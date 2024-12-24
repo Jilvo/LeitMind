@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "leitmind"
+version = "0.1.0"
+description = ""
+authors = ["Jilvo <jmillot41@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+fastapi = "^0.115.6"
+pydantic = "^2.10.4"
+black = "^24.10.0"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+mypy = "^1.14.0"
+pytest = "^8.3.4"
+alembic = "^1.14.0"
+sqlalchemy = "^2.0.36"
+pre-commit = "^4.0.1"
+uvicorn = "^0.34.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
