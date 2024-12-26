@@ -1,9 +1,8 @@
 import uvicorn
+from controller.controller import controller
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from kink import di
-
-from controller.controller import controller
 
 app = FastAPI()
 origins = [
@@ -25,8 +24,8 @@ app.add_middleware(
 controller()
 try:
     print("add middleware to app")
-    app.include_router(di["auth_api_router"], tags=["stockage"], prefix="/auth")
-    app.include_router(di["questions_api_router"], tags=["tech"], prefix="/questions")
+    app.include_router(di["auth_api_router"], tags=["Auth"], prefix="/auth")
+    app.include_router(di["questions_api_router"], tags=["Questions"], prefix="/questions")
 except Exception as e:
     print(e)
     raise e

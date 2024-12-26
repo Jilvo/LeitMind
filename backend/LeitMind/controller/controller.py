@@ -1,11 +1,6 @@
-from infrastructure.api.bootstrap import (
-    bootstrap as bootstrap_infrastructure,
-)
 from controller.global_parameters import global_parameters
-
-from infrastructure.spi.repository.questions_repository_postgres.bootstrap import (
-    bootstrap as boostrap_repository,
-)
+from infrastructure.api.bootstrap import bootstrap as bootstrap_infrastructure
+from infrastructure.spi.repository.bootstrap import bootstrap as boostrap_repository
 
 try:
     print("bootstraping dependencies for base services (logs,...)")

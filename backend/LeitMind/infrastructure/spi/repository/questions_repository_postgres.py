@@ -1,4 +1,6 @@
-from domains.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.interfaces.questions_repository_postgres import (
+    QuestionsRepository,
+)
 
 
 class QuestionsRepositoryPostgreSQL(QuestionsRepository):

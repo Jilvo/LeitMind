@@ -20,6 +20,7 @@ sqlalchemy = "^2.0.36"
 pre-commit = "^4.0.1"
 uvicorn = "^0.34.0"
 kink = "^0.8.1"
+psycopg2-binary = "^2.9.10"
 
 
 [build-system]

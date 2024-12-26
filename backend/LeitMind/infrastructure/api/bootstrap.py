@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from infrastructure.api.auth_api_rest.api import router as auth_router
 from infrastructure.api.questions_api_rest.api import router as questions_router
 
