@@ -78,5 +78,5 @@ kill-port PORT:
 pre-commit:
     poetry run pre-commit run --all-files
 
-venv:
+shell:
     poetry shell

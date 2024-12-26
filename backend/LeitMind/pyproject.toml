@@ -19,6 +19,7 @@ alembic = "^1.14.0"
 sqlalchemy = "^2.0.36"
 pre-commit = "^4.0.1"
 uvicorn = "^0.34.0"
+kink = "^0.8.1"
 
 
 [build-system]

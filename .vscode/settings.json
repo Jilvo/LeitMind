@@ -1,0 +1,6 @@
+{
+  "python.analysis.typeCheckingMode": "off",
+  "python.pythonPath": ".venv",
+  // "python.analysis.extraPaths": ["./stockage_service/stockage_service"]
+  "python.analysis.extraPaths": ["./stockage_service", "./backend/LeitMind"]
+}

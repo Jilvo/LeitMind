@@ -107,6 +107,12 @@ The application uses two storage systems:
 
     -   `hashed_password`: Password hash.
 
+    -   `country`: Country from a list of existants country
+
+    -   `created_at`: Timestamp for when the user was created.
+
+    -   `updated_at`: Timestamp for the last update to the user's record.
+
 #### Questions
 
 -   Stores questions and related metadata.
@@ -121,6 +127,26 @@ The application uses two storage systems:
 
     -   `image_path`: Path to associated image (if any).
 
+    -   `created_at`: Timestamp for when the question was created.
+
+    -   `updated_at`: Timestamp for the last update to the question's record.
+
+#### Categories
+
+-   Defines categories for grouping questions.
+
+-   **Columns**:
+
+    -   `id`: Primary key.
+
+    -   `name`: Unique category name.
+
+    -   `description`: Brief description of the category.
+
+    -   `created_at`: Timestamp for when the category was created.
+
+    -   `updated_at`: Timestamp for the last update to the category's record.
+
 #### Progress
 
 -   Tracks user progress for questions.
@@ -133,9 +159,51 @@ The application uses two storage systems:
 
     -   `question_id`: Foreign key linking to the questions table.
 
-    -   `status`: Current status (e.g., `completed`, `pending`).
+    -   `status`: Current status (e.g., `completed`, `pending`, `in_progress`).
 
     -   `next_review`: Timestamp for the next scheduled review.
+
+    -   `attempts`: Number of attempts made on the question.
+
+    -   `created_at`: Timestamp for when the progress was created.
+
+    -   `updated_at`: Timestamp for the last update to the progress's record.
+
+#### Notifications
+
+-   Stores notifications for users.
+
+-   **Columns**:
+
+    -   `id`: Primary key.
+
+    -   `user_id`: Foreign key linking to the users table.
+
+    -   `message`: Notification message content.
+
+    -   `is_read`: Boolean indicating if the notification has been read.
+
+    -   `sent_at`: Timestamp for when the notification was sent.
+
+#### User_Settings
+
+-   Stores user-specific settings and preferences.
+
+-   **Columns**:
+
+    -   `id`: Primary key.
+
+    -   `user_id`: Foreign key linking to the users table.
+
+    -   `language`: Preferred language for the user.
+
+    -   `notification_frequency`: Frequency of notifications (e.g., daily, weekly).
+
+    -   `theme`: Theme preference (e.g., light, dark).
+
+    -   `created_at`: Timestamp for when the settings were created.
+
+    -   `updated_at`: Timestamp for the last update to the settings record.
 
 * * * * *
 
