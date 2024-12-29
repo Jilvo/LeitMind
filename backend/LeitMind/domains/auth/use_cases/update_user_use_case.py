@@ -1,9 +1,12 @@
+from kink import inject
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.auth.schemas.user import UserUpdateRequest
 
 
+@inject
 class UpdateUserUseCase:
-    def __init__(self, user_repository: AuthRepository):
-        self.user_repository = user_repository
+    def __init__(self, auth_repository: AuthRepository):
+        self.auth_repository = auth_repository
 
-    def execute(self, user_id: int, username: str = None, email: str = None, country: str = None):
-        return self.user_repository.update_user(user_id, username, email, country)
+    def execute(self, user_data: UserUpdateRequest):
+        return self.auth_repository.update_user(user_data)

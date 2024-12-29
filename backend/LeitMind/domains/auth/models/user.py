@@ -12,3 +12,13 @@ class User(Base):
     country = Column(String(50), nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "country": self.country,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
