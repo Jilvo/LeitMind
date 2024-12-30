@@ -1,5 +1,5 @@
-from kink import inject
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from kink import inject
 
 
 @inject

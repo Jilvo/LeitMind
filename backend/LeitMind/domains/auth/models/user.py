@@ -1,5 +1,6 @@
 from domains.base import Base
 from sqlalchemy import Column, DateTime, Integer, String, Text, func
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -12,6 +13,8 @@ class User(Base):
     country = Column(String(50), nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    questions = relationship("Question", back_populates="creator")
 
     def to_dict(self):
         return {

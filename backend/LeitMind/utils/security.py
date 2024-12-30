@@ -1,8 +1,9 @@
-from passlib.context import CryptContext
 from datetime import datetime, timedelta
+
 import jwt
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer
-from fastapi import HTTPException, status, Depends
+from passlib.context import CryptContext
 
 SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
@@ -48,11 +49,12 @@ def decode_access_token(token: str) -> dict:
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
     payload = decode_access_token(token.credentials)
-    username: str = payload.get("sub")
-    if username is None:
+    # username: str = payload.get("sub")
+    email: str = payload.get("email")
+    if email is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return username
+    return email

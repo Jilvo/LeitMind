@@ -1,9 +1,9 @@
-from kink import inject
-from pydantic import ValidationError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.models.user import User
 from domains.auth.schemas.user import UserCreationRequest
-from utils.security import get_password_hash, create_access_token
+from kink import inject
+from pydantic import ValidationError
+from utils.security import create_access_token, get_password_hash
 
 
 @inject
@@ -11,8 +11,8 @@ class AuthUserUseCase:
     def __init__(self, auth_repository: AuthRepository):
         self.auth_repository = auth_repository
 
-    def login(self, username: str, password: str):
-        user = self.auth_repository.authenticate_user(username, password)
+    def login(self, email: str, password: str):
+        user = self.auth_repository.authenticate_user(email, password)
         return user
 
     def signup(self, user_data: UserCreationRequest):

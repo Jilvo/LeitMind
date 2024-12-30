@@ -1,8 +1,8 @@
-from kink import inject
-from pydantic import ValidationError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.models.user import User
 from domains.auth.schemas.user import UserCreationRequest
+from kink import inject
+from pydantic import ValidationError
 from utils.security import get_password_hash
 
 

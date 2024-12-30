@@ -1,6 +1,7 @@
-from pydantic import BaseModel
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class UserCreationRequest(BaseModel):
@@ -44,9 +45,25 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    email: Optional[str] = None
 
 
 class UserLoginRequest(BaseModel):
-    username: str
-    password: str
+    email: str = Field(
+        default="jilvo@mail.com",
+        example="jilvo@mail.com",
+        description="User email",
+    )
+    password: str = Field(
+        default="jilvo",
+        example="jilvo",
+        description="User password",
+    )
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "email": "jilvo@mail.com",
+                "password": "jilvo",
+            }
+        }

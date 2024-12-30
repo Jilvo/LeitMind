@@ -1,4 +1,5 @@
 from typing import List
+
 from domains.auth.models.user import User
 
 

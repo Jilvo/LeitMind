@@ -1,9 +1,5 @@
-from infrastructure.spi.repository.auth_repository_postgres import (
-    AuthRepositoryPostgreSQL,
-)
-from infrastructure.spi.repository.questions_repository_postgres import (
-    QuestionsRepositoryPostgreSQL,
-)
+from infrastructure.spi.repository.auth_repository_postgres import AuthRepositoryPostgreSQL
+from infrastructure.spi.repository.questions_repository_postgres import QuestionsRepositoryPostgreSQL
 
 
 def bootstrap():

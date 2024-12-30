@@ -1,7 +1,7 @@
-from kink import inject
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.models.user import User
 from infrastructure.spi.repository.database import SessionLocal
+from kink import inject
 from utils.security import verify_password
 
 
@@ -12,6 +12,8 @@ class AuthRepositoryPostgreSQL(AuthRepository):
         self.session = SessionLocal
 
     def create_user(self, user: User) -> User:
+        if self.is_user_exist(user.username, user.email):
+            raise ValueError("User already exists")
         with self.session() as session:
 
             session.add(user)
@@ -26,6 +28,10 @@ class AuthRepositoryPostgreSQL(AuthRepository):
     def get_all_users(self):
         with self.session() as session:
             return session.query(User).all()
+
+    def is_user_exist(self, username: str, email: str) -> bool:
+        with self.session() as session:
+            return session.query(User).filter(User.username == username).first() or session.query(User).filter(User.email == email).first()
 
     def update_user(self, user_id: int, username: str, email: str, country: str) -> User:
         with self.session() as session:
@@ -51,7 +57,7 @@ class AuthRepositoryPostgreSQL(AuthRepository):
             return session.query(User).filter(User.username == username).first()
 
     def authenticate_user(self, username: str, password: str) -> User:
-        user = self.get_user_by_username(username)
+        user = self.get_user_by_email(username)
         if not user:
             return False
         if not verify_password(password, user.hashed_password):

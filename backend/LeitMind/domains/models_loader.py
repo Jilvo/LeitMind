@@ -19,6 +19,7 @@ def import_models():
         "domains.purchases.models.in_app_purchase",
         "domains.purchases.models.virtual_currency",
         "domains.feedback.models.feedback",
+        "domains.questions.models.answer",
     ]
 
     for module in modules:
