@@ -1,25 +1,27 @@
-from domains.base import Base
-from sqlalchemy import TIMESTAMP, Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, TIMESTAMP
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from domains.base import Base
 
 
-class Category(Base):
-    __tablename__ = "categories"
+class Theme(Base):
+    __tablename__ = "themes"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(50), unique=True, nullable=False)
-    description = Column(Text, nullable=True)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), unique=True, nullable=False)
+    description = Column(Text)
+    sub_category_id = Column(Integer, ForeignKey("sub_categories.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    sub_categories = relationship("SubCategory", back_populates="category")
+    sub_category = relationship("SubCategory", back_populates="themes")
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "sub_category_id": self.sub_category_id,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }

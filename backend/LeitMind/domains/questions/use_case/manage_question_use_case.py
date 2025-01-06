@@ -1,3 +1,4 @@
+import pandas as pd
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
 from domains.questions.interfaces.questions_repository_postgres import (
@@ -6,19 +7,20 @@ from domains.questions.interfaces.questions_repository_postgres import (
 from domains.questions.models.answer import Answer
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
-from domains.questions.schemas.question import CategoryRequest, QuestionRequest
+from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.theme import Theme
+from domains.questions.schemas.question import QuestionRequest
 from kink import inject
 from pydantic import ValidationError
 
 
 @inject
 class ManageQuestionUseCase:
-    def __init__(self, questions_repository: QuestionsRepository):
+    def __init__(self, questions_repository: QuestionsRepository, auth_repository: AuthRepository):
         self.questions_repository = questions_repository
-        self.auth_repository = AuthRepository()
+        self.auth_repository = auth_repository
 
     def create_question(self, question_data: QuestionRequest, current_user: UserCreationRequest):
-        # Logique métier (si nécessaire)
         try:
             category: Category = self.questions_repository.get_category_by_id(question_data.category)
             if not category:
@@ -42,7 +44,7 @@ class ManageQuestionUseCase:
         except ValidationError as e:
             raise ValueError(f"Invalid data: {e}")
 
-    def get_all_questions(self):
+    def get_all_questions(self) -> list[Question]:
         """Get all questions."""
         return self.questions_repository.get_all_questions()
 
@@ -78,9 +80,8 @@ class ManageQuestionUseCase:
         """Get all categories."""
         return self.questions_repository.get_categories()
 
-    def create_category(self, category_request: CategoryRequest):
+    def create_category(self, category: Category) -> Category:
         """Create a new category."""
-        category = Category(name=category_request.name, description=category_request.description)
         return self.questions_repository.create_category(category)
 
     def update_category(self, category_id: int, category_name: str):
@@ -95,3 +96,133 @@ class ManageQuestionUseCase:
     def get_questions_by_category(self, category_id: int):
         """Get all questions by category."""
         return self.questions_repository.get_questions_by_category(category_id)
+
+    def create_sub_category(self, sub_category: SubCategory) -> SubCategory:
+        """Create a new sub category."""
+        return self.questions_repository.create_sub_category(sub_category)
+
+    def update_sub_category(self, sub_category_id: int, sub_category_name: str):
+        """Update a sub category."""
+        return self.questions_repository.update_sub_category(sub_category_id, sub_category_name)
+
+    def delete_sub_category(self, sub_category_id: int):
+        """Delete a sub category."""
+        return self.questions_repository.delete_sub_category(sub_category_id)
+
+    def get_sub_categories_by_category(self, category_id: int):
+        """Get all sub categories by category."""
+        return self.questions_repository.get_sub_categories_by_category(category_id)
+
+    def get_all_sub_categories(self):
+        """Get all sub categories."""
+        return self.questions_repository.get_all_sub_categories()
+
+    def get_sub_category_by_id(self, sub_category_id: int):
+        """Get a sub category by id."""
+        return self.questions_repository.get_sub_category_by_id(sub_category_id)
+
+    def get_sub_category_by_name(self, sub_category_name: str):
+        """Get a sub category by name."""
+        return self.questions_repository.get_sub_category_by_name(sub_category_name)
+
+    def get_themes(self):
+        """Get all themes."""
+        return self.questions_repository.get_themes()
+
+    def get_theme_by_id(self, theme_id: int):
+        """Get a theme by id."""
+        return self.questions_repository.get_theme_by_id(theme_id)
+
+    def get_theme_by_name(self, theme_name: str):
+        """Get a theme by name."""
+        return self.questions_repository.get_theme_by_name(theme_name)
+
+    def create_theme(self, theme: Theme) -> Theme:
+        """Create a new theme."""
+        return self.questions_repository.create_theme(theme)
+
+    def update_theme(self, theme_id: int, theme_name: str):
+        """Update a theme."""
+        return self.questions_repository.update_theme(theme_id, theme_name)
+
+    def delete_theme(self, theme_id: int):
+        """Delete a theme."""
+        return self.questions_repository.delete_theme(theme_id)
+
+    def get_themes_by_sub_category(self, sub_category_id: int):
+        """Get all themes by sub category."""
+        return self.questions_repository.get_themes_by_sub_category(sub_category_id)
+
+    def get_questions_by_theme(self, theme_id: int):
+        """Get all questions by theme."""
+        return self.questions_repository.get_questions_by_theme(theme_id)
+
+    def get_category_by_name(self, category: str) -> Category:
+        """Get a category by name."""
+        return self.questions_repository.get_category_by_name(category)
+
+    def bulk_create_questions(self):
+        """Bulk create questions."""
+        try:
+            # Lire le fichier CSV
+            df = pd.read_csv("datas/datasset.csv", on_bad_lines="skip")
+            # df_head = df.head()
+            # print(df)
+            for index, row in df.iterrows():
+                print(index)
+                # print(row)
+                # print(row)
+                category = self.get_category_by_name(row["category"])
+                if not category:
+                    category = Category(name=row["category"])
+                    category = self.create_category(category)
+                sub_category = self.get_sub_category_by_name(row["sub_category"])
+                if not sub_category:
+                    sub_category = SubCategory(name=row["sub_category"], category_id=category.id)
+                    sub_category = self.create_sub_category(sub_category)
+                theme = self.get_theme_by_name(row["theme"])
+                if not theme:
+                    theme = Theme(name=row["theme"], sub_category_id=sub_category.id)
+                    theme = self.create_theme(theme)
+                question = Question(
+                    text=row["question"],
+                    category_id=category.id,
+                    creator_id=1,
+                    explanation=row["explanation"],
+                )
+                question_already_exists = self.questions_repository.get_question_by_text(question.text)
+                if question_already_exists:
+                    continue
+                question = self.questions_repository.create_question(question)
+                answers = []
+                answers_possibility = [
+                    row["answers_1"],
+                    row["answers_2"],
+                    row["answers_3"],
+                ]
+                for index, aswr in enumerate(answers_possibility):
+                    answer = Answer(
+                        is_correct=(True if index + 1 == row["index_correct_answer"] else False),
+                        question_id=question.id,
+                        text=aswr.replace("\n", "").replace("\r", "").replace("\t", "").replace("  ", " ").replace('"', ""),
+                    )
+                    answers.append(answer)
+                    self.questions_repository.create_answer(answer)
+                # self.questions_repository.create_question_with_answers(
+                #     question, answers
+                # )
+                print(question)
+            print(df.head())
+            a = df.head().to_dict("records")
+            return a
+        except Exception as e:
+            print(f"Error reading CSV file: {e}")
+        return None
+        # return self.questions_repository.bulk_create_questions()
+
+    def get_question_by_id(self, question_id: int) -> dict:
+        """Get a question by id with answers."""
+        question = self.questions_repository.get_question_by_id(question_id).to_dict()
+        aswrs = self.questions_repository.get_answers_by_question(question_id)
+        answers = [aswr.to_dict() for aswr in aswrs]
+        return {"question": question, "answers": answers}

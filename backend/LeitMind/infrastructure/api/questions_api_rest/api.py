@@ -116,5 +116,17 @@ def get_question_by_id(question_id: int, current_user: str = Depends(get_current
     Get a question by ID
     """
     service: UseCasesService = di[UseCasesService]
-    question = service.manageQuestionUseCase.get_question_by_id(question_id)
-    return JSONResponse(status_code=201, content={"message": question})
+    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(question_id)
+    return JSONResponse(status_code=200, content={"message": questions_and_answers})
+
+
+@router.get("/bulk_create_questions/")
+def bulk_create_questions(
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Bulk create questions
+    """
+    service: UseCasesService = di[UseCasesService]
+    res = service.manageQuestionUseCase.bulk_create_questions()
+    return JSONResponse(status_code=201, content={"message": res})

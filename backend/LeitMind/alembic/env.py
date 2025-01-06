@@ -1,6 +1,7 @@
 # import os
 # import sys
 from domains.base import Base  # Import your Base
+from domains import models_loader  # noqa: F401
 from logging.config import fileConfig
 
 from alembic import context
@@ -24,6 +25,7 @@ fileConfig(config.config_file_name)
 # from domains.questions.models.question import Question  # Import your models
 
 target_metadata = Base.metadata
+print(target_metadata)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
