@@ -16,6 +16,8 @@ class User(Base):
 
     questions = relationship("Question", back_populates="creator")
 
+    subscriptions = relationship("UserSubscription", back_populates="user", cascade="all, delete-orphan")
+
     def to_dict(self):
         return {
             "id": self.id,

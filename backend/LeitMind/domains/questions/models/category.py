@@ -14,6 +14,7 @@ class Category(Base):
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
     sub_categories = relationship("SubCategory", back_populates="category")
+    subscriptions = relationship("UserSubscription", back_populates="category", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

@@ -22,6 +22,8 @@ class SubCategory(Base):
     category = relationship("Category", back_populates="sub_categories")
     themes = relationship("Theme", back_populates="sub_category")
 
+    subscriptions = relationship("UserSubscription", back_populates="sub_category", cascade="all, delete-orphan")
+
     def to_dict(self):
         return {
             "id": self.id,

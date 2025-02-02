@@ -27,6 +27,7 @@ try:
     app.include_router(di["auth_api_router"], tags=["Auth"], prefix="/auth")
     app.include_router(di["questions_api_router"], tags=["Questions"], prefix="/questions")
     app.include_router(di["validation_api_router"], tags=["Validation"], prefix="/validate")
+    app.include_router(di["category_api_router"], tags=["Category"], prefix="/category")
 except Exception as e:
     print(e)
     raise e

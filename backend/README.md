@@ -23,3 +23,12 @@ This is a boilerplate project to kickstart a FastAPI app with a PostgreSQL datab
 ## Endpoints
 - `/users` : Manage users
 - `/questions` : Manage questions
+- `/validate` : Manage validation of users for questions
+
+
+## Organising questions
+`Category` --> `Sub Category` --> `Theme` --> `Questions` --> `Answers`
+
+Exemple :
+
+`Histoire` --> `Préhistoire` --> `Paléolithique inférieur` --> `Quel est le nom du premier hominidé connu à avoir utilisé des outils de pierre ?` --> `"Homo habilis", "Homo erectus", "Australopithèque"`

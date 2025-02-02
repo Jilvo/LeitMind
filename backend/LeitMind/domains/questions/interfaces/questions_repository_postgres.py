@@ -56,7 +56,7 @@ class QuestionsRepository:
         """
         pass
 
-    def get_unattempted_questions_by_user_id_and_theme_id(self, user_id: int, theme_id: int) -> list[Question]:
+    def get_unattempted_questions_by_user_id_and_sub_category_choosed(self, user_id: int, theme_id: int) -> list[Question]:
         """
         Get all unattempted questions by user ID and theme ID.
         """
