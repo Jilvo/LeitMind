@@ -1,7 +1,7 @@
 from domains.base import Base
-from sqlalchemy import TIMESTAMP, Column, Integer, String, Text, ForeignKey
-from sqlalchemy.sql import func
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 
 class SubCategory(Base):

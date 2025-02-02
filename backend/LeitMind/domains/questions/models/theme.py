@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, TIMESTAMP
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
 from domains.base import Base
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 
 class Theme(Base):

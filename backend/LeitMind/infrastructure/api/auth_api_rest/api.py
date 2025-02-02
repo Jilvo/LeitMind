@@ -1,9 +1,4 @@
-from domains.auth.schemas.user import (
-    Token,
-    UserCreationRequest,
-    UserLoginRequest,
-    UserUpdateRequest,
-)
+from domains.auth.schemas.user import Token, UserCreationRequest, UserLoginRequest, UserUpdateRequest
 from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse

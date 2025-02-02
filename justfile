@@ -55,6 +55,11 @@ uptdoc-stockage-service:
 lazycommit commit_message:
     git add . && git commit -m "{{commit_message}}" && git push
 
+migration migration_name:
+    poetry run alembic revision --autogenerate -m "{{migration_name}}"
+
+apply-migration:
+    poetry run alembic upgrade head
 # Initializes the project.
 # This command runs the install script to set up the project.
 init-project:
@@ -80,3 +85,6 @@ pre-commit:
 
 shell:
     poetry shell
+
+lint:
+    black . && isort .

@@ -1,4 +1,5 @@
 from domains.questions.models.answer import Answer
+from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
@@ -40,6 +41,24 @@ class QuestionsRepository:
     def get_questions_by_category(self, category_id: int) -> list[Question]:
         """
         Get all questions by category.
+        """
+        pass
+
+    def get_questions_by_ids(self, question_ids: list[int]) -> list[Question]:
+        """
+        Get all questions by IDs.
+        """
+        pass
+
+    def get_unattempted_questions_by_user_id(self, user_id: int) -> list[Question]:
+        """
+        Get all unattempted questions by user ID.
+        """
+        pass
+
+    def get_unattempted_questions_by_user_id_and_theme_id(self, user_id: int, theme_id: int) -> list[Question]:
+        """
+        Get all unattempted questions by user ID and theme ID.
         """
         pass
 
@@ -213,5 +232,30 @@ class QuestionsRepository:
     def get_question_by_text(text: str) -> Question:
         """
         Get a question by text.
+        """
+        pass
+
+    # Attempts
+    def create_or_update_attempt(self, attempt) -> Attempt:
+        """
+        Create or Update a new attempt.
+        """
+        pass
+
+    def get_attempt_by_id(self, attempt_id: int) -> Attempt:
+        """
+        Get an attempt by ID.
+        """
+        pass
+
+    def get_attempt_by_question_and_user_id(self, question_id: int, user_id: int) -> Attempt:
+        """
+        Get an attempt by question and user ID.
+        """
+        pass
+
+    def get_all_attempts_by_user_id(self, user_id: int) -> list[Attempt]:
+        """
+        Get all attempts by user ID.
         """
         pass

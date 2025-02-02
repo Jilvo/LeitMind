@@ -1,6 +1,4 @@
-from domains.questions.interfaces.questions_repository_postgres import (
-    QuestionsRepository,
-)
+from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
 from domains.questions.models.answer import Answer
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
@@ -8,6 +6,7 @@ from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
 from infrastructure.spi.repository.database import SessionLocal
 from kink import inject
+from sqlalchemy.orm import joinedload
 
 
 @inject(alias="questions_repository")
@@ -24,7 +23,13 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
 
     def get_question_by_id(self, question_id: int):
         with self.session() as session:
-            return session.query(Question).filter(Question.id == question_id).first()
+            return (
+                session.query(Question)
+                .options(joinedload(Question.answers))  # Charge les réponses en même temps
+                .filter(Question.id == question_id)
+                .first()
+            )
+            # return session.query(Question).filter(Question.id == question_id).first()
 
     def update_question(self, question: Question):
         with self.session() as session:
@@ -196,3 +201,11 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     def get_questions_by_theme(self, theme_id: int) -> list[Question]:
         with self.session() as session:
             return session.query(Question).filter(Question.theme_id == theme_id).all()
+
+    # Attempts #
+    def create_attempt(self, attempt):
+        with self.session() as session:
+            session.add(attempt)
+            session.commit()
+            session.refresh(attempt)
+            return attempt

@@ -1,10 +1,10 @@
 # import os
 # import sys
-from domains.base import Base  # Import your Base
-from domains import models_loader  # noqa: F401
 from logging.config import fileConfig
 
 from alembic import context
+from domains import models_loader  # noqa: F401
+from domains.base import Base  # Import your Base
 from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides

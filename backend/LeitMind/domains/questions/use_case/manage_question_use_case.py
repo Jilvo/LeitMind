@@ -1,15 +1,14 @@
 import pandas as pd
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
-from domains.questions.interfaces.questions_repository_postgres import (
-    QuestionsRepository,
-)
+from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
 from domains.questions.models.answer import Answer
+from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
-from domains.questions.schemas.question import QuestionRequest
+from domains.questions.schemas.question import QuestionRequest, ValidateRequest
 from kink import inject
 from pydantic import ValidationError
 
@@ -226,3 +225,35 @@ class ManageQuestionUseCase:
         aswrs = self.questions_repository.get_answers_by_question(question_id)
         answers = [aswr.to_dict() for aswr in aswrs]
         return {"question": question, "answers": answers}
+
+    # Validation
+    def validate_question(self, validation_data: ValidateRequest, current_user: str):
+        """Validate a question."""
+        question: Question = self.questions_repository.get_question_by_id(validation_data.question_id)
+        if not question:
+            raise ValueError("Question not found")
+        answers = question.answers
+        correct_answer = [answer for answer in answers if answer.is_correct]
+        is_correct = False
+        if validation_data.answer_id == correct_answer[0].id:
+            is_correct = True
+        user = self.auth_repository.get_user_by_email(current_user)
+        attempt = self.questions_repository.get_attempt_by_question_and_user_id(question.id, user.id)
+        if not attempt:
+            attempt = Attempt(
+                question_id=question.id,
+                user_id=user.id,
+                is_correct=is_correct,
+                answer_id=validation_data.answer_id,
+                # attempt_count=1,
+                # leitner_box=1,
+            )
+        else:
+            attempt.leitner_box += 1
+            attempt.attempt_count += 1
+            attempt.is_correct = is_correct
+            attempt.answer_id = validation_data.answer_id
+        self.questions_repository.create_or_update_attempt(attempt, current_user)
+        if is_correct:
+            return "Correct answer", ""
+        return "Bad answer", question.explanation

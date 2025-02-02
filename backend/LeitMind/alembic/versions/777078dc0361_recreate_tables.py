@@ -8,9 +8,8 @@ Create Date: 2025-01-05 09:39:12.784563
 
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "777078dc0361"
@@ -37,7 +36,12 @@ def upgrade() -> None:
         sa.Column("item_name", sa.String(length=100), nullable=False),
         sa.Column("price", sa.DECIMAL(precision=10, scale=2), nullable=False),
         sa.Column("currency", sa.String(length=10), nullable=False),
-        sa.Column("purchased_at", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "purchased_at",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -79,7 +83,12 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("friend_id", sa.Integer(), nullable=False),
         sa.Column("status", sa.String(length=20), nullable=False),
-        sa.Column("connected_at", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "connected_at",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.CheckConstraint("status IN ('pending', 'accepted', 'blocked')", name="check_status"),
         sa.ForeignKeyConstraint(["friend_id"], ["users.id"], ondelete="CASCADE"),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
@@ -100,7 +109,12 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("achievement_id", sa.Integer(), nullable=False),
-        sa.Column("unlocked_at", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "unlocked_at",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(["achievement_id"], ["achievements.id"], ondelete="CASCADE"),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
@@ -122,7 +136,12 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("balance", sa.Integer(), nullable=True),
-        sa.Column("last_updated", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "last_updated",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -132,7 +151,12 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("question_id", sa.Integer(), nullable=False),
         sa.Column("is_correct", sa.Boolean(), nullable=False),
-        sa.Column("attempted_at", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "attempted_at",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(["question_id"], ["questions.id"], ondelete="CASCADE"),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
@@ -143,7 +167,12 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("question_id", sa.Integer(), nullable=False),
         sa.Column("content", sa.Text(), nullable=False),
-        sa.Column("submitted_at", sa.TIMESTAMP(), server_default=sa.text("now()"), nullable=True),
+        sa.Column(
+            "submitted_at",
+            sa.TIMESTAMP(),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(["question_id"], ["questions.id"], ondelete="CASCADE"),
         sa.ForeignKeyConstraint(["user_id"], ["users.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),

@@ -173,3 +173,11 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 backend/LeitMind/alembic.ini
+*.csv
+/scripts
+/repositories
+backend/LeitMind/test_llama_cpp.py
+backend/LeitMind/test_llama.py
+.vscode/settings.json
+doc/category.md
+doc/prompt.md
