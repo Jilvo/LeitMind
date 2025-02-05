@@ -1,8 +1,16 @@
 import uvicorn
-from controller.controller import controller
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from kink import di
+from controller.controller import (
+    controller,
+)
+from fastapi import (
+    FastAPI,
+)
+from fastapi.middleware.cors import (
+    CORSMiddleware,
+)
+from kink import (
+    di,
+)
 
 app = FastAPI()
 origins = [
@@ -24,10 +32,26 @@ app.add_middleware(
 controller()
 try:
     print("add middleware to app")
-    app.include_router(di["auth_api_router"], tags=["Auth"], prefix="/auth")
-    app.include_router(di["questions_api_router"], tags=["Questions"], prefix="/questions")
-    app.include_router(di["validation_api_router"], tags=["Validation"], prefix="/validate")
-    app.include_router(di["category_api_router"], tags=["Category"], prefix="/category")
+    app.include_router(
+        di["auth_api_router"],
+        tags=["Auth"],
+        prefix="/auth",
+    )
+    app.include_router(
+        di["questions_api_router"],
+        tags=["Questions"],
+        prefix="/questions",
+    )
+    app.include_router(
+        di["validation_api_router"],
+        tags=["Validation"],
+        prefix="/validate",
+    )
+    app.include_router(
+        di["category_api_router"],
+        tags=["Category"],
+        prefix="/category",
+    )
 except Exception as e:
     print(e)
     raise e
@@ -39,4 +63,9 @@ def read_root():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8080, reload=True)
+    uvicorn.run(
+        "main:app",
+        host="localhost",
+        port=8080,
+        reload=True,
+    )

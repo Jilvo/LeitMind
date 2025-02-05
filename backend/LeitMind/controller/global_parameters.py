@@ -1,10 +1,20 @@
-from commons.utils import getOrSet
-from kink import di
+from commons.utils import (
+    getOrSet,
+)
+from kink import (
+    di,
+)
 
 try:
     print("loading controller (manage app initialization)")
-    di["POSTGRES_DB_URL"] = getOrSet("POSTGRES_DB_URL", "test")
-    print("POSTGRES_DB_URL configuration", di["POSTGRES_DB_URL"])
+    di["POSTGRES_DB_URL"] = getOrSet(
+        "POSTGRES_DB_URL",
+        "test",
+    )
+    print(
+        "POSTGRES_DB_URL configuration",
+        di["POSTGRES_DB_URL"],
+    )
     print("checking version...")
 
     print("commons settings")

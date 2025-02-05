@@ -1,4 +1,5 @@
 from domains.auth.models.user import User  # noqa: F401
+from domains.auth.models.user import UserSubscription  # noqa: F401
 from domains.auth.models.user_setting import UserSetting  # noqa: F401
 from domains.feedback.models.feedback import Feedback  # noqa: F401
 from domains.leaderboards.models.leaderboard import Leaderboard  # noqa: F401

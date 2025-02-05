@@ -1,8 +1,8 @@
-"""Initial migration
+"""create user sub
 
-Revision ID: 7369c8cf7f90
-Revises:
-Create Date: 2024-12-26 17:24:31.766546
+Revision ID: f1ee81459050
+Revises: 19fe453b88d0
+Create Date: 2025-02-05 20:24:36.652781
 
 """
 
@@ -12,8 +12,8 @@ from typing import (
 )
 
 # revision identifiers, used by Alembic.
-revision: str = "7369c8cf7f90"
-down_revision: Union[str, None] = None
+revision: str = "f1ee81459050"
+down_revision: Union[str, None] = "19fe453b88d0"
 branch_labels: Union[
     str,
     Sequence[str],

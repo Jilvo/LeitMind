@@ -1,17 +1,35 @@
-from domains.auth.interfaces.auth_repository_postgres import AuthRepository
-from domains.auth.models.user import User
-from domains.auth.schemas.user import UserCreationRequest
-from kink import inject
-from pydantic import ValidationError
-from utils.security import get_password_hash
+from domains.auth.interfaces.auth_repository_postgres import (
+    AuthRepository,
+)
+from domains.auth.models.user import (
+    User,
+)
+from domains.auth.schemas.user import (
+    UserCreationRequest,
+)
+from kink import (
+    inject,
+)
+from pydantic import (
+    ValidationError,
+)
+from utils.security import (
+    get_password_hash,
+)
 
 
 @inject
 class SignUpUserUseCase:
-    def __init__(self, auth_repository: AuthRepository):
+    def __init__(
+        self,
+        auth_repository: AuthRepository,
+    ):
         self.auth_repository = auth_repository
 
-    def execute(self, user_data: UserCreationRequest):
+    def execute(
+        self,
+        user_data: UserCreationRequest,
+    ):
         # Logique métier (si nécessaire)
         try:
             user_data = UserCreationRequest(**user_data.model_dump())
