@@ -25,7 +25,7 @@ jobs:
           pip install poetry
 
       - name: Update lock file
-        wokring-directory: backend/LeitMind
+        working-directory: backend/LeitMind
         run: |
           poetry lock --no-update
 
