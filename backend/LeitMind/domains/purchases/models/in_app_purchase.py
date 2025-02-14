@@ -1,17 +1,6 @@
-from domains.base import (
-    Base,
-)
-from sqlalchemy import (
-    DECIMAL,
-    TIMESTAMP,
-    Column,
-    ForeignKey,
-    Integer,
-    String,
-)
-from sqlalchemy.sql import (
-    func,
-)
+from domains.base import Base
+from sqlalchemy import DECIMAL, TIMESTAMP, Column, ForeignKey, Integer, String
+from sqlalchemy.sql import func
 
 
 class InAppPurchase(Base):

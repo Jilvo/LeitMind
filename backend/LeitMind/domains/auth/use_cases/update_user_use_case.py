@@ -1,12 +1,6 @@
-from domains.auth.interfaces.auth_repository_postgres import (
-    AuthRepository,
-)
-from domains.auth.schemas.user import (
-    UserUpdateRequest,
-)
-from kink import (
-    inject,
-)
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.auth.schemas.user import UserUpdateRequest
+from kink import inject
 
 
 @inject

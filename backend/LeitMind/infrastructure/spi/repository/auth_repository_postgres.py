@@ -1,18 +1,8 @@
-from domains.auth.interfaces.auth_repository_postgres import (
-    AuthRepository,
-)
-from domains.auth.models.user import (
-    User,
-)
-from infrastructure.spi.repository.database import (
-    SessionLocal,
-)
-from kink import (
-    inject,
-)
-from utils.security import (
-    verify_password,
-)
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.auth.models.user import User
+from infrastructure.spi.repository.database import SessionLocal
+from kink import inject
+from utils.security import verify_password
 
 
 @inject(alias="auth_repository")

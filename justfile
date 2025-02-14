@@ -81,10 +81,16 @@ kill-port PORT:
     sudo kill -9 $(sudo lsof -t -i:{{PORT}})
 
 pre-commit:
-    poetry run pre-commit run --all-files
+    cd backend/LeitMind && poetry run pre-commit run --all-files
 
 shell:
     poetry shell
 
 lint:
     black . && isort .
+
+
+run-back:
+    cd backend/LeitMind && python main.py
+run-front:
+    cd web/leitMind && npm run serve

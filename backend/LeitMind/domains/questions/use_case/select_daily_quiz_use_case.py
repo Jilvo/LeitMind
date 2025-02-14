@@ -1,19 +1,9 @@
-from datetime import (
-    datetime,
-)
+from datetime import datetime
 
-from domains.auth.interfaces.auth_repository_postgres import (
-    AuthRepository,
-)
-from domains.questions.interfaces.questions_repository_postgres import (
-    QuestionsRepository,
-)
-from domains.questions.models.attempt import (
-    Attempt,
-)
-from kink import (
-    inject,
-)
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.models.attempt import Attempt
+from kink import inject
 
 
 @inject

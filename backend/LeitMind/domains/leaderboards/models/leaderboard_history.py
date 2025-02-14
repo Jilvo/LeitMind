@@ -1,16 +1,6 @@
-from domains.base import (
-    Base,
-)
-from sqlalchemy import (
-    TIMESTAMP,
-    Column,
-    Date,
-    ForeignKey,
-    Integer,
-)
-from sqlalchemy.sql import (
-    func,
-)
+from domains.base import Base
+from sqlalchemy import TIMESTAMP, Column, Date, ForeignKey, Integer
+from sqlalchemy.sql import func
 
 
 class LeaderboardHistory(Base):

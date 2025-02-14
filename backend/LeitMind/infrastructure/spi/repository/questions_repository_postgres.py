@@ -1,44 +1,17 @@
-from typing import (
-    Optional,
-)
+from typing import Optional
 
-from domains.questions.interfaces.questions_repository_postgres import (
-    QuestionsRepository,
-)
-from domains.questions.models.answer import (
-    Answer,
-)
-from domains.questions.models.attempt import (
-    Attempt,
-)
-from domains.questions.models.category import (
-    Category,
-)
-from domains.questions.models.question import (
-    Question,
-)
-from domains.questions.models.sub_category import (
-    SubCategory,
-)
-from domains.questions.models.theme import (
-    Theme,
-)
-from infrastructure.spi.repository.database import (
-    SessionLocal,
-)
-from kink import (
-    inject,
-)
-from sqlalchemy import (
-    and_,
-    not_,
-)
-from sqlalchemy.orm import (
-    joinedload,
-)
-from sqlalchemy.orm.exc import (
-    NoResultFound,
-)
+from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.models.answer import Answer
+from domains.questions.models.attempt import Attempt
+from domains.questions.models.category import Category
+from domains.questions.models.question import Question
+from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.theme import Theme
+from infrastructure.spi.repository.database import SessionLocal
+from kink import inject
+from sqlalchemy import and_, not_
+from sqlalchemy.orm import joinedload
+from sqlalchemy.orm.exc import NoResultFound
 
 
 @inject(alias="questions_repository")
