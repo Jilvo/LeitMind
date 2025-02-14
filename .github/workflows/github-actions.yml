@@ -27,7 +27,7 @@ jobs:
       - name: Update lock file
         working-directory: backend/LeitMind
         run: |
-          poetry lock --no-update
+          poetry lock
 
       - name: Install dependencies
         working-directory: backend/LeitMind
@@ -35,23 +35,23 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
 
-      # Uncomment the following steps if needed
-      # - name: Lint with flake8
-      #   run: |
-      #     poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      #     poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Build Docker Image
+        run: docker build -t my-app:latest .
 
-      # - name: Test with pytest
-      #   run: |
-      #     poetry run pytest
+      - name: Push Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+          docker tag my-app:latest $DOCKER_USERNAME/my-app:latest
+          docker push $DOCKER_USERNAME/my-app:latest
 
-      # - name: Deploy Docs
-      # - name: Build Docker Images
-      # - name: Push Docker Images
-      # - name: Deploy App
-
-  # test:
-  #   runs-on: ubuntu-latest
-  # lint:
-  # package:
-  # deploy:
+      - name: Deploy on Netlify
+        uses: netlify/actions/deploy@v1
+        with:
+          publish-dir: ./web/leitMind 
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
