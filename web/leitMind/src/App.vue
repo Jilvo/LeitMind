@@ -1,17 +1,15 @@
 <template>
   <!-- Pas forcément besoin d’un style particulier ici,
        on inclut simplement le composant TemplateOne -->
-  <TemplateOne />
+  <router-view />
 </template>
 
 <script>
-import TemplateOne from "./components/TemplateOne.vue";
+import router from './router';
+
 
 export default {
   name: "App",
-  components: {
-    TemplateOne,
-  },
 };
 </script>
 

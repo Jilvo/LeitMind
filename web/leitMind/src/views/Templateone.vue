@@ -78,7 +78,7 @@ export default {
       logo,
       backgroundImage,
       // Données en dur pour l'exemple
-      title: "LeitMind, Comming Soon...",
+      title: "LeitMind, Coming Soon...",
       disclaimer: [
         "Our website is under construction.",
         "We'll be here soon with our new awesome site."
