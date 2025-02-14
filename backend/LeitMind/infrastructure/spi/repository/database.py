@@ -1,12 +1,6 @@
-from kink import (
-    di,
-)
-from sqlalchemy import (
-    create_engine,
-)
-from sqlalchemy.orm import (
-    sessionmaker,
-)
+from kink import di
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 # Configure l'engine
 engine = create_engine(

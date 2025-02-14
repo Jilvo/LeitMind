@@ -1,16 +1,8 @@
 import uvicorn
-from controller.controller import (
-    controller,
-)
-from fastapi import (
-    FastAPI,
-)
-from fastapi.middleware.cors import (
-    CORSMiddleware,
-)
-from kink import (
-    di,
-)
+from controller.controller import controller
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from kink import di
 
 app = FastAPI()
 origins = [

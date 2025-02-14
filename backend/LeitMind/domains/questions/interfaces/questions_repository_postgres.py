@@ -1,21 +1,9 @@
-from domains.questions.models.answer import (
-    Answer,
-)
-from domains.questions.models.attempt import (
-    Attempt,
-)
-from domains.questions.models.category import (
-    Category,
-)
-from domains.questions.models.question import (
-    Question,
-)
-from domains.questions.models.sub_category import (
-    SubCategory,
-)
-from domains.questions.models.theme import (
-    Theme,
-)
+from domains.questions.models.answer import Answer
+from domains.questions.models.attempt import Attempt
+from domains.questions.models.category import Category
+from domains.questions.models.question import Question
+from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.theme import Theme
 
 
 class QuestionsRepository:

@@ -1,6 +1,4 @@
-from infrastructure.spi.repository.database import (
-    SessionLocal,
-)
+from infrastructure.spi.repository.database import SessionLocal
 
 
 def get_db():

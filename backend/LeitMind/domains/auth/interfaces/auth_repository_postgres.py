@@ -1,10 +1,6 @@
-from typing import (
-    List,
-)
+from typing import List
 
-from domains.auth.models.user import (
-    User,
-)
+from domains.auth.models.user import User
 
 
 class AuthRepository:

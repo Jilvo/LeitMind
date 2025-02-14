@@ -1,16 +1,6 @@
-from domains.base import (
-    Base,
-)
-from sqlalchemy import (
-    TIMESTAMP,
-    Column,
-    Integer,
-    String,
-    Text,
-)
-from sqlalchemy.sql import (
-    func,
-)
+from domains.base import Base
+from sqlalchemy import TIMESTAMP, Column, Integer, String, Text
+from sqlalchemy.sql import func
 
 
 class Achievement(Base):

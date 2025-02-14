@@ -1,20 +1,9 @@
-from datetime import (
-    datetime,
-    timedelta,
-)
+from datetime import datetime, timedelta
 
 import jwt
-from fastapi import (
-    Depends,
-    HTTPException,
-    status,
-)
-from fastapi.security import (
-    HTTPBearer,
-)
-from passlib.context import (
-    CryptContext,
-)
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer
+from passlib.context import CryptContext
 
 SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"

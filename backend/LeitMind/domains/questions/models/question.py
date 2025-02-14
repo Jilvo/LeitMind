@@ -1,19 +1,7 @@
-from domains.base import (
-    Base,
-)
-from sqlalchemy import (
-    TIMESTAMP,
-    Column,
-    ForeignKey,
-    Integer,
-    Text,
-)
-from sqlalchemy.orm import (
-    relationship,
-)
-from sqlalchemy.sql import (
-    func,
-)
+from domains.base import Base
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, Text
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 
 class Question(Base):

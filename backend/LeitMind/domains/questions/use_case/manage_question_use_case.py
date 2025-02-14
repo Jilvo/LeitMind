@@ -1,41 +1,16 @@
 import pandas as pd
-from domains.auth.interfaces.auth_repository_postgres import (
-    AuthRepository,
-)
-from domains.auth.schemas.user import (
-    UserCreationRequest,
-)
-from domains.questions.interfaces.questions_repository_postgres import (
-    QuestionsRepository,
-)
-from domains.questions.models.answer import (
-    Answer,
-)
-from domains.questions.models.attempt import (
-    Attempt,
-)
-from domains.questions.models.category import (
-    Category,
-)
-from domains.questions.models.question import (
-    Question,
-)
-from domains.questions.models.sub_category import (
-    SubCategory,
-)
-from domains.questions.models.theme import (
-    Theme,
-)
-from domains.questions.schemas.question import (
-    QuestionRequest,
-    ValidateRequest,
-)
-from kink import (
-    inject,
-)
-from pydantic import (
-    ValidationError,
-)
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.auth.schemas.user import UserCreationRequest
+from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.models.answer import Answer
+from domains.questions.models.attempt import Attempt
+from domains.questions.models.category import Category
+from domains.questions.models.question import Question
+from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.theme import Theme
+from domains.questions.schemas.question import QuestionRequest, ValidateRequest
+from kink import inject
+from pydantic import ValidationError
 
 
 @inject

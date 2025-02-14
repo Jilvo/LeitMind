@@ -1,11 +1,20 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <HelloWorld />
+  <!-- Pas forcément besoin d’un style particulier ici,
+       on inclut simplement le composant TemplateOne -->
+  <TemplateOne />
 </template>
 
-<style scoped>
+<script>
+import TemplateOne from "./components/TemplateOne.vue";
 
+export default {
+  name: "App",
+  components: {
+    TemplateOne,
+  },
+};
+</script>
+
+<style scoped>
+/* Votre style global ou supplémentaire */
 </style>

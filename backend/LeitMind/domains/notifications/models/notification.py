@@ -1,17 +1,6 @@
-from domains.base import (
-    Base,
-)
-from sqlalchemy import (
-    TIMESTAMP,
-    Boolean,
-    Column,
-    ForeignKey,
-    Integer,
-    Text,
-)
-from sqlalchemy.sql import (
-    func,
-)
+from domains.base import Base
+from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, Text
+from sqlalchemy.sql import func
 
 
 class Notification(Base):
