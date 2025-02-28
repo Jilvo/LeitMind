@@ -1,5 +1,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import Hotjar from '@hotjar/browser';
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    Hotjar.init(5322100, 6);
+  }
+});
 
 const features = [
   {
@@ -76,8 +83,8 @@ onUnmounted(() => {
 <template>
   <div class="landing-page">
     <!-- Curseur personnalisé -->
-    <div class="custom-cursor" 
-         :style="{ 
+    <div class="custom-cursor"
+         :style="{
            transform: `translate(${cursorPos.x}px, ${cursorPos.y}px) scale(${cursorScale})`,
          }">
       <div class="cursor-dot"></div>
@@ -94,20 +101,20 @@ onUnmounted(() => {
           <span></span>
         </button>
         <div class="nav-links" :class="{ 'active': isMenuOpen }">
-          <a href="#features" 
-             class="hover-effect" 
-             @mouseenter="updateCursorScale(2)" 
+          <a href="#features"
+             class="hover-effect"
+             @mouseenter="updateCursorScale(2)"
              @mouseleave="updateCursorScale(1)">Fonctionnalités</a>
-          <a href="#categories" 
+          <a href="#categories"
              class="hover-effect"
-             @mouseenter="updateCursorScale(2)" 
+             @mouseenter="updateCursorScale(2)"
              @mouseleave="updateCursorScale(1)">Catégories</a>
-          <a href="#download" 
+          <a href="#download"
              class="hover-effect"
-             @mouseenter="updateCursorScale(2)" 
+             @mouseenter="updateCursorScale(2)"
              @mouseleave="updateCursorScale(1)">Télécharger</a>
           <button class="cta-button hover-effect"
-                  @mouseenter="updateCursorScale(2)" 
+                  @mouseenter="updateCursorScale(2)"
                   @mouseleave="updateCursorScale(1)">Essayer Gratuitement</button>
         </div>
       </nav>
@@ -116,12 +123,12 @@ onUnmounted(() => {
         <p class="animate-on-scroll fade-up delay-1">Développez vos connaissances quotidiennement grâce à des questions personnalisées et une expérience d'apprentissage unique</p>
         <div class="app-buttons animate-on-scroll fade-up delay-2">
           <button class="store-button hover-effect"
-                  @mouseenter="updateCursorScale(2)" 
+                  @mouseenter="updateCursorScale(2)"
                   @mouseleave="updateCursorScale(1)">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" />
           </button>
           <button class="store-button hover-effect"
-                  @mouseenter="updateCursorScale(2)" 
+                  @mouseenter="updateCursorScale(2)"
                   @mouseleave="updateCursorScale(1)">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" />
           </button>
@@ -136,11 +143,11 @@ onUnmounted(() => {
     <section id="features" class="features">
       <h2 class="animate-on-scroll fade-up">Comment ça marche ?</h2>
       <div class="features-grid">
-        <div v-for="(feature, index) in features" 
-             :key="feature.title" 
+        <div v-for="(feature, index) in features"
+             :key="feature.title"
              class="feature-card animate-on-scroll fade-up hover-effect"
              :class="'delay-' + index"
-             @mouseenter="updateCursorScale(2)" 
+             @mouseenter="updateCursorScale(2)"
              @mouseleave="updateCursorScale(1)">
           <div class="feature-icon">{{ feature.icon }}</div>
           <h3>{{ feature.title }}</h3>
@@ -153,12 +160,12 @@ onUnmounted(() => {
     <section id="categories" class="categories">
       <h2 class="animate-on-scroll fade-up">Explorez Nos Catégories</h2>
       <div class="categories-grid">
-        <div v-for="(category, index) in categories" 
-             :key="category.name" 
+        <div v-for="(category, index) in categories"
+             :key="category.name"
              class="category-card animate-on-scroll fade-up hover-effect"
              :class="'delay-' + index"
              :style="{ backgroundColor: category.color }"
-             @mouseenter="updateCursorScale(2)" 
+             @mouseenter="updateCursorScale(2)"
              @mouseleave="updateCursorScale(1)">
           <div class="category-icon">{{ category.icon }}</div>
           <h3>{{ category.name }}</h3>
@@ -172,12 +179,12 @@ onUnmounted(() => {
       <p class="animate-on-scroll fade-up delay-1">Rejoignez plus de 10 000 apprenants qui enrichissent leurs connaissances chaque jour</p>
       <div class="app-buttons animate-on-scroll fade-up delay-2">
         <button class="store-button hover-effect"
-                @mouseenter="updateCursorScale(2)" 
+                @mouseenter="updateCursorScale(2)"
                 @mouseleave="updateCursorScale(1)">
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" />
         </button>
         <button class="store-button hover-effect"
-                @mouseenter="updateCursorScale(2)" 
+                @mouseenter="updateCursorScale(2)"
                 @mouseleave="updateCursorScale(1)">
           <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" />
         </button>
@@ -513,4 +520,4 @@ onUnmounted(() => {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
-</style> 
+</style>
