@@ -1,5 +1,6 @@
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 
 def convert_to_binary(
     input,
@@ -32,7 +33,7 @@ def getOrSet(
     """Get the variable from ENVIRONMENT or set by a default value"""
     if os.getenv(label) is None:
         print(f"setting default value for env var: {label}: {value}")
-        os.environ[label] = value
+        os.getenv(label)
     else:
         print(f"take the value for env var: {label}")
-    return os.environ[label]
+    return os.getenv(label)

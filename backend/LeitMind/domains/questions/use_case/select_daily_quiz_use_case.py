@@ -12,11 +12,11 @@ class SelectDailyQuestionsUseCase:
         self,
         questions_repository: QuestionsRepository,
         auth_repository: AuthRepository,
-        user_id: int,
+        # user_id: int,
     ):
         self.questions_repository = questions_repository
         self.auth_repository = auth_repository
-        self.user_id = user_id
+        self.user_id = "user_id"
 
     def execute(
         self,

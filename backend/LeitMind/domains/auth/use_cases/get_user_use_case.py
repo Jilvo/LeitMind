@@ -27,6 +27,10 @@ class GetUserUseCase:
             user = self.auth_repository.get_user_by_id(user_info)
         return user.to_dict()
 
+    def execute_all(
+        self,
+    ):
+        return [user.to_dict() for user in self.auth_repository.get_all_users()]
     def get_user_by_email(
         self,
         email,

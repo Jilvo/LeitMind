@@ -28,7 +28,7 @@ def create_user(
     user_data: UserCreationRequest,
 ) -> JSONResponse:
     service: UseCasesService = di[UseCasesService]
-    service.signUpUserUseCase.execute(user_data)
+    service.authUserUseCase.signup(user_data)
     return JSONResponse(
         status_code=201,
         content={"message": "User created"},
@@ -56,8 +56,8 @@ def signup(
     user_data: UserCreationRequest,
 ) -> JSONResponse:
     service: UseCasesService = di[UseCasesService]
-    user = service.auth_repository.signup(user_data)
-    access_token = service.auth_repository.create_access_token(user)
+    user = service.authUserUseCase.signup(user_data)
+    access_token = service.authUserUseCase.create_access_token(user)
     return JSONResponse(
         status_code=201,
         content={
@@ -75,7 +75,7 @@ def login(
     user_data: UserLoginRequest,
 ) -> JSONResponse:
     service: UseCasesService = di[UseCasesService]
-    user = service.auth_repository.login(
+    user = service.authUserUseCase.login(
         user_data.email,
         user_data.password,
     )
@@ -86,7 +86,7 @@ def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = service.auth_repository.create_access_token(user)
+    access_token = service.authUserUseCase.create_access_token(user)
     return JSONResponse(
         status_code=200,
         content={
@@ -103,11 +103,13 @@ def get_all_users(
     """
     Retourne une liste d'utilisateurs uniquement si un JWT valide est fourni.
     """
+    service: UseCasesService = di[UseCasesService]
+    users = service.getUserUseCase.execute_all()
     return JSONResponse(
         status_code=200,
         content={
             "message": "List of users",
-            "user": current_user,
+            "user": users,
         },
     )
 

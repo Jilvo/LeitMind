@@ -53,3 +53,4 @@ class AuthUserUseCase:
                 "email": user.email,
             }
         )
+    

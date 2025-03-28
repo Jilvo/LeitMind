@@ -33,6 +33,15 @@ class QuestionsRepository:
         """
         pass
 
+    def create_question(
+        self,
+        question: Question,
+    ) -> Question:
+        """
+        Create a new question.
+        """
+        pass
+
     def update_question(
         self,
         question: Question,

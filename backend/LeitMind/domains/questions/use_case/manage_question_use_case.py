@@ -22,7 +22,12 @@ class ManageQuestionUseCase:
     ):
         self.questions_repository = questions_repository
         self.auth_repository = auth_repository
-
+    def get_category_by_id(
+        self,
+        category_id: int,
+    ) -> Category:
+        """Get a category by id."""
+        return self.questions_repository.get_category_by_id(category_id)
     def create_question(
         self,
         question_data: QuestionRequest,
@@ -264,7 +269,7 @@ class ManageQuestionUseCase:
         try:
             # Lire le fichier CSV
             df = pd.read_csv(
-                "datas/datasset.csv",
+                "datas/questions.csv",
                 on_bad_lines="skip",
             )
             # df_head = df.head()
@@ -306,9 +311,9 @@ class ManageQuestionUseCase:
                 question = self.questions_repository.create_question(question)
                 answers = []
                 answers_possibility = [
-                    row["answers_1"],
-                    row["answers_2"],
-                    row["answers_3"],
+                    row["answer_1"],
+                    row["answer_2"],
+                    row["answer_3"],
                 ]
                 for (
                     index,

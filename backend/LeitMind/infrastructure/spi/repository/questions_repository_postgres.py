@@ -43,6 +43,19 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
             )
             # return session.query(Question).filter(Question.id == question_id).first()
 
+    def create_question(
+        self,
+        question: Question,
+    ) -> Question:
+        """
+        Create a new question.
+        """
+        with self.session() as session:
+            session.add(question)
+            session.commit()
+            session.refresh(question)
+            return question
+
     def update_question(
         self,
         question: Question,

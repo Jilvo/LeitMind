@@ -1,0 +1,223 @@
+# Histoire
+
+
+### 1. **Préhistoire** (≈ 3 millions d'années av. J.-C. - 3 300 av. J.-C.)
+   - **Paléolithique inférieur** (≈ 3 millions d’années - 300 000 av. J.-C.) : Premiers hominidés et outils de pierre simples.
+   - **Paléolithique moyen** (≈ 300 000 - 30 000 av. J.-C.) : Apparition de l'Homo sapiens, évolution des techniques de chasse et de collecte.
+   - **Paléolithique supérieur** (≈ 40 000 - 10 000 av. J.-C.) : Art rupestre, premiers rituels funéraires, évolutions dans les outils et dans les sociétés humaines.
+   - **Mésolithique** (≈ 10 000 - 8 000 av. J.-C.) : Transition vers le néolithique, développement de l'outil et du travail du bois.
+   - **Néolithique** (≈ 8 000 - 3 300 av. J.-C.) : Révolution agricole, sédentarisation, premiers villages, domestication des animaux, agriculture.
+
+### 2. **Antiquité** (≈ 3 300 av. J.-C. - 476 ap. J.-C.)
+   - **Mésopotamie** : Invention de l'écriture cunéiforme, création des premières cités-états sumériennes.
+   - **Égypte ancienne** : Unification de l’Égypte, règnes de Pharaons comme Ramsès II, pyramides et temples.
+   - **Civilisation de la vallée de l'Indus** : Harappa, Mohenjo-Daro et leurs premières formes d’urbanisme.
+   - **Civilisation chinoise ancienne** : Dynasties Shang et Zhou, invention de l’écriture chinoise, confucianisme.
+   - **Grèce archaïque** : Fondation des premières cités (Athènes, Sparte), premières réformes politiques.
+   - **Grèce classique** : Guerre du Péloponnèse, période de Platon et Aristote, guerre de Troie, Alexandre le Grand.
+   - **Rome** : Fondation de Rome, république romaine, guerres puniques, César, Empire romain sous Auguste, divisions et chute de l’Empire.
+
+### 3. **Moyen Âge** (476 - 1492)
+   - **Chute de l'Empire romain** (476) : Fin de l’Empire romain d'Occident, invasions barbares.
+   - **Haut Moyen Âge** (476 - 1 000) : Royaumes barbares, dynastie mérovingienne, empire carolingien, Charlemagne.
+   - **Invasions vikings et normandes** (8e-10e siècle) : Conquête des terres anglo-saxonnes et scandinaves.
+   - **Croisades** (11e - 13e siècle) : Guerre pour la Terre Sainte, croisades et expansion chrétienne en Orient.
+   - **Reconquista** (8e - 15e siècle) : Reconquête de la péninsule ibérique par les royaumes chrétiens.
+   - **Guerre de Cent Ans** (1337-1453) : Conflit majeur entre la France et l'Angleterre.
+   - **Renaissance** (14e - 16e siècle) : Période de transition marquée par l’art, la science, l'exploration et les découvertes.
+
+### 4. **Temps Modernes** (1492 - 1789)
+   - **Renaissance** : Reformation, découverte du Nouveau Monde, expansion de la pensée humaniste.
+   - **Réforme protestante** (16e siècle) : Martin Luther et la division religieuse en Europe, guerre des religions.
+   - **Colonisation et expansion européenne** (15e - 18e siècle) : Exploration et création des empires coloniaux européens.
+   - **Révolutions scientifiques** (16e - 17e siècle) : Copernic, Galilée, Newton et les grandes découvertes qui bouleversent la pensée.
+   - **L'Ancien Régime en France** (17e - 18e siècle) : Louis XIV, le pouvoir absolu, la guerre de Succession, les premiers signes de la Révolution.
+   - **Révolutions politiques** : La guerre d'indépendance des États-Unis, les premières idées révolutionnaires qui conduiront à la Révolution française.
+
+### 5. **Époque Contemporaine** (1789 - aujourd'hui)
+   - **Révolution française** (1789) : Prise de la Bastille, la déclaration des droits de l'homme, la Terreur.
+   - **Empire napoléonien** (1804-1815) : L’ascension et la chute de Napoléon Bonaparte, les guerres napoléoniennes.
+   - **Révolutions industrielles** : Première révolution industrielle (textile, vapeur) suivie de la seconde (électricité, production de masse).
+   - **Guerres mondiales** : Première guerre mondiale (1914-1918), conséquences politiques et sociales, Seconde guerre mondiale (1939-1945), conséquences géopolitiques majeures.
+   - **Décolonisation** : Les indépendances des colonies africaines, asiatiques et autres après la Seconde Guerre mondiale.
+   - **Guerre froide** (1947-1991) : Bloc soviétique vs bloc occidental, conflits en Asie, en Europe, et en Amérique latine.
+   - **Mondialisation et avancées technologiques** : Internet, globalisation économique et culturelle, défis mondiaux comme le changement climatique.
+
+## Géo-Politique 
+
+
+### 1. **Préhistoire et Antiquité**
+   - **Premiers groupes humains** : Bien que la géopolitique n'existait pas sous cette forme, les premières tribus et peuples installés sur le territoire actuel de la France (Gaulois, Ligures, etc.) étaient souvent en guerre entre eux et avec d'autres peuples voisins.
+   - **Expansion romaine** : Au cours du 1er siècle avant J.-C., la Gaule (actuelle France) a été conquise par Rome sous Jules César, marquant le début de la romanisation. La France faisait partie de l'Empire romain, avec une forte influence de la civilisation romaine, jusqu'à la chute de l'Empire romain d'Occident.
+
+### 2. **Moyen Âge** (476 - 1492)
+   - **Les Royaumes francs** : Après la chute de l'Empire romain, la France est devenue le centre de l'un des royaumes les plus puissants d'Europe, celui des Francs. Clovis Ier (5e-6e siècles) unifie les tribus franques et se convertit au christianisme, établissant un précédent pour la monarchie française.
+   - **Le Carolingien et l'Empire de Charlemagne** : Au 9e siècle, Charlemagne étend son empire couvrant une grande partie de l'Europe occidentale. Après sa mort, les frontières sont divisées, mais l'influence de la France sur l'Europe demeure forte.
+   - **Les invasions normandes** (9e - 11e siècles) : Les Vikings (Normands) envahissent et s'installent en France, et la Normandie devient un duché influent.
+   - **Les Capétiens** (10e - 15e siècles) : Avec Hugues Capet, la France devient un royaume stable, et les Capétiens s'affirment comme la famille royale dominante, amorçant l'expansion et la centralisation du pouvoir royal en France.
+   - **La Guerre de Cent Ans** (1337-1453) : Ce conflit majeur avec l'Angleterre redéfinit les frontières et l'importance de la France en Europe, renforçant la nation française face à une menace extérieure. La victoire sur l'Angleterre et la reconquête du territoire français marque un tournant dans la consolidation du royaume.
+
+### 3. **Renaissance et Temps Modernes** (1492 - 1789)
+   - **La montée de la puissance de la France** : Au 16e siècle, la France devient l'une des grandes puissances européennes. François Ier, notamment, cherche à étendre son influence en Europe tout en faisant face à la montée en puissance de l’Espagne et de l’Empire Habsbourg.
+   - **Les Guerres de Religion** (1562-1598) : Les conflits entre catholiques et protestants affaiblissent la France et modifient ses relations avec ses voisins européens, notamment l'Espagne et l'Angleterre. La paix de Vervins (1598) marque un retour à la stabilité, notamment sous Henri IV.
+   - **Louis XIV et la Monarchie Absolue** (17e siècle) : La France atteint un sommet en termes de puissance politique et militaire sous Louis XIV. Il centralise le pouvoir royal, et la France devient l'un des principaux acteurs des guerres européennes, comme la guerre de succession d'Espagne.
+   - **Les guerres contre l'Angleterre et l'Empire** : La France se retrouve en guerre contre l'Angleterre, et sa puissance navale prend de l'ampleur. Le soutien français à la révolution américaine (1775-1783) permet à la France de s'impliquer dans les affaires mondiales et de fragiliser l'Empire britannique.
+
+### 4. **Révolution Française et Empire Napoléonien** (1789 - 1815)
+   - **La Révolution française** (1789) : La France se transforme radicalement. Après la chute de la monarchie, la France devient une république. La Révolution marque aussi la naissance des idéaux républicains et la propagation de l'idée d'égalité et de liberté, ce qui influence les nations voisines.
+   - **L'Empire Napoléonien** (1804-1815) : Napoléon Bonaparte établit un empire qui s'étend de l'Espagne à la Russie. Napoléon tente de dominer l’Europe, mais la défaite finale lors de la bataille de Waterloo en 1815 marque la fin de l’Empire et la restauration de la monarchie.
+
+### 5. **19e siècle - Le second empire et la montée des républiques**
+   - **Les guerres napoléoniennes** : La France continue de jouer un rôle clé dans les guerres européennes, notamment à travers l'Empire napoléonien. Après la chute de Napoléon, la France se retrouve dans un système monarchique sous Louis-Philippe.
+   - **Les révolutions de 1848** : La France traverse plusieurs changements de régimes, avec la fin de la monarchie de Juillet, la proclamation de la Deuxième République et l'ascension de Napoléon III. Le Second Empire est fondé en 1852, mais se termine par la défaite de Sedan en 1870 contre l’Allemagne.
+   - **La Troisième République** : Après la guerre franco-prussienne de 1870 et la perte de l'Alsace-Lorraine, la France entame un long processus de reconstruction et d’industrialisation. Elle devient une puissance coloniale avec une large influence en Afrique et en Asie.
+
+### 6. **20e siècle - Les guerres mondiales et la décolonisation**
+   - **La Première Guerre mondiale** (1914-1918) : La France, en tant que membre de l'Entente, lutte contre les puissances centrales (Allemagne, Empire austro-hongrois). La guerre laisse la France dévastée, mais elle conserve son rôle de grande puissance mondiale.
+   - **La Seconde Guerre mondiale** (1939-1945) : La France subit une invasion allemande en 1940, et la Vichy de Pétain collabore avec l’occupant. La résistance française et la libération par les Alliés marquent la fin de l’occupation. La France est un des membres fondateurs de l'ONU et de l’OTAN.
+   - **La décolonisation** : Après la guerre, la France doit faire face à la décolonisation, notamment en Indochine et en Algérie. La guerre d’Algérie (1954-1962) marque un tournant important pour l’influence géopolitique de la France.
+
+### 7. **21e siècle - France et géopolitique moderne**
+   - **Les défis contemporains** : Aujourd’hui, la France fait face à des défis géopolitiques complexes avec la montée des tensions en Europe (notamment après le Brexit et les conflits en Ukraine), son rôle dans l’UE, son intervention en Afrique (Sahel) et ses relations avec les États-Unis et la Chine.
+   - **L’armement et la diplomatie** : La France joue un rôle central dans les négociations internationales (notamment le nucléaire iranien) et dans la défense européenne. Elle conserve une influence importante dans le Conseil de sécurité de l'ONU.
+
+
+## Culture
+
+
+### 1. **Préhistoire et Antiquité**
+   - **Art préhistorique** : Les premières formes d'art, comme les peintures rupestres dans les grottes de Lascaux et Altamira, illustrent les croyances et les pratiques des premiers habitants de ce qui est aujourd'hui la France.
+   - **Mythologie et religion** : L'Antiquité en Gaule était marquée par un polythéisme celtique, avec des divinités telles que Belenos, Cernunnos et Epona. Les druides jouaient un rôle central dans la culture et la société gauloises.
+   - **Influence romaine** : Sous la domination romaine, les Gallo-Romains adoptent une grande partie de la culture et des arts romains, comme la construction de théâtres, d’amphithéâtres, de routes et de monuments, et l’art de la mosaïque.
+
+### 2. **Moyen Âge** (476 - 1492)
+   - **Littérature médiévale** : Le Moyen Âge français est riche en poésie épique et en littérature chrétienne. Des œuvres comme *La Chanson de Roland* et les *romans de chevalerie* (Lancelot, Tristan et Iseult) sont créées. La littérature religieuse domine, avec des œuvres comme la *Divine Comédie* de Dante ou les *Vies des saints*.
+   - **Architecture gothique** : La construction de grandes cathédrales (Notre-Dame de Paris, Chartres) marque le Moyen Âge français. Les vitraux, les sculptures et les architectes comme Viollet-le-Duc deviennent des figures importantes de cette époque.
+   - **Musique médiévale** : La musique sacrée (chants grégoriens) domine. Vers le 12e siècle, la polyphonie et la musique profane commencent à se développer, avec des troubadours et des trouvères qui chantent des poèmes amoureux.
+
+### 3. **Renaissance** (14e - 16e siècle)
+   - **Humanisme** : La Renaissance en France est marquée par un regain d'intérêt pour les classiques antiques, inspiré par l’Italie. François Ier est un grand mécène des arts, et des artistes comme Léonard de Vinci, qui travaille en France, apportent une influence italienne sur les arts.
+   - **Peinture et sculpture** : Des artistes comme Jean Clouet et François Clouet, ainsi que des sculpteurs comme Jean Goujon, influencent la peinture et la sculpture françaises. La peinture devient plus réaliste, avec un focus sur la perspective.
+   - **Littérature humaniste** : La littérature de la Renaissance se distingue avec des auteurs comme Ronsard et Du Bellay. François Rabelais, avec ses œuvres comme *Gargantua et Pantagruel*, représente le génie comique et satirique de l’époque.
+   - **Musique de la Renaissance** : La musique vocale polyphonique se développe, avec des compositeurs comme Josquin des Prez.
+
+### 4. **Classique et Lumières** (17e - 18e siècle)
+   - **Baroque et Classicisme** : L’art baroque domine au début du 17e siècle, mais il laisse progressivement place au classicisme, représenté par des artistes comme Nicolas Poussin et Charles Le Brun. Le classicisme se manifeste aussi dans la littérature avec Molière, Racine, Corneille et La Fontaine.
+   - **Architecture classique** : Le Palais de Versailles, construit sous Louis XIV, est un exemple majeur de l’architecture classique française. L’ordre, l’équilibre et la symétrie sont les principes directeurs.
+   - **Les Lumières** : Au 18e siècle, le mouvement des Lumières prend une grande ampleur en France, avec des philosophes comme Voltaire, Rousseau et Montesquieu qui remettent en question les autorités établies et promeuvent la raison, la liberté et la tolérance. La littérature et la philosophie fleurissent, influençant la Révolution française.
+   - **Musique classique** : La musique de l’époque classique est dominée par des compositeurs comme Jean-Baptiste Lully et Jean-Philippe Rameau. L’opéra devient une forme artistique importante.
+
+### 5. **Romantisme et Réalisme** (19e siècle)
+   - **Romantisme** : Le romantisme se caractérise par l’exaltation de l’individu, la nature et l’émotion. Des écrivains comme Victor Hugo (*Les Misérables*), Stendhal (*Le Rouge et le Noir*), et des peintres comme Eugène Delacroix marquent cette époque.
+   - **Réalisme** : En réaction au romantisme, le réalisme cherche à représenter la vie telle qu’elle est. Des écrivains comme Gustave Flaubert (*Madame Bovary*) et Honoré de Balzac (*La Comédie humaine*) explorent la société française dans ses détails les plus sombres et réalistes.
+   - **Musique romantique** : Des compositeurs comme Hector Berlioz et Charles Gounod ajoutent à la richesse de la musique romantique en France. L’opéra devient un vecteur important de cette période.
+   - **Peinture** : L’impressionnisme, qui naît à la fin du 19e siècle, devient un mouvement artistique majeur avec des artistes comme Claude Monet, Pierre-Auguste Renoir et Edgar Degas. Ce mouvement se caractérise par l’importance donnée à la lumière et aux couleurs dans la représentation de la réalité.
+
+### 6. **20e siècle**
+   - **Avant-gardes et modernisme** : Les premières décennies du 20e siècle sont marquées par des mouvements artistiques comme le cubisme (Pablo Picasso), le dadaïsme, et le surréalisme (André Breton, Salvador Dalí). La France devient un centre majeur pour les artistes avant-gardistes.
+   - **Littérature du 20e siècle** : Des auteurs comme Marcel Proust (*À la recherche du temps perdu*), Albert Camus (*L'Étranger*), et Jean-Paul Sartre (*L'Être et le Néant*) façonnent la littérature moderne avec des thèmes existentiels, la recherche du sens de la vie et la condition humaine.
+   - **Cinéma** : Le cinéma français devient l’un des plus influents au monde avec des réalisateurs comme Jean-Luc Godard (Nouvelle Vague), François Truffaut et Agnès Varda. Le cinéma devient un moyen d’expression essentiel pour comprendre la société et la culture françaises.
+   - **Musique** : La chanson française et le jazz, avec des artistes comme Edith Piaf et Django Reinhardt, jouent un rôle majeur dans la culture populaire du 20e siècle. Plus tard, la musique électronique devient une partie importante de la scène musicale française avec des artistes comme Daft Punk.
+
+### 7. **21e siècle**
+   - **Culture numérique** : La France s’ouvre à la culture numérique et à la mondialisation culturelle. La culture française continue de rayonner à travers les films, les livres, la mode et la gastronomie, tout en intégrant de nouvelles formes d’art comme les jeux vidéo et les médias sociaux.
+   - **Gastronomie** : La cuisine française reste un pilier de la culture nationale, et la cuisine régionale (comme le cassoulet, la bouillabaisse ou la raclette) continue de jouer un rôle important.
+   - **Mode et art contemporain** : Paris reste un centre mondial de la mode avec des créateurs comme Jean-Paul Gaultier, Yves Saint Laurent et Coco Chanel. Les galeries d'art contemporain continuent de promouvoir les nouvelles tendances et mouvements artistiques.
+
+## Culture FR
+
+### 1. **Gastronomie Régionale**
+   - **Gastronomie du Midi** :
+     - **Plats traditionnels** : Bouillabaisse, ratatouille, brandade de morue, etc.
+     - **Ingrédients clés** : Herbes de Provence, huile d'olive, légumes méditerranéens, poissons frais.
+     - **Spécialités de la mer** : Fruits de mer, poissons de roche, daurade, rouille.
+   - **Gastronomie du Bassin Minier** :
+     - **Plats typiques** : Carbonnade flamande, potjevleesch, maroilles.
+     - **Influences belges et flamandes** : Spécialités à base de viandes braisées, plats consistants pour les travailleurs miniers.
+     - **Boissons traditionnelles** : La bière artisanale du Nord et les spécialités comme la bière de Lille.
+   - **Gastronomie de la région lyonnaise** :
+     - **Les bouchons lyonnais** : Salade de foie de volaille, quenelles de brochet, andouillette.
+     - **Les vins de la région** : Beaujolais, Côtes-du-Rhône.
+     - **Les produits phares** : Charcuterie lyonnaise (saucisson de Lyon), gratons, cervelle de canut.
+   - **Gastronomie de la Bretagne** :
+     - **Plats emblématiques** : Crêpes bretonnes, galettes de sarrasin, kouign-amann, cidre.
+     - **Spécialités maritimes** : Homard, huîtres, moules de bouchot.
+     - **Ingrédients de la mer** : Algues, poissons fumés, beurre salé.
+   - **Gastronomie de l'Alsace** :
+     - **Plats traditionnels** : Choucroute, baeckeoffe, tarte flambée.
+     - **Influences germaniques** : Sauerkraut, charcuterie fumée, bière.
+     - **Vins d'Alsace** : Riesling, Gewürztraminer, Pinot Gris.
+
+### 2. **Proverbes et Expressions Régionales**
+   - **Proverbes du Languedoc** :
+     - **Expression populaire** : "Qui va à la chasse perd sa place" (reflétant une sagesse rurale).
+     - **Proverbes sur l'agriculture** : "Un champ sans vigne, c’est un sol sans pain".
+     - **Langue Occitane** : L’occitan comme langue de culture dans cette région.
+   - **Proverbes de Provence** :
+     - **Dictons liés au climat** : "Quand le mistral souffle, il n’y a plus de sage".
+     - **Expressions sur la nature** : "A la Saint-Jean, les jours allongent d’un pas de géant".
+     - **Culture provençale** : Proverbes autour des herbes, des oliviers et des lavandes.
+   - **Proverbes de la Bretagne** :
+     - **Sur la mer** : "Qui veut aller loin ménage sa monture, qui veut aller en mer ménage son bateau".
+     - **Proverbes sur le temps** : "A Noël, les jours grandissent d’un quart d’heure".
+     - **Langue Bretonne** : Les proverbes et expressions populaires en breton, notamment liés à la mer et aux légendes celtiques.
+
+### 3. **Jeux Traditionnels et Loisirs**
+   - **Jeux du Sud** :
+     - **La pétanque** : Histoire, règles et variantes régionales (pétanque provençale, pétanque de compétition).
+     - **La savate** : Art martial traditionnel, souvent associé à Marseille.
+     - **Les jeux d'eau et de plein air** : Le jeu de boules, le lancer de fer à cheval, et autres jeux populaires dans les villages du sud.
+   - **Jeux du Nord** :
+     - **La belote** : Les variantes locales et les différentes manières de jouer à la belote en fonction des régions.
+     - **Les jeux de société traditionnels** : Le jeu de cartes picard ou les jeux de billes dans les régions du Nord.
+     - **La course en sac et jeux de camp** : Activités populaires lors des fêtes locales et dans les écoles.
+   - **Jeux de Cartes Régionaux** :
+     - **Le tarot** : Spécificité du tarot dans le Midi, notamment en Provence.
+     - **La bataille navale** : Popularité du jeu dans les ports et villes côtières.
+
+### 4. **Artisanat et Savoir-Faire**
+   - **Artisanat du Pays Basque** :
+     - **Tapis basques** : L'art de tisser des motifs géométriques et colorés traditionnels.
+     - **Coutellerie** : Le couteau basque, un symbole de la région.
+     - **Objets en bois** : Le travail du bois, avec des artisans créant des objets traditionnels et utilitaires comme les pirogues et paniers.
+   - **Savoir-faire de la Normandie** :
+     - **Fromage normand** : Camembert, Livarot, Pont-l'Évêque.
+     - **Vannerie et ferronnerie** : Fabrication artisanale de paniers, poteries et objets en fer forgé.
+   - **Artisanat des Alpes** :
+     - **Fabrication de meubles** : Bois massif des montagnes, artisanat local dans les vallées.
+     - **Couteaux et outils** : Savoir-faire traditionnel dans la fabrication de couteaux et de petits outils de travail du bois.
+     - **Vêtements traditionnels** : Fabrication de bonnets, gants et chaussettes en laine, typiques des montagnes.
+
+### 5. **Costumes et Vêtements Traditionnels**
+   - **Costumes Bretons** :
+     - **Coiffes bretonnes** : La coiffe traditionnelle, symbolisant les différentes régions de Bretagne.
+     - **Vêtements du terroir** : Le costume de fête, composé de robes et d'habits traditionnels en laine et coton.
+   - **Costumes Provençaux** :
+     - **Fête de la lavande** : Les vêtements colorés et ornés qui sont portés pendant les festivals de la lavande et les fêtes populaires.
+     - **Manteaux et gilets de laine** : Utilisés dans les marchés traditionnels.
+   - **Costumes du Languedoc** :
+     - **Les costumes de fête** : Les habits traditionnels portés lors des fêtes locales, souvent en lin ou en coton, avec des touches de broderies.
+     - **Habillement paysan** : Des vêtements pratiques et résistants, adaptés à l’agriculture.
+
+### 6. **Musique et Danse Traditionnelles**
+   - **Musique du Midi** :
+     - **Chants de la mer** : Les chants traditionnels des pêcheurs et des marins dans le sud de la France.
+     - **Danse folklorique** : Les danses provençales et catalanes comme la farandole et la sardane.
+   - **Musique Bretonne** :
+     - **Instruments traditionnels** : La bombarde et le biniou, utilisés dans les fest-noz et autres rassemblements.
+     - **Chants et danses populaires** : Les danses bretonnes, marquées par des rythmes et des pas caractéristiques.
+   - **Musique Corse** :
+     - **Polyphonie** : Les chants corses polyphoniques, connus pour leur harmonie et leur puissance émotionnelle.
+     - **Instruments traditionnels** : La guitare, la mandoline et la vielle à roue.
+
+### 7. **Fêtes et Célébrations**
+   - **Fêtes du Sud-Ouest** :
+     - **La fête de la Saint-Jean** : Célébrations autour du feu, très populaires dans le sud-ouest de la France.
+     - **Fête de la musique et du vin** : L’influence de la viticulture dans des fêtes régionales comme la fête des vendanges.
+   - **Fêtes de la Bretagne** :
+     - **Le Fest-Noz** : Une tradition bretonne de danse populaire, avec musique et costumes traditionnels.
+     - **Fête des pommes** : Célébrations autour de la récolte des pommes, typiques dans les régions bretonnes.
+   - **Fêtes de Provence** :
+     - **Fête des olives et de l’huile d’olive** : Célébrations autour de la récolte des olives.
+     - **Fêtes de la lavande** : Réunions autour de la fleur de lavande, marquées par des concours et des spectacles.
+
