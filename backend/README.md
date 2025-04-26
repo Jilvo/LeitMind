@@ -12,7 +12,7 @@ This is a boilerplate project to kickstart a FastAPI app with a PostgreSQL datab
 1. Create and activate a virtual environment.
 2. Install dependencies:
    ```
-   pip install -r requirements.txt
+   poetry install
    ```
 3. Update `.env` with your database credentials.
 4. Run the app:
