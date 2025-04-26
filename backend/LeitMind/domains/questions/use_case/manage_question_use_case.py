@@ -1,4 +1,5 @@
 import pandas as pd
+from commons.errors import CategoryError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
 from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
@@ -75,7 +76,7 @@ class ManageQuestionUseCase:
         """Update a question."""
         category: Category = self.questions_repository.get_category_by_id(question_data.category)
         if not category:
-            raise ValueError("Category not found")
+            raise CategoryError("Category not found for this question. You must create it first.")
         question = Question(
             id=question_data.id,
             text=question_data.question,

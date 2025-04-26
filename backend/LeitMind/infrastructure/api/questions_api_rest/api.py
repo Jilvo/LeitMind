@@ -1,3 +1,4 @@
+from commons.errors import CategoryError
 from domains.questions.schemas.question import QuestionRequest
 from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
@@ -71,16 +72,28 @@ def update_question(
     """
     Update a question
     """
-    service: UseCasesService = di[UseCasesService]
-    service.manageQuestionUseCase.update_question(
-        question_id,
-        question_data,
-        current_user,
-    )
-    return JSONResponse(
-        status_code=201,
-        content={"message": "Question updated"},
-    )
+    try:
+        service: UseCasesService = di[UseCasesService]
+        service.manageQuestionUseCase.update_question(
+            question_id,
+            question_data,
+            current_user,
+        )
+        
+        return JSONResponse(
+            status_code=201,
+            content={"message": "Question updated"},
+        )
+    except CategoryError as e:
+        return JSONResponse(
+            status_code=406,
+            content={"message": str(e)},
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"message": str(e)},
+        )
 
 
 @router.get("/questions/{question_id}")
