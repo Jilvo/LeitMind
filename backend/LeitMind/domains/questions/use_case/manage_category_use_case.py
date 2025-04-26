@@ -1,5 +1,6 @@
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from kink import inject
 
 

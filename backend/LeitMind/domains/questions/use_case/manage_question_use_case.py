@@ -2,7 +2,8 @@ import pandas as pd
 from commons.errors import CategoryError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from domains.questions.models.answer import Answer
 from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
@@ -35,7 +36,9 @@ class ManageQuestionUseCase:
         current_user: UserCreationRequest,
     ):
         try:
-            category: Category = self.questions_repository.get_category_by_id(question_data.category)
+            category: Category = self.questions_repository.get_category_by_id(
+                question_data.category
+            )
             if not category:
                 raise ValueError("Category not found")
             user = self.auth_repository.get_user_by_email(current_user)
@@ -51,7 +54,9 @@ class ManageQuestionUseCase:
                 aswr,
             ) in enumerate(question_data.answers):
                 answer = Answer(
-                    is_correct=(True if index == question_data.correct_answer else False),
+                    is_correct=(
+                        True if index == question_data.correct_answer else False
+                    ),
                     question_id=question.id,
                     text=aswr,
                 )
@@ -74,7 +79,9 @@ class ManageQuestionUseCase:
         question_data: QuestionRequest,
     ):
         """Update a question."""
-        category: Category = self.questions_repository.get_category_by_id(question_data.category)
+        category: Category = self.questions_repository.get_category_by_id(
+            question_data.category
+        )
         if not category:
             raise CategoryError("Category not found for this question. You must create it first.")
         question = Question(
@@ -306,7 +313,9 @@ class ManageQuestionUseCase:
                     creator_id=1,
                     explanation=row["explanation"],
                 )
-                question_already_exists = self.questions_repository.get_question_by_text(question.text)
+                question_already_exists = (
+                    self.questions_repository.get_question_by_text(question.text)
+                )
                 if question_already_exists:
                     continue
                 question = self.questions_repository.create_question(question)
@@ -321,7 +330,9 @@ class ManageQuestionUseCase:
                     aswr,
                 ) in enumerate(answers_possibility):
                     answer = Answer(
-                        is_correct=(True if index + 1 == row["index_correct_answer"] else False),
+                        is_correct=(
+                            True if index + 1 == row["index_correct_answer"] else False
+                        ),
                         question_id=question.id,
                         text=aswr.replace(
                             "\n",
@@ -378,7 +389,9 @@ class ManageQuestionUseCase:
         current_user: str,
     ):
         """Validate a question."""
-        question: Question = self.questions_repository.get_question_by_id(validation_data.question_id)
+        question: Question = self.questions_repository.get_question_by_id(
+            validation_data.question_id
+        )
         if not question:
             raise ValueError("Question not found")
         answers = question.answers

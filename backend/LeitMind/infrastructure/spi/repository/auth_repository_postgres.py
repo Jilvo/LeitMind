@@ -48,7 +48,10 @@ class AuthRepositoryPostgreSQL(AuthRepository):
         email: str,
     ) -> bool:
         with self.session() as session:
-            return session.query(User).filter(User.username == username).first() or session.query(User).filter(User.email == email).first()
+            return (
+                session.query(User).filter(User.username == username).first()
+                or session.query(User).filter(User.email == email).first()
+            )
 
     def update_user(
         self,

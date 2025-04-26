@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from domains.questions.models.attempt import Attempt
 from kink import inject
 
@@ -25,20 +26,26 @@ class SelectDailyQuestionsUseCase:
         Select daily questions for a user based on Leitner's system.
         """
         today = datetime.now()
-        attempts: list[Attempt] = self.questions_repository.get_all_attempts_by_user_id(self.user_id)
+        attempts: list[Attempt] = self.questions_repository.get_all_attempts_by_user_id(
+            self.user_id
+        )
         # not_correct_attempts = self.get_not_correct_user_attempts(attempts)
         outdated_attempts = self.get_outdated_attempts(
             attempts,
             today,
         )
-        list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(self.user_id)
+        list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(
+            self.user_id
+        )
         # questions_to_review = list(
         #     set([a.question_id for a in not_correct_attempts + outdated_attempts])
         # )
         questions = []
         if len(outdated_attempts) > 0:
             questions_to_review = [a.question_id for a in outdated_attempts]
-            questions = self.questions_repository.get_questions_by_ids(questions_to_review)
+            questions = self.questions_repository.get_questions_by_ids(
+                questions_to_review
+            )
             # return questions
         length = len(questions)
         if length < 10:

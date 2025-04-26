@@ -105,7 +105,9 @@ def get_question_by_id(
     Get a question by ID
     """
     service: UseCasesService = di[UseCasesService]
-    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(question_id)
+    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(
+        question_id
+    )
     return JSONResponse(
         status_code=200,
         content={"message": questions_and_answers},
