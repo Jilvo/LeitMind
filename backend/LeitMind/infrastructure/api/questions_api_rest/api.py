@@ -1,5 +1,5 @@
 from commons.errors import CategoryError
-from domains.questions.schemas.question import QuestionRequest
+from domains.questions.schemas.question import QuestionRequest,QuestionUpdateRequest
 from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
@@ -66,13 +66,14 @@ def delete_question(
 @router.put("/questions/{question_id}")
 def update_question(
     question_id: int,
-    question_data: QuestionRequest,
+    question_data: QuestionUpdateRequest,
     current_user: str = Depends(get_current_user),
 ) -> JSONResponse:
     """
     Update a question
     """
     try:
+        
         service: UseCasesService = di[UseCasesService]
         service.manageQuestionUseCase.update_question(
             question_id,

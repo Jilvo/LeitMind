@@ -10,7 +10,7 @@ from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
-from domains.questions.schemas.question import QuestionRequest, ValidateRequest
+from domains.questions.schemas.question import QuestionRequest, ValidateRequest, QuestionUpdateRequest
 from kink import inject
 from pydantic import ValidationError
 
@@ -76,35 +76,52 @@ class ManageQuestionUseCase:
 
     def update_question(
         self,
-        question_data: QuestionRequest,
+        question_id: int,
+        question_data: QuestionUpdateRequest,
+        current_user: str,
     ):
         """Update a question."""
-        category: Category = self.questions_repository.get_category_by_id(
-            question_data.category
-        )
-        if not category:
-            raise CategoryError("Category not found for this question. You must create it first.")
-        question = Question(
-            id=question_data.id,
-            text=question_data.question,
-            category_id=category.id,
-            explanation=question_data.explanation,
-        )
-        answers = []
-        for (
-            index,
-            aswr,
-        ) in enumerate(question_data.answers):
-            answer = Answer(
-                is_correct=(True if index == question_data.correct_answer else False),
-                question_id=question.id,
-                text=aswr,
+        try:
+            print(f"Updating question with ID: {question_id}")
+            print(f"Question data: {question_data}")
+            print(f"Current user: {current_user}")
+
+            question = self.questions_repository.get_question_by_id(question_id)
+            print(f"Type of question: {type(question)}")
+            if not question:
+                raise ValueError("Question not found")
+            print(f"Existing question: {question}")
+            
+           
+            category= self.questions_repository.get_category_by_id(
+                question_data.category
             )
-            answers.append(answer)
-        question = self.questions_repository.update_question(question)
-        for answer in answers:
-            self.questions_repository.update_answer(answer)
-        return question
+            print(f"Type of category: {type(category)}")
+            if not category:
+                raise CategoryError("Category not found for this question. You must create it first.")
+            
+            question.text = question_data.text
+            question.category_id = category.id
+            question.explanation = question_data.explanation
+            
+
+           
+            for (
+                index,
+                aswr,
+            ) in enumerate(question_data.answers):
+                answer = Answer(
+                    is_correct=(True if index == question_data.correct_answer else False),
+                    question_id=question.id,
+                    text=aswr,
+                )
+                self.questions_repository.create_answer(answer)
+            print(f"Question updated successfully: {question}")
+       
+            return question
+        except Exception as e:
+            print(f"Error during question update: {e}")
+            raise ValueError(f"Failed to update question: {e}")
 
     def delete_question(
         self,
