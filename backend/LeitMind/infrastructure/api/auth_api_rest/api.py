@@ -7,6 +7,7 @@ from fastapi.security import HTTPBasic
 from kink import di
 from utils.security import decode_access_token, get_current_user
 
+
 router = APIRouter()
 di["auth_api_router"] = router
 
@@ -134,21 +135,39 @@ def get_current_user_info(
 
 @router.put("/users/{user_id}")
 def update_user(
+    user_id: int,
     user_data: UserUpdateRequest,
 ) -> JSONResponse:
-    return JSONResponse(
-        status_code=201,
-        content={"message": "User updated"},
-    )
+    service: UseCasesService= di[UseCasesService]
+    try:
+        update_user = service.updateUserUseCase.execute(user_id, user_data)
+
+        return JSONResponse(
+            status_code=200,
+            content={"message": "User updated"},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to update user: {str(e)}",
+        )
 
 
 @router.delete("/users/{user_id}")
 def delete_user(
     user_id: int,
 ) -> JSONResponse:
-    return JSONResponse(
-        status_code=201,
-        content={"message": "User deleted"},
+    service: UseCasesService = di[UseCasesService]
+    try:
+        delete_user = service.deleteUserUseCase.execute(user_id)
+        return JSONResponse(
+            status_code=200,
+            content={"message": "User deleted"},
+        )
+    except Exception as e:
+        raise HTTPException(
+        status_code=400,
+        detail=f"Failed to delete user: {str(e)}",
     )
 
 

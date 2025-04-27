@@ -13,6 +13,10 @@ class UpdateUserUseCase:
 
     def execute(
         self,
+        user_id: int,
         user_data: UserUpdateRequest,
     ):
-        return self.auth_repository.update_user(user_data)
+        return self.auth_repository.update_user(user_id=user_id,
+        username=user_data.username,
+        email=user_data.email,
+        country=user_data.country)

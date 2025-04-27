@@ -277,11 +277,11 @@ class ManageQuestionUseCase:
         try:
             # Lire le fichier CSV
             df = pd.read_csv(
-                "datas/questions.csv",
-                on_bad_lines="skip",
+                "datas/questions.csv",quotechar='"',
+                on_bad_lines="skip",delimiter=";"
             )
-            # df_head = df.head()
-            # print(df)
+            df_head = df.head()
+            print(df_head)
             for (
                 index,
                 row,
@@ -414,13 +414,14 @@ class ManageQuestionUseCase:
                 # leitner_box=1,
             )
         else:
+            #TODO si faux leitner box revient à 1 sinon sinon +1 select_daily_quiz_use_case.py::get_outdated_attempts
             attempt.leitner_box += 1
             attempt.attempt_count += 1
             attempt.is_correct = is_correct
             attempt.answer_id = validation_data.answer_id
         self.questions_repository.create_or_update_attempt(
             attempt,
-            current_user,
+            # current_user,
         )
         if is_correct:
             return (
