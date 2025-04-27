@@ -43,7 +43,7 @@ class ManageQuestionUseCase:
                 raise ValueError("Category not found")
             user = self.auth_repository.get_user_by_email(current_user)
             question = Question(
-                text=question_data.question,
+                text=question_data.text,
                 category_id=category.id,
                 creator_id=user.id,
                 explanation=question_data.explanation,

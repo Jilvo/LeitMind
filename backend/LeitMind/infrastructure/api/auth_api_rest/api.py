@@ -24,17 +24,25 @@ def check_health():
     """
     return {"Stockage API successfully started!"}
 
-
-@router.post("/users/")
-def create_user(
-    user_data: UserCreationRequest,
+@router.get(
+    "/users/me",
+    response_model=None,
+)
+def get_current_user_info(
+    token: str = Depends(get_current_user),
 ) -> JSONResponse:
-    service: UseCasesService = di[UseCasesService]
-    service.authUserUseCase.signup(user_data)
-    return JSONResponse(
-        status_code=201,
-        content={"message": "User created"},
-    )
+    """
+    Retourne le contenu du JWT déchiffré sans appel en DB.
+    """
+    try:
+        decoded_token = decode_access_token(token)
+        return JSONResponse(
+            status_code=200,
+            content={"token_data": decoded_token},
+        )
+    except Exception as e:
+        raise HTTPException(status_code=401,
+                            detail='Invalid token')
 
 
 @router.get("/users/{user_id}")
@@ -42,12 +50,18 @@ def get_user(
     user_id: int,
 ) -> JSONResponse:
     service: UseCasesService = di[UseCasesService]
-    user = service.getUserUseCase.execute(user_id)
-    print(user)
-    return JSONResponse(
-        status_code=201,
-        content={"message": user},
-    )
+    try:
+        user = service.getUserUseCase.execute(user_id)
+    
+        return JSONResponse(
+            status_code=201,
+            content={"message": user},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to retrieve user: {str(e)}",
+        )
 
 
 @router.post(
@@ -58,16 +72,22 @@ def signup(
     user_data: UserCreationRequest,
 ) -> JSONResponse:
     service: UseCasesService = di[UseCasesService]
-    user = service.authUserUseCase.signup(user_data)
-    access_token = service.authUserUseCase.create_access_token(user)
-    return JSONResponse(
-        status_code=201,
-        content={
-            "access_token": access_token,
-            "token_type": "bearer",
-        },
-    )
+    try:
+        user = service.authUserUseCase.signup(user_data)
+        access_token = service.authUserUseCase.create_access_token(user)
+        return JSONResponse(
+            status_code=201,
+            content={
+                "access_token": access_token,
+                "token_type": "bearer",
+            },
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to sign up user: {str(e)}",
 
+        )
 
 @router.post(
     "/login",
@@ -106,31 +126,24 @@ def get_all_users(
     Retourne une liste d'utilisateurs uniquement si un JWT valide est fourni.
     """
     service: UseCasesService = di[UseCasesService]
-    users = service.getUserUseCase.execute_all()
-    return JSONResponse(
-        status_code=200,
-        content={
-            "message": "List of users",
-            "user": users,
-        },
-    )
+
+    try:
+
+        users = service.getUserUseCase.execute_all()
+        return JSONResponse(
+            status_code=200,
+            content={
+                "message": "List of users",
+                "user": users,
+            },
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to retrieve users: {str(e)}",
+        )
 
 
-@router.get(
-    "/users/me",
-    response_model=None,
-)
-def get_current_user_info(
-    token: str = Depends(get_current_user),
-) -> JSONResponse:
-    """
-    Retourne le contenu du JWT déchiffré sans appel en DB.
-    """
-    decoded_token = decode_access_token(token)
-    return JSONResponse(
-        status_code=200,
-        content={"token_data": decoded_token},
-    )
 
 
 @router.put("/users/{user_id}")
