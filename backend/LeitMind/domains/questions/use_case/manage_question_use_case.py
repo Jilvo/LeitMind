@@ -10,6 +10,7 @@ from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
+from domains.questions.models.sub_theme import SubTheme
 from domains.questions.schemas.question import QuestionRequest, ValidateRequest, QuestionUpdateRequest
 from kink import inject
 from pydantic import ValidationError
@@ -39,12 +40,16 @@ class ManageQuestionUseCase:
             category: Category = self.questions_repository.get_category_by_id(
                 question_data.category
             )
+            sub_category: SubCategory = self.questions_repository.get_sub_category_by_id(
+                question_data.sub_category
+            )
             if not category:
                 raise ValueError("Category not found")
             user = self.auth_repository.get_user_by_email(current_user)
             question = Question(
                 text=question_data.text,
                 category_id=category.id,
+                sub_category_id = sub_category.id,
                 creator_id=user.id,
                 explanation=question_data.explanation,
             )
@@ -72,8 +77,41 @@ class ManageQuestionUseCase:
         self,
     ) -> list[Question]:
         """Get all questions."""
-        return self.questions_repository.get_all_questions()
-
+        try: 
+            questions = self.questions_repository.get_all_questions()
+            print(f"Questions brutes du repo: {questions}")
+            result = []
+            for question in questions:
+                if hasattr(question, 'to_dict'):
+                    question_dict = question.to_dict()
+                elif isinstance(question, Question):
+                    question_dict = question.to_dict()
+             
+                else:
+                    question_dict = question
+              
+           
+            if hasattr(question, 'answers'):
+                answers = []
+                for answer in question.answers:
+                    if hasattr(answer, 'to_dict'):
+                        answers.append(answer.to_dict())
+                    else:
+                        answers.append({
+                        'id': getattr(answer, 'id', None),
+                        'text': getattr(answer, 'text', None),
+                        'is_correct': getattr(answer, 'is_correct', False)
+                    })
+                question_dict['answers'] = answers
+            result.append(question_dict)
+            print(f"Returning {len(result)} questions après traitement")
+            return result
+                        
+        except Exception as e:
+            print(f"Erreur dans get_all_questions du use case: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return []
     def update_question(
         self,
         question_id: int,
@@ -268,7 +306,7 @@ class ManageQuestionUseCase:
     ):
         """Delete a theme."""
         return self.questions_repository.delete_theme(theme_id)
-
+    
     def get_themes_by_sub_category(
         self,
         sub_category_id: int,
@@ -327,6 +365,14 @@ class ManageQuestionUseCase:
                         sub_category_id=sub_category.id,
                     )
                     theme = self.create_theme(theme)
+
+                sub_theme = self.questions_repository.get_sub_theme_by_name(row["sub_theme"])
+                if not sub_theme:
+                    sub_theme = SubTheme(
+                        name=row["sub_theme"],
+                        sub_category_id=sub_category.id,
+                    )
+                    sub_theme = self.questions_repository.create_sub_theme(sub_theme)
                 question = Question(
                     text=row["question"],
                     category_id=category.id,

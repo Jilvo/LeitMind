@@ -7,6 +7,7 @@ class QuestionRequest(BaseModel):
     answers: list[str]
     correct_answer: int
     category: int
+    sub_category: int
     explanation: str
     # image_path: Optional[str]
     # difficulty: int

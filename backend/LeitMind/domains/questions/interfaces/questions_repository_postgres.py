@@ -4,6 +4,7 @@ from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
+from domains.questions.models.sub_theme import SubTheme
 
 
 class QuestionsRepository:
@@ -352,6 +353,25 @@ class QuestionsRepository:
         Get all questions by theme.
         """
         pass
+    # SubTheme
+    def create_sub_theme(
+        self,
+        sub_theme,
+    ) -> SubTheme:
+        """
+        Create a new sub theme.
+        """
+        pass
+    
+    def get_sub_theme_by_name(
+        self,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        """
+        Get a sub theme by name.
+        """
+        pass
+
 
     def create_answer(
         answer,
@@ -424,7 +444,7 @@ class QuestionsRepository:
     def get_subscriptions_by_user(
         self,
         user_id: int,
-    ) -> list[Category]:
+    ) -> list[SubCategory]:
         """
         Get all subscriptions by user ID.
         """

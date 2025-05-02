@@ -40,7 +40,11 @@ class Category(Base):
         back_populates="category",
         cascade="all, delete-orphan",
     )
-
+    questions = relationship(
+        "Question",
+        back_populates="category",
+        cascade="all, delete-orphan",
+    )
     def to_dict(
         self,
     ):

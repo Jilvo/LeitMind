@@ -8,6 +8,7 @@ from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
+from domains.questions.models.sub_theme import SubTheme
 from infrastructure.spi.repository.database import SessionLocal
 from kink import inject
 from sqlalchemy import and_, not_, text
@@ -391,7 +392,46 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     ) -> list[Question]:
         with self.session() as session:
             return session.query(Question).filter(Question.theme_id == theme_id).all()
-
+    # SubTheme #
+    def create_sub_theme(
+        self,
+        sub_theme,
+    ) -> SubTheme:
+        with self.session() as session:
+            session.add(sub_theme)
+            session.commit()
+            session.refresh(sub_theme)
+            return sub_theme
+    def update_sub_theme(
+        self,
+        sub_theme_id: int,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        with self.session() as session:
+            session.query(SubTheme).filter(SubTheme.id == sub_theme_id).update(
+                {"name": sub_theme_name}
+            )
+            session.commit()
+            return self.get_sub_category_by_id(sub_theme_id)
+    def delete_sub_theme(
+        self,
+        sub_theme_id: int,
+    ):
+        with self.session() as session:
+            session.query(SubTheme).filter(
+                SubTheme.id == sub_theme_id
+            ).delete()
+            session.commit()
+    def get_sub_theme_by_name(
+        self,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        with self.session() as session:
+            return (
+                session.query(SubTheme)
+                .filter(SubTheme.name == sub_theme_name)
+                .first()
+            )
     # Attempts #
     def create_attempt(
         self,
