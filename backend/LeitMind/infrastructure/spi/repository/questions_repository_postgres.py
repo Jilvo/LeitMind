@@ -10,7 +10,7 @@ from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
 from infrastructure.spi.repository.database import SessionLocal
 from kink import inject
-from sqlalchemy import and_, not_
+from sqlalchemy import and_, not_, text
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -438,8 +438,10 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     ):
         with self.session() as session:
             session.execute(
-                f"INSERT INTO user_categories (user_id, category_id) VALUES ({user_id}, {category_id})"
+                text(f"INSERT INTO user_subscriptions (user_id, category_id) VALUES (:user_id, :category_id)"),
+                {"user_id": user_id, "category_id": category_id}
             )
+            session.commit()
 
     def subscribe_to_sub_category(
         self,
@@ -448,17 +450,22 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     ):
         with self.session() as session:
             session.execute(
-                f"INSERT INTO user_sub_categories (user_id, sub_category_id) VALUES ({user_id}, {sub_category_id})"
+                text("INSERT INTO user_sub_categories (user_id, sub_category_id) VALUES (:user_id, :sub_category_id)"),
+            {"user_id": user_id, "sub_category_id": sub_category_id}
             )
+            session.commit()
+
 
     def get_subscriptions_by_user(
         self,
         user_id: int,
     ):
         with self.session() as session:
-            return session.execute(
-                f"SELECT * FROM user_categories WHERE user_id = {user_id}"
+            result = session.execute(
+                text(f"SELECT * FROM user_subscriptions WHERE user_id = :user_id"),
+                {"user_id": user_id}
             )
+            return [row[0] for row in result]
 
     def unsubscribe_from_category(
         self,
@@ -467,8 +474,10 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     ):
         with self.session() as session:
             session.execute(
-                f"DELETE FROM user_categories WHERE user_id = {user_id} AND category_id = {category_id}"
+                text("DELETE FROM user_subscriptions WHERE user_id = :user_id AND category_id = :category_id"),
+                {"user_id": user_id, "category_id": category_id}
             )
+            session.commit()
 
     def unsubscribe_from_sub_category(
         self,
@@ -477,5 +486,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     ):
         with self.session() as session:
             session.execute(
-                f"DELETE FROM user_sub_categories WHERE user_id = {user_id} AND sub_category_id = {sub_category_id}"
+                text("DELETE FROM user_sub_categories WHERE user_id = :user_id AND sub_category_id = :sub_category_id"),
+                {"user_id": user_id, "sub_category_id": sub_category_id}
             )
+            session.commit()

@@ -23,7 +23,12 @@ class Question(Base):
             ondelete="CASCADE",
         ),
         nullable=False,
-    )
+    ),
+    sub_category_id = Column(Integer, 
+                             ForeignKey(
+                                 "sub_categories.id", ondelete="CASCADE"),
+                                 nullable=False
+                                )
     creator_id = Column(
         Integer,
         ForeignKey(

@@ -104,7 +104,10 @@ class ManageQuestionUseCase:
             question.category_id = category.id
             question.explanation = question_data.explanation
             
-
+            old_answers = self.questions_repository.get_answers_by_question(question_id)
+            for old_answer in old_answers:
+                self.questions_repository.delete_answer(old_answer.id)
+            
            
             for (
                 index,

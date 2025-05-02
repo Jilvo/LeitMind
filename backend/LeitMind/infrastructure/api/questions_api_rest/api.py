@@ -46,7 +46,49 @@ def get_all_questions(
         content={"message": questions},
     )
 
+@router.get("/questions/daily_questions")
+def get_daily_questions(
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Get daily questions
+    """
+    try:
 
+        service: UseCasesService = di[UseCasesService]
+        res = service.selectDailyQuestionsUseCase.execute(current_user=current_user)
+        if not res:
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "message": [],
+                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions"
+                },
+            )
+        return JSONResponse(
+            status_code=200,
+            content={"message": res},
+        )
+    except ValueError as e:
+        if "no subscriptions" in str(e).lower():
+            return JSONResponse(
+                status_code=200,  
+                content={
+                    "message": [],
+                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions"
+                },
+            )
+        return JSONResponse(
+            status_code=404,
+            content={"message": str(e)},
+        )
+    except Exception as e:
+        # Loggez l'erreur pour le débogage
+        print(f"Erreur dans get_daily_questions: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"message": "Une erreur interne s'est produite"},
+        )
 @router.delete("/questions/{question_id}")
 def delete_question(
     question_id: int,
@@ -97,6 +139,7 @@ def update_question(
         )
 
 
+
 @router.get("/questions/{question_id}")
 def get_question_by_id(
     question_id: int,
@@ -130,16 +173,3 @@ def bulk_create_questions(
     )
 
 
-@router.get("/questions/daily_questions")
-def get_daily_questions(
-    current_user: str = Depends(get_current_user),
-) -> JSONResponse:
-    """
-    Get daily questions
-    """
-    service: UseCasesService = di[UseCasesService]
-    res = service.selectDailyQuestionsUseCase.execute()
-    return JSONResponse(
-        status_code=200,
-        content={"message": res},
-    )
