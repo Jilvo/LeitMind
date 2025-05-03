@@ -35,11 +35,6 @@ class Category(Base):
         "SubCategory",
         back_populates="category",
     )
-    subscriptions = relationship(
-        "UserSubscription",
-        back_populates="category",
-        cascade="all, delete-orphan",
-    )
     questions = relationship(
         "Question",
         back_populates="category",

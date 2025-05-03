@@ -78,8 +78,9 @@ class Question(Base):
         "SubTheme",
         back_populates="questions",
     )
-    theme = relationship(
+    themes = relationship(
         "Theme",
+        
         back_populates="questions",
     )
 

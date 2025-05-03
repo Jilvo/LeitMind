@@ -335,7 +335,7 @@ class ManageQuestionUseCase:
         try:
             # Lire le fichier CSV
             df = pd.read_csv(
-                "datas/questions.csv",quotechar='"',
+                "datas/question_dot.csv",quotechar='"',
                 on_bad_lines="skip",delimiter=";"
             )
             df_head = df.head()
@@ -365,17 +365,17 @@ class ManageQuestionUseCase:
                         sub_category_id=sub_category.id,
                     )
                     theme = self.create_theme(theme)
-
                 sub_theme = self.questions_repository.get_sub_theme_by_name(row["sub_theme"])
                 if not sub_theme:
                     sub_theme = SubTheme(
                         name=row["sub_theme"],
-                        sub_category_id=sub_category.id,
                     )
                     sub_theme = self.questions_repository.create_sub_theme(sub_theme)
                 question = Question(
                     text=row["question"],
                     category_id=category.id,
+                    theme_id=theme.id,
+                    sub_theme_id=sub_theme.id,
                     creator_id=1,
                     explanation=row["explanation"],
                 )

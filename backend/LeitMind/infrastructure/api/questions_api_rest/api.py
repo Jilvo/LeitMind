@@ -40,11 +40,21 @@ def get_all_questions(
     Get all questions
     """
     service: UseCasesService = di[UseCasesService]
-    questions = service.manageQuestionUseCase.get_all_questions()
-    return JSONResponse(
-        status_code=201,
-        content={"message": questions},
-    )
+    try:
+    
+        questions = service.manageQuestionUseCase.get_all_questions()
+        return JSONResponse(
+                status_code=200,
+                content={
+                "message": "List of questions",
+                "questions": questions,
+            },
+            )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "An error occurred while retrieving questions: {str(e)}"},
+        )
 
 @router.get("/questions/daily_questions")
 def get_daily_questions(

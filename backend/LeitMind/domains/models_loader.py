@@ -16,7 +16,6 @@ from domains.questions.models.attempt import Attempt  # noqa: F401
 from domains.questions.models.category import Category  # noqa: F401
 from domains.questions.models.progress import Progress  # noqa: F401
 from domains.questions.models.sub_theme import SubTheme  # noqa: F401
-from domains.questions.models.user_subscriptions import UserSubscription  # noqa: F401
 from domains.questions.models.streak import Streak  # noqa: F401
 from domains.questions.models.sub_category import SubCategory  # noqa: F401
 from domains.questions.models.theme import Theme  # noqa: F401
