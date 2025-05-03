@@ -90,9 +90,14 @@ def get_category_by_id(
     """
     service: UseCasesService = di[UseCasesService]
     category = service.manageQuestionUseCase.get_category_by_id(category_id)
+    if not category:
+        return JSONResponse(
+            status_code=404,
+            content={"message": "Category not found"},
+        )
     return JSONResponse(
-        status_code=201,
-        content={"message": category},
+        status_code=200,
+        content={"category": category.to_dict()},
     )
 
 

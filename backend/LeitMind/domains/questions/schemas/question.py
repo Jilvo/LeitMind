@@ -26,6 +26,7 @@ class CategoryRequest(BaseModel):
     description: str
 
 
+
 class ValidateRequest(BaseModel):
     question_id: int
     answer_id: int
