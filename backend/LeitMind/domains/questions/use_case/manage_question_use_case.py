@@ -40,16 +40,33 @@ class ManageQuestionUseCase:
             category: Category = self.questions_repository.get_category_by_id(
                 question_data.category
             )
+            if not category:
+                raise ValueError("Category not found")
             sub_category: SubCategory = self.questions_repository.get_sub_category_by_id(
                 question_data.sub_category
             )
-            if not category:
-                raise ValueError("Category not found")
+            if not sub_category:
+                raise ValueError("Sub-category not found")
+            
+            theme: Theme = self.questions_repository.get_theme_by_id(
+                question_data.theme
+            )
+            if not theme:
+                raise ValueError("Theme not found")
+            
+            sub_theme: SubTheme = self.questions_repository.get_sub_theme_by_id(
+                question_data.sub_theme
+            )
+           
+            if not sub_theme:
+                raise ValueError("Sub-theme not found")
+           
             user = self.auth_repository.get_user_by_email(current_user)
             question = Question(
                 text=question_data.text,
                 category_id=category.id,
-                sub_category_id = sub_category.id,
+                theme_id=theme.id,
+                sub_theme_id=sub_theme.id,
                 creator_id=user.id,
                 explanation=question_data.explanation,
             )
@@ -79,33 +96,9 @@ class ManageQuestionUseCase:
         """Get all questions."""
         try: 
             questions = self.questions_repository.get_all_questions()
-            print(f"Questions brutes du repo: {questions}")
-            result = []
-            for question in questions:
-                if hasattr(question, 'to_dict'):
-                    question_dict = question.to_dict()
-                elif isinstance(question, Question):
-                    question_dict = question.to_dict()
-             
-                else:
-                    question_dict = question
-              
-           
-            if hasattr(question, 'answers'):
-                answers = []
-                for answer in question.answers:
-                    if hasattr(answer, 'to_dict'):
-                        answers.append(answer.to_dict())
-                    else:
-                        answers.append({
-                        'id': getattr(answer, 'id', None),
-                        'text': getattr(answer, 'text', None),
-                        'is_correct': getattr(answer, 'is_correct', False)
-                    })
-                question_dict['answers'] = answers
-            result.append(question_dict)
-            print(f"Returning {len(result)} questions après traitement")
-            return result
+            print(f"Questions brutes du repo: {len(questions)}")
+        
+            return questions[:5]
                         
         except Exception as e:
             print(f"Erreur dans get_all_questions du use case: {str(e)}")

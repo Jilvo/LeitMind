@@ -371,6 +371,22 @@ class QuestionsRepository:
         Get a sub theme by name.
         """
         pass
+    def get_sub_theme_by_id(
+        self,
+        sub_theme_id: int,
+    ) -> SubTheme:
+        """
+        Get a sub theme by id.
+        """
+        pass
+    def get_all_sub_themes(
+        self,
+        sub_theme_id: int,
+    ) -> list[SubTheme]:
+        """
+        Get all sub themes.
+        """
+        pass
 
 
     def create_answer(

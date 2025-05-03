@@ -8,6 +8,8 @@ class QuestionRequest(BaseModel):
     correct_answer: int
     category: int
     sub_category: int
+    theme: int
+    sub_theme: int
     explanation: str
     # image_path: Optional[str]
     # difficulty: int

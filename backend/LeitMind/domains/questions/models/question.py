@@ -91,7 +91,6 @@ class Question(Base):
             "id": self.id,
             "text": self.text,
             "category_id": self.category_id,
-            "sub_category_id": self.sub_category_id,
             "creator_id": self.creator_id,
             "explanation": self.explanation,
             "image_path": self.image_path,

@@ -29,7 +29,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         self,
     ) -> list[Question]:
         with self.session() as session:
-            questions = session.query(Question).all()
+            questions = session.query(Question).order_by(Question.id.asc()).all()
             return [question.to_dict() for question in questions]
 
     def get_question_by_id(
@@ -430,6 +430,16 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
             return (
                 session.query(SubTheme)
                 .filter(SubTheme.name == sub_theme_name)
+                .first()
+            )
+    def get_sub_theme_by_id(
+        self,
+        sub_theme_id: int,
+    ) -> SubTheme:
+        with self.session() as session:
+            return (
+                session.query(SubTheme)
+                .filter(SubTheme.id == sub_theme_id)
                 .first()
             )
     # Attempts #
