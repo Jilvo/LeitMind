@@ -491,3 +491,16 @@ class ManageQuestionUseCase:
             "Bad answer",
             question.explanation,
         )
+    def get_correct_answer(
+        self,
+        question_id: int,
+    ):
+        """Get the correct answer for a question."""
+        question = self.questions_repository.get_question_by_id(question_id)
+        if not question:
+            raise ValueError("Question not found")
+        answers = question.answers
+        correct_answer = [answer for answer in answers if answer.is_correct]
+        if not correct_answer:
+            raise ValueError("No correct answer found")
+        return correct_answer[0].text

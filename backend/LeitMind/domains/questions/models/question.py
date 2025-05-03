@@ -58,6 +58,7 @@ class Question(Base):
         server_default=func.now(),
         onupdate=func.now(),
     )
+    
     # Relations avec les autres tables
     answers = relationship(
         "Answer",
