@@ -11,7 +11,7 @@ from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
 from domains.questions.models.theme import Theme
 from domains.questions.models.sub_theme import SubTheme
-from domains.questions.schemas.question import QuestionRequest, ValidateRequest, QuestionUpdateRequest
+from domains.questions.schemas.question import QuestionRequest, ValidateRequest, QuestionUpdateRequest, CategoryRequest
 from kink import inject
 from pydantic import ValidationError
 
@@ -172,10 +172,15 @@ class ManageQuestionUseCase:
 
     def create_category(
         self,
-        category: Category,
-    ) -> Category:
+        category_request: CategoryRequest,
+    ) -> CategoryRequest:
         """Create a new category."""
+        category = Category(
+        name=category_request.name,
+        description=category_request.description,
+        )
         return self.questions_repository.create_category(category)
+        
 
     def update_category(
         self,
