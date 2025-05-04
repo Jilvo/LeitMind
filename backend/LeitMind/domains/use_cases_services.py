@@ -8,6 +8,9 @@ from domains.questions.use_case.manage_question_use_case import \
     ManageQuestionUseCase
 from domains.questions.use_case.select_daily_quiz_use_case import \
     SelectDailyQuestionsUseCase
+from domains.questions.use_case.manage_subscription_use_case import \
+    ManageSubscriptionUseCase
+
 from kink import di, inject
 
 
@@ -26,3 +29,6 @@ class UseCasesService:
             SelectDailyQuestionsUseCase
         ]
         self.manageCategoryUseCase: ManageCategoryUseCase = di[ManageCategoryUseCase]
+        self.manageSubscriptionUseCase: ManageSubscriptionUseCase = di[
+            ManageSubscriptionUseCase
+        ]

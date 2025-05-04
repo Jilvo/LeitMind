@@ -22,6 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 controller()
+
 try:
     print("add middleware to app")
     app.include_router(
@@ -43,6 +44,11 @@ try:
         di["category_api_router"],
         tags=["Category"],
         prefix="/category",
+    )
+    app.include_router(
+        di["subscription_api_router"],
+        tags=["Subscription"],
+        prefix="/subscription",
     )
 except Exception as e:
     print(e)
