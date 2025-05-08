@@ -126,7 +126,7 @@ def delete_subscription(
         )
 @router.get("/subscriptions/user/{user_id}")
 def get_subscription_by_user_id(
-    user_id: str,
+    user_id: int,
     current_user: str = Depends(get_current_user),
 ) -> JSONResponse:
     """
@@ -135,6 +135,11 @@ def get_subscription_by_user_id(
     service: UseCasesService = di[UseCasesService]
     try:
         subscription = service.manageSubscriptionUseCase.get_subscription_by_user_id(user_id)
+        if not subscription:
+            return JSONResponse(
+                status_code=404,
+                content={"message": "Subscription not found"},
+            )
         return JSONResponse(
             status_code=200,
             content={
@@ -146,4 +151,30 @@ def get_subscription_by_user_id(
         return JSONResponse(
             status_code=500,
             content={"message": f"An error occurred while retrieving the subscription: {str(e)}"},
+        )
+    
+@router.get("/subscriptions/count/{sub_category_id}")
+def count_subscriptions_by_sub_category(
+    sub_category_id: int,
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Count subscriptions by sub-category ID
+    """
+    service: UseCasesService = di[UseCasesService]
+    try:
+        result = service.manageSubscriptionUseCase.count_subscriptions_by_sub_category(sub_category_id)
+        return JSONResponse(
+            status_code=200,
+            content={
+                "sub_category_id": sub_category_id,
+                "count": result["count"],
+                "users": result["users"],
+            },
+        )
+
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": f"An error occurred while counting subscriptions: {str(e)}"},
         )

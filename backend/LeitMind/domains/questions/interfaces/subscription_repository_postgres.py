@@ -56,3 +56,11 @@ class SubscriptionRepository:
         Get a subscription by user ID.
         """
         pass
+    def count_subscriptions_by_sub_category(
+        self,
+        sub_category_id: str,
+    ) -> int:
+        """
+        Count subscriptions by sub-category ID.
+        """
+        pass

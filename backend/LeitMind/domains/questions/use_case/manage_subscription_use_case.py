@@ -75,4 +75,28 @@ class ManageSubscriptionUseCase:
         except Exception as e:
             raise Exception(f"An error occurred while retrieving the subscription: {str(e)}")
         
+    def get_subscription_by_user_id(
+        self,
+        user_id: int,
+        
+    ) -> UserSubscription:
+        """
+        Get a subscription by user ID.
+        """
+        subscription = self.subscription_repository.get_subscription_by_user_id(user_id)
+        if not subscription:
+            raise Exception("Subscription not found")
+        return subscription
+    
+    def count_subscriptions_by_sub_category(
+        self,
+        sub_category_id: int,
+    ) -> int:
+        """
+        Count subscriptions by sub_category_id.
+        """
+        try:
+            return self.subscription_repository.count_subscriptions_by_sub_category(sub_category_id)
+        except Exception as e:
+            raise Exception(f"An error occurred while counting subscriptions: {str(e)}")
     
