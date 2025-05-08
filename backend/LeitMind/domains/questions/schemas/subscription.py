@@ -4,7 +4,6 @@ class SubscriptionRequest(BaseModel):
     """
     Schema for creating a new subscription.
     """
-    user_id: int
     sub_category_id: int
 
 class SubscriptionUpdateRequest(BaseModel):

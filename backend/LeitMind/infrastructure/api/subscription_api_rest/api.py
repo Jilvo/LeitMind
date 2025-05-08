@@ -15,17 +15,20 @@ di["subscription_api_router"] = router
 security = HTTPBasic()
 
 @router.post("/new_subscription/")
-def create_new_subscription(
+def create_subscription(
     subscription_data: SubscriptionRequest,
+    current_user: str = Depends(get_current_user),
     
 ) -> JSONResponse:
     """
     Create a new subscription
     """
+    
     service: UseCasesService = di[UseCasesService]
     service.manageSubscriptionUseCase.create_subscription(
         subscription_data,
-        
+    
+        current_user,
     )
     return JSONResponse(
         status_code=201,
@@ -55,7 +58,7 @@ def get_all_subscriptions(
         )
 @router.get("/subscriptions/{subscription_id}")
 def get_subscription_by_id(
-    subscription_id: str,
+    subscription_id: int,
     current_user: str = Depends(get_current_user),
 ) -> JSONResponse:
     """
@@ -68,7 +71,7 @@ def get_subscription_by_id(
             status_code=200,
             content={
                 "message": "Subscription retrieved",
-                "subscription": subscription,
+                "subscription": subscription.to_dict(),
             },
         )
     except Exception as e:
@@ -78,7 +81,7 @@ def get_subscription_by_id(
         )
 @router.put("/subscriptions/{subscription_id}")
 def update_subscription(
-    subscription_id: str,
+    subscription_id: int,
     subscription_data: SubscriptionUpdateRequest,
     current_user: str = Depends(get_current_user),
 ) -> JSONResponse:

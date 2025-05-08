@@ -21,11 +21,17 @@ class SubscriptionRepositoryPostgreSQL(SubscriptionRepository):
         """
         self.session = SessionLocal
 
-    def get_all_subscriptions(self) -> list[UserSubscription]:
+    def get_all_subscriptions(self) -> list[dict]:
         with self.session() as session:
-            subscription = session.query(UserSubscription).all()
-            return [subscription.to_dict() for subscription in subscription]
-    def get_subscription_by_id(self, subscription_id):
+            subscriptions = session.query(UserSubscription).all()
+            serialized_subscriptions = []
+        for subscription in subscriptions:
+            try:
+                serialized_subscriptions.append(subscription.to_dict())
+            except Exception as e:
+                print(f"Error serializing subscription: {subscription}, Error: {e}")
+        return serialized_subscriptions
+    def get_subscription_by_id(self, subscription_id: int) -> UserSubscription:
         with self.session() as session:
             return (session.query(UserSubscription)
                 .options(joinedload(UserSubscription.user))

@@ -30,14 +30,20 @@ class ManageSubscriptionUseCase:
     def create_subscription(
         self,
         subscription_data: SubscriptionRequest,
+        current_user: str,
        
     ) -> UserSubscription:
         """
         Create a new subscription.
         """
         try:
+            user = self.auth_repository.get_user_by_email(current_user)
             # Validate the subscription data
-            subscription = UserSubscription(**subscription_data.dict())
+            subscription = UserSubscription(
+                user_id = user.id,
+                sub_category_id = subscription_data.sub_category_id,
+                
+            )
             
             # Create the subscription
             return self.subscription_repository.create_subscription(subscription)
@@ -48,14 +54,25 @@ class ManageSubscriptionUseCase:
 
     def get_all_subscriptions(
         self,
-    ) -> pd.DataFrame:
+    ) -> list[dict]:
         """
         Get all subscriptions.
         """
         try:
-            # Get all subscriptions
-            subscriptions = self.subscription_repository.get_all_subscriptions()
-            # Convert to DataFrame
-            return pd.DataFrame([subscription.dict() for subscription in subscriptions])
+           return self.subscription_repository.get_all_subscriptions()
         except Exception as e:
             raise Exception(f"An error occurred while retrieving subscriptions: {str(e)}")
+        
+    def get_subscription_by_id(
+        self,
+        subscription_id: str,
+    ) -> UserSubscription:
+        """
+        Get a subscription by ID.
+        """
+        try:
+            return self.subscription_repository.get_subscription_by_id(subscription_id)
+        except Exception as e:
+            raise Exception(f"An error occurred while retrieving the subscription: {str(e)}")
+        
+    

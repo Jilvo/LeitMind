@@ -51,3 +51,13 @@ class UserSubscription(Base):
         back_populates="subscriptions",
         foreign_keys=[sub_category_id],
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "sub_category_id": self.sub_category_id,
+            "is_active": self.is_active,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }

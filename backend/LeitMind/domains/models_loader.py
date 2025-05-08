@@ -25,4 +25,4 @@ from domains.social.models.social_connection import \
     SocialConnection  # noqa: F401
 from domains.questions.models.question import Question  # noqa: F401
 
-from domains.questions.models.subscription import Subscription  # noqa: F401
+from domains.questions.models.subscription import UserSubscription  # noqa: F401
