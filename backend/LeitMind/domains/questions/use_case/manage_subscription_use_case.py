@@ -99,4 +99,17 @@ class ManageSubscriptionUseCase:
             return self.subscription_repository.count_subscriptions_by_sub_category(sub_category_id)
         except Exception as e:
             raise Exception(f"An error occurred while counting subscriptions: {str(e)}")
+        
+
+    def delete_subscription(
+        self,
+        subscription_id: str,
+    ) -> None:
+        """
+        Delete a subscription.
+        """
+        try:
+            self.subscription_repository.delete_subscription(subscription_id)
+        except Exception as e:
+            raise Exception(f"An error occurred while deleting the subscription: {str(e)}")
     
