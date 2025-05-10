@@ -50,6 +50,11 @@ try:
         tags=["Subscription"],
         prefix="/subscription",
     )
+    app.include_router(
+        di["attempt_api_router"],
+        tags=["Attempt"],
+        prefix="/attempt",
+    )
 except Exception as e:
     print(e)
     raise e
