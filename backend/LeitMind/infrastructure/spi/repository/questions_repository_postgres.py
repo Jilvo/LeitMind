@@ -1,17 +1,20 @@
 from typing import Optional
 
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from kink import inject
+from sqlalchemy import and_, not_, text
+from sqlalchemy.orm import joinedload
+from sqlalchemy.orm.exc import NoResultFound
+
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from domains.questions.models.answer import Answer
 from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.sub_theme import SubTheme
 from domains.questions.models.theme import Theme
 from infrastructure.spi.repository.database import SessionLocal
-from kink import inject
-from sqlalchemy import and_, not_
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm.exc import NoResultFound
 
 
 @inject(alias="questions_repository")
@@ -27,7 +30,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         self,
     ) -> list[Question]:
         with self.session() as session:
-            questions = session.query(Question).all()
+            questions = session.query(Question).order_by(Question.id.asc()).all()
             return [question.to_dict() for question in questions]
 
     def get_question_by_id(
@@ -351,6 +354,49 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         with self.session() as session:
             return session.query(Question).filter(Question.theme_id == theme_id).all()
 
+    # SubTheme #
+    def create_sub_theme(
+        self,
+        sub_theme,
+    ) -> SubTheme:
+        with self.session() as session:
+            session.add(sub_theme)
+            session.commit()
+            session.refresh(sub_theme)
+            return sub_theme
+
+    def update_sub_theme(
+        self,
+        sub_theme_id: int,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        with self.session() as session:
+            session.query(SubTheme).filter(SubTheme.id == sub_theme_id).update({"name": sub_theme_name})
+            session.commit()
+            return self.get_sub_category_by_id(sub_theme_id)
+
+    def delete_sub_theme(
+        self,
+        sub_theme_id: int,
+    ):
+        with self.session() as session:
+            session.query(SubTheme).filter(SubTheme.id == sub_theme_id).delete()
+            session.commit()
+
+    def get_sub_theme_by_name(
+        self,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        with self.session() as session:
+            return session.query(SubTheme).filter(SubTheme.name == sub_theme_name).first()
+
+    def get_sub_theme_by_id(
+        self,
+        sub_theme_id: int,
+    ) -> SubTheme:
+        with self.session() as session:
+            return session.query(SubTheme).filter(SubTheme.id == sub_theme_id).first()
+
     # Attempts #
     def create_attempt(
         self,
@@ -391,7 +437,11 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         user_id: int,
     ):
         with self.session() as session:
-            session.execute(f"INSERT INTO user_categories (user_id, category_id) VALUES ({user_id}, {category_id})")
+            session.execute(
+                text(f"INSERT INTO user_subscriptions (user_id, category_id) VALUES (:user_id, :category_id)"),
+                {"user_id": user_id, "category_id": category_id},
+            )
+            session.commit()
 
     def subscribe_to_sub_category(
         self,
@@ -399,14 +449,19 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         user_id: int,
     ):
         with self.session() as session:
-            session.execute(f"INSERT INTO user_sub_categories (user_id, sub_category_id) VALUES ({user_id}, {sub_category_id})")
+            session.execute(
+                text("INSERT INTO user_sub_categories (user_id, sub_category_id) VALUES (:user_id, :sub_category_id)"),
+                {"user_id": user_id, "sub_category_id": sub_category_id},
+            )
+            session.commit()
 
     def get_subscriptions_by_user(
         self,
         user_id: int,
     ):
         with self.session() as session:
-            return session.execute(f"SELECT * FROM user_categories WHERE user_id = {user_id}")
+            result = session.execute(text(f"SELECT * FROM user_subscriptions WHERE user_id = :user_id"), {"user_id": user_id})
+            return [row[0] for row in result]
 
     def unsubscribe_from_category(
         self,
@@ -414,7 +469,11 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         user_id: int,
     ):
         with self.session() as session:
-            session.execute(f"DELETE FROM user_categories WHERE user_id = {user_id} AND category_id = {category_id}")
+            session.execute(
+                text("DELETE FROM user_subscriptions WHERE user_id = :user_id AND category_id = :category_id"),
+                {"user_id": user_id, "category_id": category_id},
+            )
+            session.commit()
 
     def unsubscribe_from_sub_category(
         self,
@@ -422,4 +481,8 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         user_id: int,
     ):
         with self.session() as session:
-            session.execute(f"DELETE FROM user_sub_categories WHERE user_id = {user_id} AND sub_category_id = {sub_category_id}")
+            session.execute(
+                text("DELETE FROM user_sub_categories WHERE user_id = :user_id AND sub_category_id = :sub_category_id"),
+                {"user_id": user_id, "sub_category_id": sub_category_id},
+            )
+            session.commit()

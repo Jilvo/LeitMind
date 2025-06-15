@@ -1,7 +1,8 @@
-from domains.base import Base
 from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from domains.base import Base
 
 
 class Question(Base):
@@ -23,6 +24,15 @@ class Question(Base):
             ondelete="CASCADE",
         ),
         nullable=False,
+    )
+    theme_id = Column(Integer, ForeignKey("themes.id", ondelete="CASCADE"), nullable=True)
+    sub_theme_id = Column(
+        Integer,
+        ForeignKey(
+            "sub_themes.id",
+            ondelete="CASCADE",
+        ),
+        nullable=True,
     )
     creator_id = Column(
         Integer,
@@ -46,6 +56,7 @@ class Question(Base):
         onupdate=func.now(),
     )
 
+    # Relations avec les autres tables
     answers = relationship(
         "Answer",
         back_populates="question",
@@ -55,6 +66,18 @@ class Question(Base):
 
     creator = relationship(
         "User",
+        back_populates="questions",
+    )
+    category = relationship(
+        "Category",
+        back_populates="questions",
+    )
+    sub_theme = relationship(
+        "SubTheme",
+        back_populates="questions",
+    )
+    themes = relationship(
+        "Theme",
         back_populates="questions",
     )
 

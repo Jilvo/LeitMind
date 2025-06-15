@@ -1,7 +1,8 @@
-from domains.base import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from domains.base import Base
 
 
 class Category(Base):
@@ -35,8 +36,8 @@ class Category(Base):
         "SubCategory",
         back_populates="category",
     )
-    subscriptions = relationship(
-        "UserSubscription",
+    questions = relationship(
+        "Question",
         back_populates="category",
         cascade="all, delete-orphan",
     )

@@ -1,17 +1,23 @@
 import pandas as pd
+from kink import inject
+from pydantic import ValidationError
+
 from commons.errors import CategoryError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from domains.questions.models.answer import Answer
 from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.sub_theme import SubTheme
 from domains.questions.models.theme import Theme
-from domains.questions.schemas.question import QuestionRequest, ValidateRequest
-from kink import inject
-from pydantic import ValidationError
+from domains.questions.schemas.question import (CategoryRequest,
+                                                QuestionRequest,
+                                                QuestionUpdateRequest,
+                                                ValidateRequest)
 
 
 @inject
@@ -23,12 +29,14 @@ class ManageQuestionUseCase:
     ):
         self.questions_repository = questions_repository
         self.auth_repository = auth_repository
+
     def get_category_by_id(
         self,
         category_id: int,
     ) -> Category:
         """Get a category by id."""
         return self.questions_repository.get_category_by_id(category_id)
+
     def create_question(
         self,
         question_data: QuestionRequest,
@@ -38,10 +46,25 @@ class ManageQuestionUseCase:
             category: Category = self.questions_repository.get_category_by_id(question_data.category)
             if not category:
                 raise ValueError("Category not found")
+            sub_category: SubCategory = self.questions_repository.get_sub_category_by_id(question_data.sub_category)
+            if not sub_category:
+                raise ValueError("Sub-category not found")
+
+            theme: Theme = self.questions_repository.get_theme_by_id(question_data.theme)
+            if not theme:
+                raise ValueError("Theme not found")
+
+            sub_theme: SubTheme = self.questions_repository.get_sub_theme_by_id(question_data.sub_theme)
+
+            if not sub_theme:
+                raise ValueError("Sub-theme not found")
+
             user = self.auth_repository.get_user_by_email(current_user)
             question = Question(
-                text=question_data.question,
+                text=question_data.text,
                 category_id=category.id,
+                theme_id=theme.id,
+                sub_theme_id=sub_theme.id,
                 creator_id=user.id,
                 explanation=question_data.explanation,
             )
@@ -67,37 +90,66 @@ class ManageQuestionUseCase:
         self,
     ) -> list[Question]:
         """Get all questions."""
-        return self.questions_repository.get_all_questions()
+        try:
+            questions = self.questions_repository.get_all_questions()
+            print(f"Questions brutes du repo: {len(questions)}")
+
+            return questions[:5]
+
+        except Exception as e:
+            print(f"Erreur dans get_all_questions du use case: {str(e)}")
+            import traceback
+
+            traceback.print_exc()
+            return []
 
     def update_question(
         self,
-        question_data: QuestionRequest,
+        question_id: int,
+        question_data: QuestionUpdateRequest,
+        current_user: str,
     ):
         """Update a question."""
-        category: Category = self.questions_repository.get_category_by_id(question_data.category)
-        if not category:
-            raise CategoryError("Category not found for this question. You must create it first.")
-        question = Question(
-            id=question_data.id,
-            text=question_data.question,
-            category_id=category.id,
-            explanation=question_data.explanation,
-        )
-        answers = []
-        for (
-            index,
-            aswr,
-        ) in enumerate(question_data.answers):
-            answer = Answer(
-                is_correct=(True if index == question_data.correct_answer else False),
-                question_id=question.id,
-                text=aswr,
-            )
-            answers.append(answer)
-        question = self.questions_repository.update_question(question)
-        for answer in answers:
-            self.questions_repository.update_answer(answer)
-        return question
+        try:
+            print(f"Updating question with ID: {question_id}")
+            print(f"Question data: {question_data}")
+            print(f"Current user: {current_user}")
+
+            question = self.questions_repository.get_question_by_id(question_id)
+            print(f"Type of question: {type(question)}")
+            if not question:
+                raise ValueError("Question not found")
+            print(f"Existing question: {question}")
+
+            category = self.questions_repository.get_category_by_id(question_data.category)
+            print(f"Type of category: {type(category)}")
+            if not category:
+                raise CategoryError("Category not found for this question. You must create it first.")
+
+            question.text = question_data.text
+            question.category_id = category.id
+            question.explanation = question_data.explanation
+
+            old_answers = self.questions_repository.get_answers_by_question(question_id)
+            for old_answer in old_answers:
+                self.questions_repository.delete_answer(old_answer.id)
+
+            for (
+                index,
+                aswr,
+            ) in enumerate(question_data.answers):
+                answer = Answer(
+                    is_correct=(True if index == question_data.correct_answer else False),
+                    question_id=question.id,
+                    text=aswr,
+                )
+                self.questions_repository.create_answer(answer)
+            print(f"Question updated successfully: {question}")
+
+            return question
+        except Exception as e:
+            print(f"Error during question update: {e}")
+            raise ValueError(f"Failed to update question: {e}")
 
     def delete_question(
         self,
@@ -114,9 +166,13 @@ class ManageQuestionUseCase:
 
     def create_category(
         self,
-        category: Category,
-    ) -> Category:
+        category_request: CategoryRequest,
+    ) -> CategoryRequest:
         """Create a new category."""
+        category = Category(
+            name=category_request.name,
+            description=category_request.description,
+        )
         return self.questions_repository.create_category(category)
 
     def update_category(
@@ -269,12 +325,9 @@ class ManageQuestionUseCase:
         """Bulk create questions."""
         try:
             # Lire le fichier CSV
-            df = pd.read_csv(
-                "datas/questions.csv",
-                on_bad_lines="skip",
-            )
-            # df_head = df.head()
-            # print(df)
+            df = pd.read_csv("datas/question_dot.csv", quotechar='"', on_bad_lines="skip", delimiter=";")
+            df_head = df.head()
+            print(df_head)
             for (
                 index,
                 row,
@@ -300,9 +353,17 @@ class ManageQuestionUseCase:
                         sub_category_id=sub_category.id,
                     )
                     theme = self.create_theme(theme)
+                sub_theme = self.questions_repository.get_sub_theme_by_name(row["sub_theme"])
+                if not sub_theme:
+                    sub_theme = SubTheme(
+                        name=row["sub_theme"],
+                    )
+                    sub_theme = self.questions_repository.create_sub_theme(sub_theme)
                 question = Question(
                     text=row["question"],
                     category_id=category.id,
+                    theme_id=theme.id,
+                    sub_theme_id=sub_theme.id,
                     creator_id=1,
                     explanation=row["explanation"],
                 )
@@ -401,13 +462,14 @@ class ManageQuestionUseCase:
                 # leitner_box=1,
             )
         else:
+            # TODO si faux leitner box revient à 1 sinon sinon +1 select_daily_quiz_use_case.py::get_outdated_attempts
             attempt.leitner_box += 1
             attempt.attempt_count += 1
             attempt.is_correct = is_correct
             attempt.answer_id = validation_data.answer_id
         self.questions_repository.create_or_update_attempt(
             attempt,
-            current_user,
+            # current_user,
         )
         if is_correct:
             return (
@@ -418,3 +480,17 @@ class ManageQuestionUseCase:
             "Bad answer",
             question.explanation,
         )
+
+    def get_correct_answer(
+        self,
+        question_id: int,
+    ):
+        """Get the correct answer for a question."""
+        question = self.questions_repository.get_question_by_id(question_id)
+        if not question:
+            raise ValueError("Question not found")
+        answers = question.answers
+        correct_answer = [answer for answer in answers if answer.is_correct]
+        if not correct_answer:
+            raise ValueError("No correct answer found")
+        return correct_answer[0].text

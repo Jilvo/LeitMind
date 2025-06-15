@@ -1,9 +1,10 @@
-from domains.questions.schemas.question import CategoryRequest
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from domains.questions.schemas.question import CategoryRequest
+from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
 router = APIRouter()
@@ -90,9 +91,14 @@ def get_category_by_id(
     """
     service: UseCasesService = di[UseCasesService]
     category = service.manageQuestionUseCase.get_category_by_id(category_id)
+    if not category:
+        return JSONResponse(
+            status_code=404,
+            content={"message": "Category not found"},
+        )
     return JSONResponse(
-        status_code=201,
-        content={"message": category},
+        status_code=200,
+        content={"category": category.to_dict()},
     )
 
 

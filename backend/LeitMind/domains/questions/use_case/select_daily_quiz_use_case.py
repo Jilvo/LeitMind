@@ -1,9 +1,11 @@
 from datetime import datetime
 
-from domains.auth.interfaces.auth_repository_postgres import AuthRepository
-from domains.questions.interfaces.questions_repository_postgres import QuestionsRepository
-from domains.questions.models.attempt import Attempt
 from kink import inject
+
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
+from domains.questions.models.attempt import Attempt
 
 
 @inject
@@ -16,51 +18,61 @@ class SelectDailyQuestionsUseCase:
     ):
         self.questions_repository = questions_repository
         self.auth_repository = auth_repository
-        self.user_id = "user_id"
 
     def execute(
         self,
+        current_user: str,
     ):
         """
         Select daily questions for a user based on Leitner's system.
         """
-        today = datetime.now()
-        attempts: list[Attempt] = self.questions_repository.get_all_attempts_by_user_id(self.user_id)
-        # not_correct_attempts = self.get_not_correct_user_attempts(attempts)
-        outdated_attempts = self.get_outdated_attempts(
-            attempts,
-            today,
-        )
-        list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(self.user_id)
-        # questions_to_review = list(
-        #     set([a.question_id for a in not_correct_attempts + outdated_attempts])
-        # )
-        questions = []
-        if len(outdated_attempts) > 0:
-            questions_to_review = [a.question_id for a in outdated_attempts]
-            questions = self.questions_repository.get_questions_by_ids(questions_to_review)
-            # return questions
-        length = len(questions)
-        if length < 10:
-            needed = 15
-        elif length < 20:
-            needed = 10
-        elif length < 30:
-            needed = 5
-        else:
-            needed = 0
-        if needed:
-            new_questions = self.questions_repository.get_unattempted_questions_by_user_id_and_subscribed_sub_categories(
-                user_id=self.user_id,
-                list_id_sub_categories=list_id_sub_categories,
-                count=needed,
+        try:
+            today = datetime.now()
+            user = self.auth_repository.get_user_by_email(current_user)
+            if not user:
+                raise ValueError(f"User with email {current_user} not found")
+            attempts: list[Attempt] = self.questions_repository.get_all_attempts_by_user_id(user.id)
+            # not_correct_attempts = self.get_not_correct_user_attempts(attempts)
+            outdated_attempts = self.get_outdated_attempts(
+                attempts,
+                today,
             )
-        else:
+            list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(user.id)
+            if not list_id_sub_categories:
+                return []
+            questions_to_review = []
+            if outdated_attempts:
+                questions_to_review = [a.question_id for a in outdated_attempts]
+                questions = self.questions_repository.get_questions_by_ids(questions_to_review)
+            else:
+                questions = []
+
+            length = len(questions)
+            if length < 10:
+                needed = 15
+            elif length < 20:
+                needed = 10
+            elif length < 30:
+                needed = 5
+            else:
+                needed = 0
+
             new_questions = []
-        list_of_daily_questions = questions + new_questions
-        if len(list_of_daily_questions) > 0:
-            return list_of_daily_questions
-        raise ValueError("No questions to review or new questions to select")
+            if needed:
+                new_questions = self.questions_repository.get_unattempted_questions_by_user_id_and_subscribed_sub_categories(
+                    user_id=user.id,
+                    list_id_sub_categories=list_id_sub_categories,
+                    count=needed,
+                )
+
+            list_of_daily_questions = questions + new_questions
+            if list_of_daily_questions:
+                return list_of_daily_questions
+            else:
+                return []
+        except Exception as e:
+            print(f"Error in execute: {str(e)}")
+            raise ValueError(f"Unable to retrieve daily questions: {str(e)}")
 
     def get_outdated_attempts(
         self,

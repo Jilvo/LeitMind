@@ -3,6 +3,7 @@ from domains.questions.models.attempt import Attempt
 from domains.questions.models.category import Category
 from domains.questions.models.question import Question
 from domains.questions.models.sub_category import SubCategory
+from domains.questions.models.sub_theme import SubTheme
 from domains.questions.models.theme import Theme
 
 
@@ -353,6 +354,43 @@ class QuestionsRepository:
         """
         pass
 
+    # SubTheme
+    def create_sub_theme(
+        self,
+        sub_theme,
+    ) -> SubTheme:
+        """
+        Create a new sub theme.
+        """
+        pass
+
+    def get_sub_theme_by_name(
+        self,
+        sub_theme_name: str,
+    ) -> SubTheme:
+        """
+        Get a sub theme by name.
+        """
+        pass
+
+    def get_sub_theme_by_id(
+        self,
+        sub_theme_id: int,
+    ) -> SubTheme:
+        """
+        Get a sub theme by id.
+        """
+        pass
+
+    def get_all_sub_themes(
+        self,
+        sub_theme_id: int,
+    ) -> list[SubTheme]:
+        """
+        Get all sub themes.
+        """
+        pass
+
     def create_answer(
         answer,
     ) -> Answer:
@@ -424,7 +462,7 @@ class QuestionsRepository:
     def get_subscriptions_by_user(
         self,
         user_id: int,
-    ) -> list[Category]:
+    ) -> list[SubCategory]:
         """
         Get all subscriptions by user ID.
         """

@@ -1,6 +1,7 @@
-from domains.base import Base
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from domains.base import Base
 
 
 class Answer(Base):

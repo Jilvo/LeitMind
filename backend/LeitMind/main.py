@@ -1,8 +1,9 @@
 import uvicorn
-from controller.controller import controller
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from kink import di
+
+from controller.controller import controller
 
 app = FastAPI()
 origins = [
@@ -22,6 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 controller()
+
 try:
     print("add middleware to app")
     app.include_router(
@@ -43,6 +45,16 @@ try:
         di["category_api_router"],
         tags=["Category"],
         prefix="/category",
+    )
+    app.include_router(
+        di["subscription_api_router"],
+        tags=["Subscription"],
+        prefix="/subscription",
+    )
+    app.include_router(
+        di["attempt_api_router"],
+        tags=["Attempt"],
+        prefix="/attempt",
     )
 except Exception as e:
     print(e)
