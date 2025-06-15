@@ -27,7 +27,7 @@ python-multipart = "^0.0.20"
 pandas = "^2.2.3"
 boto3 = "^1.38.36"
 httpx = "^0.28.1"
-
+pytest-cov = "^6.2.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -36,3 +36,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 150
+
