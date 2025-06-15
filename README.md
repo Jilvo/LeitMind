@@ -1,4 +1,4 @@
-# LeitnerQuest
+# LeitMind
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green?logo=fastapi)](https://fastapi.tiangolo.com/)
@@ -7,7 +7,7 @@
 [![Vue.js](https://img.shields.io/badge/Vue.js-Web-4FC08D?logo=vue.js)](https://vuejs.org/)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**LeitnerQuest** is a cross-platform application inspired by the Leitner system of spaced repetition. It helps users learn and retain information more effectively by delivering questions on a strategic schedule that adapts to their progress and performance.
+**LeitMind** is a cross-platform application inspired by the Leitner system of spaced repetition. It helps users learn and retain information more effectively by delivering questions on a strategic schedule that adapts to their progress and performance.
 
 ---
 
@@ -64,7 +64,7 @@
 
 3. **Set up the database**
    ```bash
-   psql -U postgres -c "CREATE DATABASE leitnerquest;"
+   psql -U postgres -c "CREATE DATABASE LeitMind;"
    alembic upgrade head
    ```
 
@@ -126,8 +126,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 📬 Contact
 
-For inquiries or support, contact us at [contact@leitnerquest.com](mailto:contact@leitnerquest.com).
+For inquiries or support, contact us at [contact@leitmind.com](mailto:contact@leitmind.com).
 
 ---
 
-Start your journey to smarter learning with **LeitnerQuest** today!
+Start your journey to smarter learning with **LeitMind** today!
