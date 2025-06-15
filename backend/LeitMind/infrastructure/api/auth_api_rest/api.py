@@ -1,12 +1,12 @@
-from domains.auth.schemas.user import (Token, UserCreationRequest,
-                                       UserLoginRequest, UserUpdateRequest)
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
-from utils.security import decode_access_token, get_current_user
 
+from domains.auth.schemas.user import (Token, UserCreationRequest,
+                                       UserLoginRequest, UserUpdateRequest)
+from domains.use_cases_services import UseCasesService
+from utils.security import decode_access_token, get_current_user
 
 router = APIRouter()
 di["auth_api_router"] = router
@@ -23,6 +23,7 @@ def check_health():
         dict: A dictionary indicating that the Stockage API has successfully started.
     """
     return {"Stockage API successfully started!"}
+
 
 @router.get(
     "/users/me",
@@ -41,8 +42,7 @@ def get_current_user_info(
             content={"token_data": decoded_token},
         )
     except Exception as e:
-        raise HTTPException(status_code=401,
-                            detail='Invalid token')
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 
 @router.get("/users/{user_id}")
@@ -52,7 +52,7 @@ def get_user(
     service: UseCasesService = di[UseCasesService]
     try:
         user = service.getUserUseCase.execute(user_id)
-    
+
         return JSONResponse(
             status_code=201,
             content={"message": user},
@@ -86,8 +86,8 @@ def signup(
         raise HTTPException(
             status_code=400,
             detail=f"Failed to sign up user: {str(e)}",
-
         )
+
 
 @router.post(
     "/login",
@@ -144,14 +144,12 @@ def get_all_users(
         )
 
 
-
-
 @router.put("/users/{user_id}")
 def update_user(
     user_id: int,
     user_data: UserUpdateRequest,
 ) -> JSONResponse:
-    service: UseCasesService= di[UseCasesService]
+    service: UseCasesService = di[UseCasesService]
     try:
         update_user = service.updateUserUseCase.execute(user_id, user_data)
 
@@ -179,9 +177,9 @@ def delete_user(
         )
     except Exception as e:
         raise HTTPException(
-        status_code=400,
-        detail=f"Failed to delete user: {str(e)}",
-    )
+            status_code=400,
+            detail=f"Failed to delete user: {str(e)}",
+        )
 
 
 @router.get(

@@ -1,5 +1,6 @@
-from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from kink import inject
+
+from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 
 
 @inject
@@ -31,6 +32,7 @@ class GetUserUseCase:
         self,
     ):
         return [user.to_dict() for user in self.auth_repository.get_all_users()]
+
     def get_user_by_email(
         self,
         email,

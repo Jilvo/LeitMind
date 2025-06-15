@@ -1,4 +1,4 @@
-from domains.questions.models.subscription import UserSubscription  
+from domains.questions.models.subscription import UserSubscription
 
 
 class SubscriptionRepository:
@@ -9,6 +9,7 @@ class SubscriptionRepository:
         Initializes a new repository for managing subscriptions.
         """
         pass
+
     def get_all_subscriptions(
         self,
     ) -> list[UserSubscription]:
@@ -16,6 +17,7 @@ class SubscriptionRepository:
         Get all subscriptions.
         """
         pass
+
     def get_subscription_by_id(
         self,
         subscription_id: str,
@@ -24,6 +26,7 @@ class SubscriptionRepository:
         Get a subscription by ID.
         """
         pass
+
     def create_subscription(
         self,
         subscription: UserSubscription,
@@ -32,6 +35,7 @@ class SubscriptionRepository:
         Create a new subscription.
         """
         pass
+
     def update_subscription(
         self,
         subscription: UserSubscription,
@@ -40,6 +44,7 @@ class SubscriptionRepository:
         Update a subscription.
         """
         pass
+
     def delete_subscription(
         self,
         subscription_id: str,
@@ -48,6 +53,7 @@ class SubscriptionRepository:
         Delete a subscription.
         """
         pass
+
     def get_subscription_by_user_id(
         self,
         user_id: str,
@@ -56,6 +62,7 @@ class SubscriptionRepository:
         Get a subscription by user ID.
         """
         pass
+
     def count_subscriptions_by_sub_category(
         self,
         sub_category_id: str,

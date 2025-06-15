@@ -15,16 +15,18 @@ class QuestionRequest(BaseModel):
     # difficulty: int
     # user_id: int
 
+
 class QuestionUpdateRequest(BaseModel):
     text: str
     answers: list[str]
     correct_answer: int
     category: int
     explanation: str
+
+
 class CategoryRequest(BaseModel):
     name: str
     description: str
-
 
 
 class ValidateRequest(BaseModel):

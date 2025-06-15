@@ -1,7 +1,9 @@
-from domains.base import Base
 from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from domains.base import Base
+
 
 class UserSubscription(Base):
     __tablename__ = "user_subscriptions"

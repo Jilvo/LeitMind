@@ -1,9 +1,10 @@
-from domains.questions.schemas.question import CategoryRequest
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from domains.questions.schemas.question import CategoryRequest
+from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
 router = APIRouter()

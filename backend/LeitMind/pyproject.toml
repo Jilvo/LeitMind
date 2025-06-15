@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "leitmind"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Jilvo <jmillot41@gmail.com>"]
 readme = "README.md"

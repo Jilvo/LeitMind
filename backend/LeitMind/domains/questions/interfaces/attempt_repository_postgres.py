@@ -1,5 +1,6 @@
 from domains.questions.models.attempt import Attempt
 
+
 class AttemptRepository:
     def __init__(
         self,
@@ -17,6 +18,7 @@ class AttemptRepository:
         Get all attempts.
         """
         pass
+
     def get_attempt_by_id(
         self,
         attempt_id: int,
@@ -25,6 +27,7 @@ class AttemptRepository:
         Get an attempt by ID.
         """
         pass
+
     def create_attempt(
         self,
         attempt: Attempt,
@@ -33,6 +36,7 @@ class AttemptRepository:
         Create a new attempt.
         """
         pass
+
     def update_attempt(
         self,
         attempt: Attempt,
@@ -41,6 +45,7 @@ class AttemptRepository:
         Update an attempt.
         """
         pass
+
     def delete_attempt(
         self,
         attempt_id: int,
@@ -49,6 +54,7 @@ class AttemptRepository:
         Delete an attempt.
         """
         pass
+
     def get_attempts_by_user_id(
         self,
         user_id: int,
@@ -57,6 +63,7 @@ class AttemptRepository:
         Get all attempts by user ID.
         """
         pass
+
     def get_attempts_by_question_id(
         self,
         question_id: int,

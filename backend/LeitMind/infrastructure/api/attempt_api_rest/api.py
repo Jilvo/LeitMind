@@ -1,12 +1,12 @@
-
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
-from utils.security import decode_access_token, get_current_user
-from domains.questions.use_case.manage_attempt_use_case import ManageAttemptUseCase
 
+from domains.questions.use_case.manage_attempt_use_case import \
+    ManageAttemptUseCase
+from domains.use_cases_services import UseCasesService
+from utils.security import decode_access_token, get_current_user
 
 router = APIRouter()
 di["attempt_api_router"] = router
@@ -26,6 +26,8 @@ def get_all_attempts(
         status_code=200,
         content={"attempts": attempts},
     )
+
+
 @router.get("/attempts/{attempt_id}")
 def get_attempt_by_id(
     attempt_id: int,
@@ -45,6 +47,8 @@ def get_attempt_by_id(
         status_code=200,
         content={"attempt": attempt},
     )
+
+
 @router.post("/attempts")
 def create_attempt(
     attempt: dict,
@@ -59,6 +63,8 @@ def create_attempt(
         status_code=201,
         content={"attempt": new_attempt},
     )
+
+
 @router.put("/attempts/{attempt_id}")
 def update_attempt(
     attempt_id: int,
@@ -79,6 +85,8 @@ def update_attempt(
         status_code=200,
         content={"attempt": updated_attempt},
     )
+
+
 @router.delete("/attempts/{attempt_id}")
 def delete_attempt(
     attempt_id: int,
@@ -93,6 +101,8 @@ def delete_attempt(
         status_code=204,
         content={},
     )
+
+
 @router.get("/attempts/user/{user_id}")
 def get_attempts_by_user_id(
     user_id: int,
@@ -107,6 +117,8 @@ def get_attempts_by_user_id(
         status_code=200,
         content={"attempts": attempts},
     )
+
+
 @router.get("/attempts/question/{question_id}")
 def get_attempts_by_question_id(
     question_id: int,

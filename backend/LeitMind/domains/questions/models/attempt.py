@@ -1,6 +1,7 @@
-from domains.base import Base
 from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer
 from sqlalchemy.sql import func
+
+from domains.base import Base
 
 
 class Attempt(Base):

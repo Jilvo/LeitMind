@@ -16,16 +16,13 @@ class S3Storage:
             aws_access_key_id=self.access_key,
             aws_secret_access_key=self.secret_key,
             config=Config(signature_version="s3v4"),
-            region_name=di["S3_REGION"],  
+            region_name=di["S3_REGION"],
         )
 
     def upload_blob(self, source_file_name: str, destination_blob_name: str):
         """Upload blob to storage"""
-        self.s3_client.upload_file(
-            source_file_name,
-            self.bucket_name,
-            destination_blob_name
-        )
+        self.s3_client.upload_file(source_file_name, self.bucket_name, destination_blob_name)
         print(f"File {source_file_name} uploaded to {destination_blob_name}.")
+
 
 # S3StorageRepository().upload_blob("lake.png", "test/lake.png")

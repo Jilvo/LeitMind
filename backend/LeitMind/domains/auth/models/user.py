@@ -1,7 +1,8 @@
-from domains.base import Base
-from sqlalchemy import (TIMESTAMP, Column, DateTime, ForeignKey, Integer, String, Text,
-                        func)
+from sqlalchemy import (TIMESTAMP, Column, DateTime, ForeignKey, Integer,
+                        String, Text, func)
 from sqlalchemy.orm import relationship
+
+from domains.base import Base
 
 
 class User(Base):
@@ -62,4 +63,3 @@ class User(Base):
             "created_at": str(self.created_at),
             "updated_at": str(self.updated_at),
         }
-    

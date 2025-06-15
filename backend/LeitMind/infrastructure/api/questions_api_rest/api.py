@@ -1,10 +1,12 @@
-from commons.errors import CategoryError
-from domains.questions.schemas.question import QuestionRequest,QuestionUpdateRequest
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from commons.errors import CategoryError
+from domains.questions.schemas.question import (QuestionRequest,
+                                                QuestionUpdateRequest)
+from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
 router = APIRouter()
@@ -41,20 +43,21 @@ def get_all_questions(
     """
     service: UseCasesService = di[UseCasesService]
     try:
-    
+
         questions = service.manageQuestionUseCase.get_all_questions()
         return JSONResponse(
-                status_code=200,
-                content={
+            status_code=200,
+            content={
                 "message": "List of questions",
                 "questions": questions,
             },
-            )
+        )
     except Exception as e:
         return JSONResponse(
             status_code=500,
             content={"message": "An error occurred while retrieving questions: {str(e)}"},
         )
+
 
 @router.get("/questions/daily_questions")
 def get_daily_questions(
@@ -72,7 +75,7 @@ def get_daily_questions(
                 status_code=200,
                 content={
                     "message": [],
-                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions"
+                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions",
                 },
             )
         return JSONResponse(
@@ -82,10 +85,10 @@ def get_daily_questions(
     except ValueError as e:
         if "no subscriptions" in str(e).lower():
             return JSONResponse(
-                status_code=200,  
+                status_code=200,
                 content={
                     "message": [],
-                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions"
+                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions",
                 },
             )
         return JSONResponse(
@@ -99,6 +102,8 @@ def get_daily_questions(
             status_code=500,
             content={"message": "Une erreur interne s'est produite"},
         )
+
+
 @router.delete("/questions/{question_id}")
 def delete_question(
     question_id: int,
@@ -125,14 +130,14 @@ def update_question(
     Update a question
     """
     try:
-        
+
         service: UseCasesService = di[UseCasesService]
         service.manageQuestionUseCase.update_question(
             question_id,
             question_data,
             current_user,
         )
-        
+
         return JSONResponse(
             status_code=201,
             content={"message": "Question updated"},
@@ -149,7 +154,6 @@ def update_question(
         )
 
 
-
 @router.get("/questions/{question_id}")
 def get_question_by_id(
     question_id: int,
@@ -159,9 +163,7 @@ def get_question_by_id(
     Get a question by ID
     """
     service: UseCasesService = di[UseCasesService]
-    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(
-        question_id
-    )
+    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(question_id)
     return JSONResponse(
         status_code=200,
         content={"message": questions_and_answers},
@@ -181,5 +183,3 @@ def bulk_create_questions(
         status_code=201,
         content={"message": res},
     )
-
-
