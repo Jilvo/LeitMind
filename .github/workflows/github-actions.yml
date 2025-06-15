@@ -29,12 +29,12 @@ jobs:
       - name: Lint
         run: |
           cd backend/LeitMind
-          black . && isort .
+          poetry run black . && poetry run isort .
 
       - name: Run tests
         run: |
           cd backend/LeitMind
-          pytest --cov=. tests/
+          poetry run pytest --cov=. tests/
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
