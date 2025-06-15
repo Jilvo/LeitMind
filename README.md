@@ -13,8 +13,8 @@
 ## Technology Stack
 
 ### Frontend:
-- **Mobile**: Flutter / React Native / Swift / Android ?
-- **Web**: React.js / Vue.js ?
+- **Mobile**: Flutter
+- **Web**: Vue.js ?
 
 
 ### Backend:

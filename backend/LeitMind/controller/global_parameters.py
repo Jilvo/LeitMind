@@ -10,6 +10,27 @@ try:
         "POSTGRES_DB_URL configuration",
         di["POSTGRES_DB_URL"],
     )
+    di["S3_BUCKET_NAME"] = getOrSet(
+        "S3_BUCKET_NAME",
+        "test",
+    )
+    di["S3_ENDPOINT_URL"] = getOrSet(
+        "S3_ENDPOINT_URL",
+        "test",
+    )
+    di["S3_REGION"] = getOrSet(
+        "S3_REGION",
+        "test",
+    )
+    di["S3_ACCESS_KEY"] = getOrSet(
+        "S3_ACCESS_KEY",
+        "test",
+    )
+    di["S3_SECRET_KEY"] = getOrSet(
+        "S3_SECRET_KEY",
+        "test",
+    )
+
     print("checking version...")
 
     print("commons settings")
