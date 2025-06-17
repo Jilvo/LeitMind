@@ -183,3 +183,8 @@ doc/category.md
 doc/prompt.md
 backend/LeitMind/alembic/versions/*.py
 LeitMind/TODO.md
+sonar-project.properties
+.gitignore
+.gitignore
+.scannerwork/report-task.txt
+.scannerwork/.sonar_lock
