@@ -21,26 +21,30 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd backend/LeitMind
+          cd backend
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
 
       - name: Lint
         run: |
-          cd backend/LeitMind
+          cd backend
           poetry run black . && poetry run isort .
 
       - name: Run tests
         run: |
-          cd backend/LeitMind
+          cd backend
           poetry run pytest --cov=. tests/
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v3
-        with:
-          publish-dir: ./web/leitMind 
-          production-deploy: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/leitmind-backend:latest backend/LeitMind
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/leitmind-backend:latest
+
+     
