@@ -1,9 +1,9 @@
 import uvicorn
+from controller.controller import controller
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from infrastructure.api.middlewares.language import LanguageMiddleware
 from kink import di
-
-from controller.controller import controller
 
 app = FastAPI()
 origins = [
@@ -22,6 +22,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(LanguageMiddleware)
 controller()
 
 try:

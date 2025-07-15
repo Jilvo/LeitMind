@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBasic
-from kink import di
-
+from commons.errors import UserAuthenticationError, UserNotFoundError
 from domains.auth.schemas.user import (Token, UserCreationRequest,
                                        UserLoginRequest, UserUpdateRequest)
 from domains.use_cases_services import UseCasesService
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBasic
+from kink import di
+from localization import translate
+from starlette.requests import Request
 from utils.security import decode_access_token, get_current_user
 
 router = APIRouter()
@@ -15,14 +17,20 @@ security = HTTPBasic()
 
 
 @router.get("/health")
-def check_health():
+def check_health(
+    request: Request,
+) -> dict:
     """
     Check the health of the Auth API.
 
     Returns:
         dict: A dictionary indicating that the Stockage API has successfully started.
     """
-    return {"Stockage API successfully started!"}
+    lang = request.state.lang
+    return JSONResponse(
+        status_code=200,
+        content={"message": "Stockage API successfully started!", "lang": lang},
+    )
 
 
 @router.get(
@@ -95,27 +103,47 @@ def signup(
 )
 def login(
     user_data: UserLoginRequest,
+    request: Request,
 ) -> JSONResponse:
-    service: UseCasesService = di[UseCasesService]
-    user = service.authUserUseCase.login(
-        user_data.email,
-        user_data.password,
-    )
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
+    lang = request.state.lang
+    try:
+        service: UseCasesService = di[UseCasesService]
+        user = service.authUserUseCase.login(
+            user_data.email,
+            user_data.password,
         )
 
-    access_token = service.authUserUseCase.create_access_token(user)
-    return JSONResponse(
-        status_code=200,
-        content={
-            "access_token": access_token,
-            "token_type": "bearer",
-        },
-    )
+        access_token = service.authUserUseCase.create_access_token(user)
+        return JSONResponse(
+            status_code=200,
+            content={
+                "access_token": access_token,
+                "detail": "Login successful",
+                "token_type": "bearer",
+            },
+        )
+    except UserNotFoundError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={
+                "error": "user_not_found",
+                "message": translate("user_not_found", lang),
+            },
+        )
+    except UserAuthenticationError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={
+                "error": "invalid_password",
+                "message": translate("invalid_password", lang),
+            },
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        )
 
 
 @router.get("/users/")

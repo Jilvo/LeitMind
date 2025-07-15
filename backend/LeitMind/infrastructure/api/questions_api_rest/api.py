@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBasic
-from kink import di
-
 from commons.errors import CategoryError
 from domains.questions.schemas.question import (QuestionRequest,
                                                 QuestionUpdateRequest)
 from domains.use_cases_services import UseCasesService
+from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBasic
+from kink import di
 from utils.security import get_current_user
 
 router = APIRouter()
@@ -34,6 +33,29 @@ def create_new_question(
     )
 
 
+@router.get("/questions/random")
+def get_random_question(
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Get a random question
+    """
+    service: UseCasesService = di[UseCasesService]
+    try:
+        question = service.manageQuestionUseCase.get_random_question()
+        return JSONResponse(
+            status_code=200,
+            content={"message": question},
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "message": f"An error occurred while retrieving a random question: {str(e)}"
+            },
+        )
+
+
 @router.get("/questions/")
 def get_all_questions(
     current_user: str = Depends(get_current_user),
@@ -55,7 +77,9 @@ def get_all_questions(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={"message": "An error occurred while retrieving questions: {str(e)}"},
+            content={
+                "message": "An error occurred while retrieving questions: {str(e)}"
+            },
         )
 
 
@@ -163,7 +187,9 @@ def get_question_by_id(
     Get a question by ID
     """
     service: UseCasesService = di[UseCasesService]
-    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(question_id)
+    questions_and_answers = service.manageQuestionUseCase.get_question_by_id(
+        question_id
+    )
     return JSONResponse(
         status_code=200,
         content={"message": questions_and_answers},

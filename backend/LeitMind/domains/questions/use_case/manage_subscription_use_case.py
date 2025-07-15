@@ -1,7 +1,4 @@
 import pandas as pd
-from kink import inject
-from pydantic import ValidationError
-
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
 from domains.questions.interfaces.subscription_repository_postgres import \
@@ -9,6 +6,8 @@ from domains.questions.interfaces.subscription_repository_postgres import \
 from domains.questions.models.subscription import UserSubscription
 from domains.questions.schemas.subscription import (SubscriptionRequest,
                                                     SubscriptionUpdateRequest)
+from kink import inject
+from pydantic import ValidationError
 
 
 @inject
@@ -45,7 +44,9 @@ class ManageSubscriptionUseCase:
         except ValidationError as e:
             raise e
         except Exception as e:
-            raise Exception(f"An error occurred while creating the subscription: {str(e)}")
+            raise Exception(
+                f"An error occurred while creating the subscription: {str(e)}"
+            )
 
     def get_all_subscriptions(
         self,
@@ -56,7 +57,9 @@ class ManageSubscriptionUseCase:
         try:
             return self.subscription_repository.get_all_subscriptions()
         except Exception as e:
-            raise Exception(f"An error occurred while retrieving subscriptions: {str(e)}")
+            raise Exception(
+                f"An error occurred while retrieving subscriptions: {str(e)}"
+            )
 
     def get_subscription_by_id(
         self,
@@ -68,7 +71,9 @@ class ManageSubscriptionUseCase:
         try:
             return self.subscription_repository.get_subscription_by_id(subscription_id)
         except Exception as e:
-            raise Exception(f"An error occurred while retrieving the subscription: {str(e)}")
+            raise Exception(
+                f"An error occurred while retrieving the subscription: {str(e)}"
+            )
 
     def get_subscription_by_user_id(
         self,
@@ -90,7 +95,9 @@ class ManageSubscriptionUseCase:
         Count subscriptions by sub_category_id.
         """
         try:
-            return self.subscription_repository.count_subscriptions_by_sub_category(sub_category_id)
+            return self.subscription_repository.count_subscriptions_by_sub_category(
+                sub_category_id
+            )
         except Exception as e:
             raise Exception(f"An error occurred while counting subscriptions: {str(e)}")
 
@@ -104,4 +111,6 @@ class ManageSubscriptionUseCase:
         try:
             self.subscription_repository.delete_subscription(subscription_id)
         except Exception as e:
-            raise Exception(f"An error occurred while deleting the subscription: {str(e)}")
+            raise Exception(
+                f"An error occurred while deleting the subscription: {str(e)}"
+            )

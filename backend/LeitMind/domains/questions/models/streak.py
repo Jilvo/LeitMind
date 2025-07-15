@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Date, ForeignKey, Integer
-
 from domains.base import Base
+from sqlalchemy import Column, Date, ForeignKey, Integer
 
 
 class Streak(Base):

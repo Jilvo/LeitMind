@@ -25,6 +25,14 @@ class QuestionsRepository:
         """
         pass
 
+    def get_random_question(
+        self,
+    ) -> Question:
+        """
+        Get a random question for a user, optionally filtered by sub-category and theme.
+        """
+        pass
+
     def get_question_by_id(
         self,
         question_id: int,

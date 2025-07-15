@@ -44,3 +44,21 @@ class QuestionNotFoundError(QuestionError):
     """Raised when a question is not found."""
 
     pass
+
+
+class UserNotFoundError(UserError):
+    """Raised when a user is not found."""
+
+    pass
+
+
+class UserAlreadyExistsError(UserError):
+    """Raised when a user already exists."""
+
+    pass
+
+
+class UserAuthenticationError(AuthError):
+    """Raised when user authentication fails."""
+
+    pass

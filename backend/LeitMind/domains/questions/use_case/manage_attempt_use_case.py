@@ -1,7 +1,6 @@
-from kink import inject
-
 from domains.questions.interfaces.attempt_repository_postgres import \
     AttemptRepository
+from kink import inject
 
 
 @inject

@@ -1,9 +1,9 @@
-from kink import inject
-from pydantic import ValidationError
-
+from commons.errors import UserAuthenticationError, UserNotFoundError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.models.user import User
 from domains.auth.schemas.user import UserCreationRequest
+from kink import inject
+from pydantic import ValidationError
 from utils.security import create_access_token, get_password_hash
 
 
@@ -20,10 +20,18 @@ class AuthUserUseCase:
         email: str,
         password: str,
     ):
-        user = self.auth_repository.authenticate_user(
+        user, is_user_exist = self.auth_repository.authenticate_user(
             email,
             password,
         )
+        if not is_user_exist:
+            raise UserNotFoundError(
+                f"User with email {email} not found or password is incorrect."
+            )
+        if not user and is_user_exist:
+            raise UserAuthenticationError(
+                f"Bad credentials for user with email {email}."
+            )
         return user
 
     def signup(

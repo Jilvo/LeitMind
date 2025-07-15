@@ -1,8 +1,7 @@
-from kink import inject
-
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.models.user import User
 from infrastructure.spi.repository.database import SessionLocal
+from kink import inject
 from utils.security import verify_password
 
 
@@ -49,7 +48,10 @@ class AuthRepositoryPostgreSQL(AuthRepository):
         email: str,
     ) -> bool:
         with self.session() as session:
-            return session.query(User).filter(User.username == username).first() or session.query(User).filter(User.email == email).first()
+            return (
+                session.query(User).filter(User.username == username).first()
+                or session.query(User).filter(User.email == email).first()
+            )
 
     def update_user(
         self,
@@ -93,13 +95,16 @@ class AuthRepositoryPostgreSQL(AuthRepository):
         self,
         username: str,
         password: str,
-    ) -> User:
+    ) -> [User, bool]:
+        """Authenticate a user by username and password.
+        Returns the user if authentication is successful, otherwise returns False.
+        """
         user = self.get_user_by_email(username)
         if not user:
-            return False
+            return None, False
         if not verify_password(
             password,
             user.hashed_password,
         ):
-            return False
-        return User(**user.to_dict())
+            return None, True
+        return User(**user.to_dict()), True

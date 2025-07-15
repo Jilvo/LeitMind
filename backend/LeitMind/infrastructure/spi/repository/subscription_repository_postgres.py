@@ -1,15 +1,14 @@
 from typing import Optional
 
-from kink import inject
-from sqlalchemy import and_, not_, text
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm.exc import NoResultFound
-
 from domains.auth.models.user import User
 from domains.questions.interfaces.subscription_repository_postgres import \
     SubscriptionRepository
 from domains.questions.models.subscription import UserSubscription
 from infrastructure.spi.repository.database import SessionLocal
+from kink import inject
+from sqlalchemy import and_, not_, text
+from sqlalchemy.orm import joinedload
+from sqlalchemy.orm.exc import NoResultFound
 
 
 @inject(alias="subscription_repository")
@@ -33,7 +32,12 @@ class SubscriptionRepositoryPostgreSQL(SubscriptionRepository):
 
     def get_subscription_by_id(self, subscription_id: int) -> UserSubscription:
         with self.session() as session:
-            return session.query(UserSubscription).options(joinedload(UserSubscription.user)).filter(UserSubscription.id == subscription_id).one()
+            return (
+                session.query(UserSubscription)
+                .options(joinedload(UserSubscription.user))
+                .filter(UserSubscription.id == subscription_id)
+                .one()
+            )
 
     def create_subscription(self, subscription: UserSubscription) -> UserSubscription:
         with self.session() as session:
@@ -44,20 +48,29 @@ class SubscriptionRepositoryPostgreSQL(SubscriptionRepository):
 
     def update_subscription(self, subscription: UserSubscription) -> UserSubscription:
         with self.session() as session:
-            session.query(UserSubscription).filter(UserSubscription.id == subscription.id).update(subscription.to_dict())
+            session.query(UserSubscription).filter(
+                UserSubscription.id == subscription.id
+            ).update(subscription.to_dict())
             session.commit()
             session.refresh(subscription)
             return subscription
 
     def delete_subscription(self, subscription_id: str):
         with self.session() as session:
-            subscription = session.query(UserSubscription).filter(UserSubscription.id == subscription_id).delete()
+            subscription = (
+                session.query(UserSubscription)
+                .filter(UserSubscription.id == subscription_id)
+                .delete()
+            )
             session.commit()
 
     def get_subscription_by_user_id(self, user_id: str) -> Optional[UserSubscription]:
         with self.session() as session:
             subscription = (
-                session.query(UserSubscription).options(joinedload(UserSubscription.user)).filter(UserSubscription.user_id == user_id).one_or_none()
+                session.query(UserSubscription)
+                .options(joinedload(UserSubscription.user))
+                .filter(UserSubscription.user_id == user_id)
+                .one_or_none()
             )
             return subscription.to_dict() if subscription else None
 
@@ -65,11 +78,15 @@ class SubscriptionRepositoryPostgreSQL(SubscriptionRepository):
         with self.session() as session:
             # Vérifiez si la sous-catégorie existe
             sub_category_exists = session.query(
-                session.query(UserSubscription.sub_category_id).filter(UserSubscription.sub_category_id == sub_category_id).exists()
+                session.query(UserSubscription.sub_category_id)
+                .filter(UserSubscription.sub_category_id == sub_category_id)
+                .exists()
             ).scalar()
 
             if not sub_category_exists:
-                raise ValueError(f"Sub-category with ID {sub_category_id} does not exist.")
+                raise ValueError(
+                    f"Sub-category with ID {sub_category_id} does not exist."
+                )
 
             # Comptez les subscriptions actives pour cette sous-catégorie
             count = (

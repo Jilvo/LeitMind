@@ -21,7 +21,9 @@ class S3Storage:
 
     def upload_blob(self, source_file_name: str, destination_blob_name: str):
         """Upload blob to storage"""
-        self.s3_client.upload_file(source_file_name, self.bucket_name, destination_blob_name)
+        self.s3_client.upload_file(
+            source_file_name, self.bucket_name, destination_blob_name
+        )
         print(f"File {source_file_name} uploaded to {destination_blob_name}.")
 
 
