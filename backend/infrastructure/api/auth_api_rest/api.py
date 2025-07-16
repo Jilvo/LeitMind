@@ -1,10 +1,15 @@
+import uuid
+
 from commons.errors import UserAuthenticationError, UserNotFoundError
+from domains.auth.models.user import User
 from domains.auth.schemas.user import (Token, UserCreationRequest,
                                        UserLoginRequest, UserUpdateRequest)
 from domains.use_cases_services import UseCasesService
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import (APIRouter, Depends, File, HTTPException, Request,
+                     UploadFile, status)
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
+from infrastructure.spi.storage.s3_storage import S3Storage
 from kink import di
 from localization import translate
 from starlette.requests import Request
@@ -108,7 +113,7 @@ def login(
     lang = request.state.lang
     try:
         service: UseCasesService = di[UseCasesService]
-        user = service.authUserUseCase.login(
+        user: User = service.authUserUseCase.login(
             user_data.email,
             user_data.password,
         )
@@ -119,6 +124,12 @@ def login(
             content={
                 "access_token": access_token,
                 "detail": "Login successful",
+                "user": {
+                    "user_id": str(user.id),
+                    "username": user.username,
+                    "email": user.email,
+                    "country": user.country,
+                },
                 "token_type": "bearer",
             },
         )
@@ -143,6 +154,50 @@ def login(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",
+        )
+
+
+@router.get("/users/{user_id}/avatar")
+def get_user_avatar(
+    user_id: int,
+) -> JSONResponse:
+    service: UseCasesService = di[UseCasesService]
+    try:
+        avatar_url = service.getUserUseCase.get_avatar(user_id)
+        return JSONResponse(
+            status_code=200,
+            content={"avatar_url": avatar_url},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to retrieve user avatar: {str(e)}",
+        )
+
+
+@router.post("/users/{user_id}/avatar")
+async def upload_user_avatar(
+    user_id: int,
+    avatar: UploadFile = File(...),
+) -> JSONResponse:
+    service: UseCasesService = di[UseCasesService]
+    try:
+        file_ext = avatar.filename.split(".")[-1]
+        filename = f"leitmind/avatars/{user_id}.{file_ext}"
+        # filename = f"leitmind/avatars/{uuid.uuid4()}.{file_ext}"
+        content = await avatar.read()  # Ajouter await
+        s3_storage = S3Storage()
+
+        url = s3_storage.upload_blob(content, filename)
+        user: User = service.updateUserUseCase.update_avatar(user_id, url)
+        return JSONResponse(
+            status_code=200,
+            content={"avatar_url": user.avatar},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to upload user avatar: {str(e)}",
         )
 
 

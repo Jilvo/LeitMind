@@ -22,3 +22,18 @@ class UpdateUserUseCase:
             email=user_data.email,
             country=user_data.country,
         )
+
+    def update_avatar(
+        self,
+        user_id: int,
+        avatar_url: str,
+    ):
+        """
+        Update the user's avatar URL.
+        """
+        if not avatar_url:
+            raise ValueError("Avatar URL cannot be empty")
+        return self.auth_repository.update_user_avatar(
+            user_id=user_id,
+            avatar_url=avatar_url,
+        )

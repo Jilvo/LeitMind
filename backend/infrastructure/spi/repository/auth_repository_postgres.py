@@ -108,3 +108,18 @@ class AuthRepositoryPostgreSQL(AuthRepository):
         ):
             return None, True
         return User(**user.to_dict()), True
+
+    def update_user_avatar(
+        self,
+        user_id: int,
+        avatar_url: str,
+    ) -> User:
+        """Update the user's avatar URL."""
+        with self.session() as session:
+            user = session.query(User).filter(User.id == user_id).first()
+            if not user:
+                raise ValueError("User not found")
+            user.avatar = avatar_url
+            session.commit()
+            session.refresh(user)
+            return user

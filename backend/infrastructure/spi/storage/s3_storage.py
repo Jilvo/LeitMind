@@ -1,5 +1,6 @@
 import boto3
 from botocore.client import Config
+from botocore.exceptions import ClientError, NoCredentialsError
 from kink import di
 
 
@@ -19,12 +20,27 @@ class S3Storage:
             region_name=di["S3_REGION"],
         )
 
-    def upload_blob(self, source_file_name: str, destination_blob_name: str):
+    def upload_blob(self, file_content: bytes, destination_blob_name: str):
         """Upload blob to storage"""
-        self.s3_client.upload_file(
-            source_file_name, self.bucket_name, destination_blob_name
-        )
-        print(f"File {source_file_name} uploaded to {destination_blob_name}.")
+        print(f"Uploading to {destination_blob_name} in bucket {self.bucket_name}")
+        try:
+            from io import BytesIO
+
+            # Convertir le contenu en objet file-like
+            file_obj = BytesIO(file_content)
+
+            self.s3_client.upload_fileobj(
+                file_obj,
+                self.bucket_name,
+                destination_blob_name,
+                ExtraArgs={"ACL": "public-read"},
+            )
+            return f"{self.endpoint_url}/{self.bucket_name}/{destination_blob_name}"
+            print(f"File uploaded to {destination_blob_name}.")
+        except NoCredentialsError:
+            raise Exception("S3 credentials not available")
+        except ClientError as e:
+            raise Exception(f"S3 upload failed: {e}")
 
 
 # S3StorageRepository().upload_blob("lake.png", "test/lake.png")

@@ -8,7 +8,7 @@
       "name": "Python Debugger : FastAPI",
       "type": "debugpy",
       "request": "launch",
-      "program": "backend/LeitMind/main.py",
+      "program": "backend/main.py",
       "console": "integratedTerminal"
     }
   ]

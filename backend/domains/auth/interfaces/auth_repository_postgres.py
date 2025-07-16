@@ -38,6 +38,12 @@ class AuthRepository:
     ) -> User:
         pass
 
+    def update_user_avatar(self, user_id: int, avatar_url: str) -> User:
+        """
+        Update the user's avatar URL.
+        """
+        pass
+
     def delete_user(
         self,
         user_id: int,
@@ -61,4 +67,14 @@ class AuthRepository:
         username: str,
         password: str,
     ) -> User:
+        pass
+
+    def update_user_avatar(
+        self,
+        user_id: int,
+        avatar_url: str,
+    ) -> User:
+        """
+        Update the user's avatar URL.
+        """
         pass

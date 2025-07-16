@@ -37,3 +37,15 @@ class GetUserUseCase:
         email,
     ):
         return self.auth_repository.get_user_by_email(email)
+
+    def get_avatar(
+        self,
+        user_id: int,
+    ):
+        """
+        Retrieve the user's avatar URL.
+        """
+        user = self.auth_repository.get_user_by_id(user_id)
+        if not user:
+            raise ValueError("User not found")
+        return user.avatar if user.avatar else None

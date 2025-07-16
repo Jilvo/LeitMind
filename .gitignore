@@ -188,3 +188,5 @@ sonar-project.properties
 .gitignore
 .scannerwork/report-task.txt
 .scannerwork/.sonar_lock
+
+web/

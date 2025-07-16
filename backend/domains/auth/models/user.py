@@ -22,6 +22,10 @@ class User(Base):
         unique=True,
         nullable=False,
     )
+    avatar = Column(
+        String(255),
+        nullable=True,
+    )
     hashed_password = Column(
         Text,
         nullable=False,
