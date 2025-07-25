@@ -1,9 +1,10 @@
 import uvicorn
-from controller.controller import controller
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from infrastructure.api.middlewares.language import LanguageMiddleware
 from kink import di
+
+from controller.controller import controller
+from infrastructure.api.middlewares.language import LanguageMiddleware
 
 app = FastAPI()
 origins = [

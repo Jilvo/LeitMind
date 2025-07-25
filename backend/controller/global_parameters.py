@@ -1,5 +1,6 @@
-from commons.utils import getOrSet
 from kink import di
+
+from commons.utils import getOrSet
 
 try:
     print("loading controller (manage app initialization)")

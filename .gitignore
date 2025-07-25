@@ -190,3 +190,4 @@ sonar-project.properties
 .scannerwork/.sonar_lock
 
 web/
+backend/alembic.ini

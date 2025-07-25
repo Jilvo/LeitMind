@@ -1,10 +1,11 @@
 from datetime import datetime
 
+from kink import inject
+
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.questions.interfaces.questions_repository_postgres import \
     QuestionsRepository
 from domains.questions.models.attempt import Attempt
-from kink import inject
 
 
 @inject
@@ -30,25 +31,19 @@ class SelectDailyQuestionsUseCase:
             user = self.auth_repository.get_user_by_email(current_user)
             if not user:
                 raise ValueError(f"User with email {current_user} not found")
-            attempts: list[Attempt] = (
-                self.questions_repository.get_all_attempts_by_user_id(user.id)
-            )
+            attempts: list[Attempt] = self.questions_repository.get_all_attempts_by_user_id(user.id)
             # not_correct_attempts = self.get_not_correct_user_attempts(attempts)
             outdated_attempts = self.get_outdated_attempts(
                 attempts,
                 today,
             )
-            list_id_sub_categories = (
-                self.questions_repository.get_subscriptions_by_user(user.id)
-            )
+            list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(user.id)
             if not list_id_sub_categories:
                 return []
             questions_to_review = []
             if outdated_attempts:
                 questions_to_review = [a.question_id for a in outdated_attempts]
-                questions = self.questions_repository.get_questions_by_ids(
-                    questions_to_review
-                )
+                questions = self.questions_repository.get_questions_by_ids(questions_to_review)
             else:
                 questions = []
 

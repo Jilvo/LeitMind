@@ -1,7 +1,8 @@
-from domains.base import Base
 from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
+from domains.base import Base
 
 
 class SubCategory(Base):
@@ -52,11 +53,11 @@ class SubCategory(Base):
         back_populates="sub_category",
     )
 
-    subscriptions = relationship(
-        "UserSubscription",
-        back_populates="sub_category",
-        cascade="all, delete-orphan",
-    )
+    # subscriptions = relationship(
+    #     "UserSubscription",
+    #     back_populates="sub_category",
+    #     cascade="all, delete-orphan",
+    # )
 
     def to_dict(
         self,

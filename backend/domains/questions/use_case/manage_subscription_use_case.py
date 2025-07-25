@@ -1,13 +1,18 @@
 import pandas as pd
+from kink import inject
+from pydantic import ValidationError
+
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
+from domains.questions.interfaces.questions_repository_postgres import \
+    QuestionsRepository
 from domains.questions.interfaces.subscription_repository_postgres import \
     SubscriptionRepository
 from domains.questions.models.subscription import UserSubscription
 from domains.questions.schemas.subscription import (SubscriptionRequest,
                                                     SubscriptionUpdateRequest)
-from kink import inject
-from pydantic import ValidationError
+from domains.questions.use_case.manage_question_use_case import \
+    ManageQuestionUseCase
 
 
 @inject
@@ -15,6 +20,7 @@ class ManageSubscriptionUseCase:
     def __init__(
         self,
         subscription_repository: SubscriptionRepository,
+        manage_question_use_case: ManageQuestionUseCase,
         auth_repository: AuthRepository,
     ):
         """
@@ -22,6 +28,7 @@ class ManageSubscriptionUseCase:
         """
         self.subscription_repository = subscription_repository
         self.auth_repository = auth_repository
+        self.manage_question_use_case = manage_question_use_case
 
     def create_subscription(
         self,
@@ -44,9 +51,7 @@ class ManageSubscriptionUseCase:
         except ValidationError as e:
             raise e
         except Exception as e:
-            raise Exception(
-                f"An error occurred while creating the subscription: {str(e)}"
-            )
+            raise Exception(f"An error occurred while creating the subscription: {str(e)}")
 
     def get_all_subscriptions(
         self,
@@ -57,9 +62,7 @@ class ManageSubscriptionUseCase:
         try:
             return self.subscription_repository.get_all_subscriptions()
         except Exception as e:
-            raise Exception(
-                f"An error occurred while retrieving subscriptions: {str(e)}"
-            )
+            raise Exception(f"An error occurred while retrieving subscriptions: {str(e)}")
 
     def get_subscription_by_id(
         self,
@@ -71,21 +74,40 @@ class ManageSubscriptionUseCase:
         try:
             return self.subscription_repository.get_subscription_by_id(subscription_id)
         except Exception as e:
-            raise Exception(
-                f"An error occurred while retrieving the subscription: {str(e)}"
-            )
+            raise Exception(f"An error occurred while retrieving the subscription: {str(e)}")
 
-    def get_subscription_by_user_id(
+    def get_subscriptions_by_user_id(
         self,
         user_id: int,
-    ) -> UserSubscription:
+    ) -> dict:
         """
-        Get a subscription by user ID.
+        Get subscriptions by user ID formatted with categories and boolean values.
         """
-        subscription = self.subscription_repository.get_subscription_by_user_id(user_id)
-        if not subscription:
-            raise Exception("Subscription not found")
-        return subscription
+        try:
+            # Récupérer toutes les catégories disponibles
+            all_categories = self.manage_question_use_case.get_all_categories()  # Tu dois implémenter cette méthode
+
+            # Récupérer les souscriptions de l'utilisateur
+            user_subscriptions = self.subscription_repository.get_subscriptions_by_user_id(user_id)
+
+            # Créer un set des category_id auxquels l'utilisateur est abonné
+            subscribed_category_ids = {sub["category_id"] for sub in user_subscriptions}
+
+            # Formater la réponse
+            formatted_subscriptions = []
+            for category in all_categories:
+                formatted_subscriptions.append(
+                    {
+                        "category_id": category["id"],
+                        "category_name": category["name"],  # Assure-toi que le nom existe dans ta table categories
+                        "subscribed": category["id"] in subscribed_category_ids,
+                    }
+                )
+
+            return {"message": "Subscriptions retrieved", "subscriptions": formatted_subscriptions}
+
+        except Exception as e:
+            raise Exception(f"An error occurred while retrieving subscriptions: {str(e)}")
 
     def count_subscriptions_by_sub_category(
         self,
@@ -95,9 +117,7 @@ class ManageSubscriptionUseCase:
         Count subscriptions by sub_category_id.
         """
         try:
-            return self.subscription_repository.count_subscriptions_by_sub_category(
-                sub_category_id
-            )
+            return self.subscription_repository.count_subscriptions_by_sub_category(sub_category_id)
         except Exception as e:
             raise Exception(f"An error occurred while counting subscriptions: {str(e)}")
 
@@ -111,6 +131,4 @@ class ManageSubscriptionUseCase:
         try:
             self.subscription_repository.delete_subscription(subscription_id)
         except Exception as e:
-            raise Exception(
-                f"An error occurred while deleting the subscription: {str(e)}"
-            )
+            raise Exception(f"An error occurred while deleting the subscription: {str(e)}")

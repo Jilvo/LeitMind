@@ -1,18 +1,19 @@
 import uuid
 
+from fastapi import (APIRouter, Depends, File, HTTPException, Request,
+                     UploadFile, status)
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBasic
+from kink import di
+from starlette.requests import Request
+
 from commons.errors import UserAuthenticationError, UserNotFoundError
 from domains.auth.models.user import User
 from domains.auth.schemas.user import (Token, UserCreationRequest,
                                        UserLoginRequest, UserUpdateRequest)
 from domains.use_cases_services import UseCasesService
-from fastapi import (APIRouter, Depends, File, HTTPException, Request,
-                     UploadFile, status)
-from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBasic
 from infrastructure.spi.storage.s3_storage import S3Storage
-from kink import di
 from localization import translate
-from starlette.requests import Request
 from utils.security import decode_access_token, get_current_user
 
 router = APIRouter()

@@ -54,7 +54,7 @@ class SubscriptionRepository:
         """
         pass
 
-    def get_subscription_by_user_id(
+    def get_subscriptions_by_user_id(
         self,
         user_id: str,
     ) -> UserSubscription:

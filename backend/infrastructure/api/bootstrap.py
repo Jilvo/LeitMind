@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from infrastructure.api.attempt_api_rest.api import router as attempt_router
 from infrastructure.api.auth_api_rest.api import router as auth_router
 from infrastructure.api.category_api_rest.api import router as category_router

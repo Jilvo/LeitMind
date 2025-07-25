@@ -1,9 +1,10 @@
-from domains.questions.schemas.question import CategoryRequest
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from domains.questions.schemas.question import CategoryRequest
+from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
 router = APIRouter()
@@ -105,23 +106,25 @@ def get_category_by_id(
 
 
 @router.post("/subscribe")
-def subscribe_to_category_or_sub_category(
+def subscribe_to_category(
     category_id: int = None,
-    sub_category_id: int = None,
+    user_id: int = None,
     current_user=Depends(get_current_user),
 ):
     """
     Subscribe a user to a category or sub-category.
     """
     service: UseCasesService = di[UseCasesService]
-    user = service.getUserUseCase.get_user_by_email(current_user)
+    if user_id is None:
+        user_dict = service.getUserUseCase.get_user_by_email(current_user)
+    else:
+        user_dict = service.getUserUseCase.execute(user_id)
 
-    if category_id is None and sub_category_id is None:
-        return {"message": "Please provide a category or sub-category ID"}
+    if category_id is None:
+        return {"message": "Please provide a category"}
     service.manageCategoryUseCase.subscribe_to_category_or_sub_category(
-        user_id=user.id,
+        user_id=user_dict["id"],
         category_id=category_id,
-        sub_category_id=sub_category_id,
     )
     return {
         "message": "Subscribed successfully",

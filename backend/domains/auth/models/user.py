@@ -1,7 +1,8 @@
-from domains.base import Base
 from sqlalchemy import (TIMESTAMP, Column, DateTime, ForeignKey, Integer,
                         String, Text, func)
 from sqlalchemy.orm import relationship
+
+from domains.base import Base
 
 
 class User(Base):

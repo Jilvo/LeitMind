@@ -17,6 +17,4 @@ translations = {
 def translate(error_code: str, lang: str) -> str:
     print(f"Translating error code '{error_code}' to language '{lang}'")
     print(f"Available translations: {translations.get(lang, translations['en'])}")
-    return translations.get(lang, translations["en"]).get(
-        error_code, translations["en"]["default_error"]
-    )
+    return translations.get(lang, translations["en"]).get(error_code, translations["en"]["default_error"])

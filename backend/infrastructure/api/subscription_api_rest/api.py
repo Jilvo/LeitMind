@@ -1,11 +1,12 @@
-from domains.questions.models.subscription import UserSubscription
-from domains.questions.schemas.subscription import (SubscriptionRequest,
-                                                    SubscriptionUpdateRequest)
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from domains.questions.models.subscription import UserSubscription
+from domains.questions.schemas.subscription import (SubscriptionRequest,
+                                                    SubscriptionUpdateRequest)
+from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
 router = APIRouter()
@@ -53,9 +54,7 @@ def get_all_subscriptions(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while retrieving subscriptions: {str(e)}"
-            },
+            content={"message": f"An error occurred while retrieving subscriptions: {str(e)}"},
         )
 
 
@@ -69,9 +68,7 @@ def get_subscription_by_id(
     """
     service: UseCasesService = di[UseCasesService]
     try:
-        subscription = service.manageSubscriptionUseCase.get_subscription_by_id(
-            subscription_id
-        )
+        subscription = service.manageSubscriptionUseCase.get_subscription_by_id(subscription_id)
         return JSONResponse(
             status_code=200,
             content={
@@ -82,9 +79,7 @@ def get_subscription_by_id(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while retrieving the subscription: {str(e)}"
-            },
+            content={"message": f"An error occurred while retrieving the subscription: {str(e)}"},
         )
 
 
@@ -111,9 +106,7 @@ def update_subscription(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while updating the subscription: {str(e)}"
-            },
+            content={"message": f"An error occurred while updating the subscription: {str(e)}"},
         )
 
 
@@ -135,14 +128,12 @@ def delete_subscription(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while deleting the subscription: {str(e)}"
-            },
+            content={"message": f"An error occurred while deleting the subscription: {str(e)}"},
         )
 
 
 @router.get("/subscriptions/user/{user_id}")
-def get_subscription_by_user_id(
+def get_subscriptions_by_user_id(
     user_id: int,
     current_user: str = Depends(get_current_user),
 ) -> JSONResponse:
@@ -151,9 +142,7 @@ def get_subscription_by_user_id(
     """
     service: UseCasesService = di[UseCasesService]
     try:
-        subscription = service.manageSubscriptionUseCase.get_subscription_by_user_id(
-            user_id
-        )
+        subscription = service.manageSubscriptionUseCase.get_subscriptions_by_user_id(user_id)
         if not subscription:
             return JSONResponse(
                 status_code=404,
@@ -169,9 +158,7 @@ def get_subscription_by_user_id(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while retrieving the subscription: {str(e)}"
-            },
+            content={"message": f"An error occurred while retrieving the subscription: {str(e)}"},
         )
 
 
@@ -185,9 +172,7 @@ def count_subscriptions_by_sub_category(
     """
     service: UseCasesService = di[UseCasesService]
     try:
-        result = service.manageSubscriptionUseCase.count_subscriptions_by_sub_category(
-            sub_category_id
-        )
+        result = service.manageSubscriptionUseCase.count_subscriptions_by_sub_category(sub_category_id)
         return JSONResponse(
             status_code=200,
             content={
@@ -200,7 +185,5 @@ def count_subscriptions_by_sub_category(
     except Exception as e:
         return JSONResponse(
             status_code=500,
-            content={
-                "message": f"An error occurred while counting subscriptions: {str(e)}"
-            },
+            content={"message": f"An error occurred while counting subscriptions: {str(e)}"},
         )

@@ -1,4 +1,7 @@
 import pandas as pd
+from kink import inject
+from pydantic import ValidationError
+
 from commons.errors import CategoryError
 from domains.auth.interfaces.auth_repository_postgres import AuthRepository
 from domains.auth.schemas.user import UserCreationRequest
@@ -15,8 +18,6 @@ from domains.questions.schemas.question import (CategoryRequest,
                                                 QuestionRequest,
                                                 QuestionUpdateRequest,
                                                 ValidateRequest)
-from kink import inject
-from pydantic import ValidationError
 
 
 @inject
@@ -42,28 +43,18 @@ class ManageQuestionUseCase:
         current_user: UserCreationRequest,
     ):
         try:
-            category: Category = self.questions_repository.get_category_by_id(
-                question_data.category
-            )
+            category: Category = self.questions_repository.get_category_by_id(question_data.category)
             if not category:
                 raise ValueError("Category not found")
-            sub_category: SubCategory = (
-                self.questions_repository.get_sub_category_by_id(
-                    question_data.sub_category
-                )
-            )
+            sub_category: SubCategory = self.questions_repository.get_sub_category_by_id(question_data.sub_category)
             if not sub_category:
                 raise ValueError("Sub-category not found")
 
-            theme: Theme = self.questions_repository.get_theme_by_id(
-                question_data.theme
-            )
+            theme: Theme = self.questions_repository.get_theme_by_id(question_data.theme)
             if not theme:
                 raise ValueError("Theme not found")
 
-            sub_theme: SubTheme = self.questions_repository.get_sub_theme_by_id(
-                question_data.sub_theme
-            )
+            sub_theme: SubTheme = self.questions_repository.get_sub_theme_by_id(question_data.sub_theme)
 
             if not sub_theme:
                 raise ValueError("Sub-theme not found")
@@ -83,9 +74,7 @@ class ManageQuestionUseCase:
                 aswr,
             ) in enumerate(question_data.answers):
                 answer = Answer(
-                    is_correct=(
-                        True if index == question_data.correct_answer else False
-                    ),
+                    is_correct=(True if index == question_data.correct_answer else False),
                     question_id=question.id,
                     text=aswr,
                 )
@@ -132,14 +121,10 @@ class ManageQuestionUseCase:
                 raise ValueError("Question not found")
             print(f"Existing question: {question}")
 
-            category = self.questions_repository.get_category_by_id(
-                question_data.category
-            )
+            category = self.questions_repository.get_category_by_id(question_data.category)
             print(f"Type of category: {type(category)}")
             if not category:
-                raise CategoryError(
-                    "Category not found for this question. You must create it first."
-                )
+                raise CategoryError("Category not found for this question. You must create it first.")
 
             question.text = question_data.text
             question.category_id = category.id
@@ -154,9 +139,7 @@ class ManageQuestionUseCase:
                 aswr,
             ) in enumerate(question_data.answers):
                 answer = Answer(
-                    is_correct=(
-                        True if index == question_data.correct_answer else False
-                    ),
+                    is_correct=(True if index == question_data.correct_answer else False),
                     question_id=question.id,
                     text=aswr,
                 )
@@ -375,9 +358,7 @@ class ManageQuestionUseCase:
                         sub_category_id=sub_category.id,
                     )
                     theme = self.create_theme(theme)
-                sub_theme = self.questions_repository.get_sub_theme_by_name(
-                    row["sub_theme"]
-                )
+                sub_theme = self.questions_repository.get_sub_theme_by_name(row["sub_theme"])
                 if not sub_theme:
                     sub_theme = SubTheme(
                         name=row["sub_theme"],
@@ -391,9 +372,7 @@ class ManageQuestionUseCase:
                     creator_id=1,
                     explanation=row["explanation"],
                 )
-                question_already_exists = (
-                    self.questions_repository.get_question_by_text(question.text)
-                )
+                question_already_exists = self.questions_repository.get_question_by_text(question.text)
                 if question_already_exists:
                     continue
                 question = self.questions_repository.create_question(question)
@@ -408,9 +387,7 @@ class ManageQuestionUseCase:
                     aswr,
                 ) in enumerate(answers_possibility):
                     answer = Answer(
-                        is_correct=(
-                            True if index + 1 == row["index_correct_answer"] else False
-                        ),
+                        is_correct=(True if index + 1 == row["index_correct_answer"] else False),
                         question_id=question.id,
                         text=aswr.replace(
                             "\n",
@@ -467,9 +444,7 @@ class ManageQuestionUseCase:
         current_user: str,
     ):
         """Validate a question."""
-        question: Question = self.questions_repository.get_question_by_id(
-            validation_data.question_id
-        )
+        question: Question = self.questions_repository.get_question_by_id(validation_data.question_id)
         if not question:
             raise ValueError("Question not found")
         answers = question.answers

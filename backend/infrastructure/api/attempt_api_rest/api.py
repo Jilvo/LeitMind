@@ -1,10 +1,11 @@
-from domains.questions.use_case.manage_attempt_use_case import \
-    ManageAttemptUseCase
-from domains.use_cases_services import UseCasesService
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+
+from domains.questions.use_case.manage_attempt_use_case import \
+    ManageAttemptUseCase
+from domains.use_cases_services import UseCasesService
 from utils.security import decode_access_token, get_current_user
 
 router = APIRouter()
