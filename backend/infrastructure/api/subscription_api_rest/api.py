@@ -5,7 +5,7 @@ from kink import di
 
 from domains.questions.models.subscription import UserSubscription
 from domains.questions.schemas.subscription import (SubscriptionRequest,
-                                                    SubscriptionUpdateRequest)
+                                                    SubscriptionUserUpdateRequest)
 from domains.use_cases_services import UseCasesService
 from utils.security import get_current_user
 
@@ -83,31 +83,31 @@ def get_subscription_by_id(
         )
 
 
-@router.put("/subscriptions/{subscription_id}")
-def update_subscription(
-    subscription_id: int,
-    subscription_data: SubscriptionUpdateRequest,
-    current_user: str = Depends(get_current_user),
-) -> JSONResponse:
-    """
-    Update a subscription
-    """
-    service: UseCasesService = di[UseCasesService]
-    try:
-        service.manageSubscriptionUseCase.update_subscription(
-            subscription_id,
-            subscription_data,
-            current_user,
-        )
-        return JSONResponse(
-            status_code=200,
-            content={"message": "Subscription updated"},
-        )
-    except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"message": f"An error occurred while updating the subscription: {str(e)}"},
-        )
+# @router.put("/subscriptions/{subscription_id}")
+# def update_subscription(
+#     subscription_id: int,
+#     subscription_data: SubscriptionUpdateRequest,
+#     current_user: str = Depends(get_current_user),
+# ) -> JSONResponse:
+#     """
+#     Update a subscription
+#     """
+#     service: UseCasesService = di[UseCasesService]
+#     try:
+#         service.manageSubscriptionUseCase.update_subscription(
+#             subscription_id,
+#             subscription_data,
+#             current_user,
+#         )
+#         return JSONResponse(
+#             status_code=200,
+#             content={"message": "Subscription updated"},
+#         )
+#     except Exception as e:
+#         return JSONResponse(
+#             status_code=500,
+#             content={"message": f"An error occurred while updating the subscription: {str(e)}"},
+#         )
 
 
 @router.delete("/subscriptions/{subscription_id}")
@@ -160,7 +160,34 @@ def get_subscriptions_by_user_id(
             status_code=500,
             content={"message": f"An error occurred while retrieving the subscription: {str(e)}"},
         )
-
+@router.post("/subscriptions/user/{user_id}")
+def update_subscription_by_user_id(
+    user_id: int,
+    subscription_data: SubscriptionUserUpdateRequest,
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Update a subscription by user ID
+    """
+    service: UseCasesService = di[UseCasesService]
+    try:
+        updated_subscription = service.manageSubscriptionUseCase.update_subscription_by_user_id(
+            user_id,
+            subscription_data,
+            current_user,
+        )
+        return JSONResponse(
+            status_code=200,
+            content={
+                "message": "Subscription updated",
+                "subscription": updated_subscription.to_dict(),
+            },
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": f"An error occurred while updating the subscription: {str(e)}"},
+        )
 
 @router.get("/subscriptions/count/{sub_category_id}")
 def count_subscriptions_by_sub_category(

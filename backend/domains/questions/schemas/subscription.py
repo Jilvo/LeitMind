@@ -3,20 +3,19 @@ from pydantic import BaseModel
 
 class SubscriptionRequest(BaseModel):
     """
-    Schema for creating a new subscription.
+    Schema for creating a category subscription.
     """
 
-    sub_category_id: int
+    category_name: str
+    subscribed: bool
 
 
-class SubscriptionUpdateRequest(BaseModel):
+class SubscriptionUserUpdateRequest(BaseModel):
     """
-    Schema for updating an existing subscription.
+    Schema for updating a subscription by user ID.
     """
 
-    user_id: int
-    sub_category_id: int
-    active: bool
+    subscriptions: list[SubscriptionRequest]
 
 
 class SubscriptionResponse(BaseModel):
@@ -25,5 +24,5 @@ class SubscriptionResponse(BaseModel):
     """
 
     user_id: int
-    sub_category_id: int
+    category_name: str
     active: bool

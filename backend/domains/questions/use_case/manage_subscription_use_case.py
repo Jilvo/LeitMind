@@ -9,8 +9,7 @@ from domains.questions.interfaces.questions_repository_postgres import \
 from domains.questions.interfaces.subscription_repository_postgres import \
     SubscriptionRepository
 from domains.questions.models.subscription import UserSubscription
-from domains.questions.schemas.subscription import (SubscriptionRequest,
-                                                    SubscriptionUpdateRequest)
+from domains.questions.schemas.subscription import (SubscriptionRequest)
 from domains.questions.use_case.manage_question_use_case import \
     ManageQuestionUseCase
 
