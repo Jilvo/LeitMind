@@ -37,8 +37,8 @@ class SelectDailyQuestionsUseCase:
                 attempts,
                 today,
             )
-            list_id_sub_categories = self.questions_repository.get_subscriptions_by_user(user.id)
-            if not list_id_sub_categories:
+            list_id_categories = self.questions_repository.get_subscriptions_by_user(user.id)
+            if not list_id_categories:
                 return []
             questions_to_review = []
             if outdated_attempts:
@@ -59,9 +59,9 @@ class SelectDailyQuestionsUseCase:
 
             new_questions = []
             if needed:
-                new_questions = self.questions_repository.get_unattempted_questions_by_user_id_and_subscribed_sub_categories(
+                new_questions = self.questions_repository.get_unattempted_questions_by_user_id_and_subscribed_categories(
                     user_id=user.id,
-                    list_id_sub_categories=list_id_sub_categories,
+                    list_id_categories=list_id_categories,
                     count=needed,
                 )
 

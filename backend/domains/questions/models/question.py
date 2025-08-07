@@ -80,6 +80,11 @@ class Question(Base):
         "Theme",
         back_populates="questions",
     )
+    attempts = relationship(
+        "Attempt",
+        back_populates="question",
+        cascade="all, delete-orphan",
+    )
 
     def to_dict(
         self,

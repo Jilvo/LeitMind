@@ -55,6 +55,11 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+    attempts = relationship(
+        "Attempt",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
 
     def to_dict(
         self,

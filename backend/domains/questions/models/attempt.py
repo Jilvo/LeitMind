@@ -1,6 +1,6 @@
 from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer
 from sqlalchemy.sql import func
-
+from sqlalchemy.orm import relationship
 from domains.base import Base
 
 
@@ -53,3 +53,19 @@ class Attempt(Base):
         Integer,
         default=1,
     )  # 1 : 1 day, 2 : 3 days, 3 : 7 days, 4 : 15 days, 5 : 30 days
+
+    user = relationship("User", back_populates="attempts")
+    question = relationship("Question", back_populates="attempts")
+    answer = relationship("Answer", back_populates="attempts")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "question": self.question.text if self.question else None,
+            "is_correct": self.is_correct,
+            "answer": self.answer.text if self.answer else None,
+            "attempted_at": self.attempted_at.isoformat() if self.attempted_at else None,
+            "attempt_count": self.attempt_count,
+            "leitner_box": self.leitner_box,
+        }

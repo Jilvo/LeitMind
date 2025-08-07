@@ -72,3 +72,26 @@ class AttemptRepository:
         Get all attempts by question ID.
         """
         pass
+
+    def count_attempts_by_user_and_question(
+        self,
+        user_id: int,
+        question_id: int,
+    ) -> int:
+        """
+        Count attempts by user ID and question ID.
+        """
+        pass
+
+
+    def get_last_attempt_by_user_and_question(
+        self,
+        user_id: int,
+        question_id: int,
+    ) -> Attempt:
+        """
+        Get the last attempt by user ID and question ID.
+        """
+        pass
+
+    

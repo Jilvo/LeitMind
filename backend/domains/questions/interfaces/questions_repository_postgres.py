@@ -104,10 +104,10 @@ class QuestionsRepository:
         """
         pass
 
-    def get_unattempted_questions_by_user_id_and_subscribed_sub_categories(
+    def get_unattempted_questions_by_user_id_and_subscribed_categories(
         self,
         user_id: int,
-        list_id_sub_categories: list[int],
+        list_id_categories: list[int],
     ) -> list[Question]:
         """
         Get all unattempted questions by user ID and categories ID which User subscribed to.

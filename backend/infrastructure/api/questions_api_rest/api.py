@@ -101,7 +101,7 @@ def get_daily_questions(
             )
         return JSONResponse(
             status_code=200,
-            content={"message": res},
+            content={"message": [q.to_dict() for q in res]},
         )
     except ValueError as e:
         if "no subscriptions" in str(e).lower():

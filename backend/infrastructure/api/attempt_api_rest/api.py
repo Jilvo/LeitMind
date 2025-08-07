@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
+from fastapi import Query
+
 
 from domains.questions.use_case.manage_attempt_use_case import \
     ManageAttemptUseCase
@@ -28,25 +30,6 @@ def get_all_attempts(
     )
 
 
-@router.get("/attempts/{attempt_id}")
-def get_attempt_by_id(
-    attempt_id: int,
-    current_user: str = Depends(get_current_user),
-) -> JSONResponse:
-    """
-    Get an attempt by ID
-    """
-    service: UseCasesService = di[UseCasesService]
-    attempt = service.manageAttemptUseCase.get_attempt_by_id(attempt_id)
-    if not attempt:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Attempt not found",
-        )
-    return JSONResponse(
-        status_code=200,
-        content={"attempt": attempt},
-    )
 
 
 @router.post("/attempts")
@@ -132,4 +115,80 @@ def get_attempts_by_question_id(
     return JSONResponse(
         status_code=200,
         content={"attempts": attempts},
+    )
+
+@router.get("/attempts/count")
+def count_attempts_by_user_and_question(
+    user_id: int = Query(...),
+    question_id: int = Query(...),
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Count attempts by user and question
+    """
+    service: UseCasesService = di[UseCasesService]
+    count = service.manageAttemptUseCase.count_attempts_by_user_and_question(user_id, question_id)
+    return JSONResponse(
+        status_code=200,
+        content={"count": count},
+    )
+
+@router.get("/attempts/last")
+def get_last_attempt(
+    user_id: int,
+    question_id: int,
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Get the last attempt by user and question
+    """
+    service: UseCasesService = di[UseCasesService]
+    last_attempt = service.manageAttemptUseCase.get_last_attempt(user_id, question_id)
+    if not last_attempt:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Last attempt not found",
+        )
+    return JSONResponse(
+        status_code=200,
+        content={"last_attempt": last_attempt},
+    )
+
+@router.get("/attempts/can_attempt")
+def can_attempt_question(
+    user_id: int,
+    question_id: int,
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Check if a user can attempt a question
+    """
+    service: UseCasesService = di[UseCasesService]
+    can_attempt = service.manageAttemptUseCase.can_attempt_question(user_id, question_id)
+    return JSONResponse(
+        status_code=200,
+        content={"can_attempt": can_attempt},
+    )
+    
+
+
+
+@router.get("/attempts/{attempt_id}")
+def get_attempt_by_id(
+    attempt_id: int,
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Get an attempt by ID
+    """
+    service: UseCasesService = di[UseCasesService]
+    attempt = service.manageAttemptUseCase.get_attempt_by_id(attempt_id)
+    if not attempt:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Attempt not found",
+        )
+    return JSONResponse(
+        status_code=200,
+        content={"attempt": attempt},
     )

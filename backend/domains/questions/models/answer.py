@@ -35,6 +35,11 @@ class Answer(Base):
         back_populates="answers",
         foreign_keys=[question_id],
     )
+    attempts = relationship(
+        "Attempt",
+        back_populates="answer",
+        cascade="all, delete-orphan",
+    )
 
     def to_dict(
         self,

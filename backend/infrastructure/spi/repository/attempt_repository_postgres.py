@@ -71,3 +71,26 @@ class AttemptRepositoryPostgreSQL:
                 except Exception as e:
                     print(f"Error serializing attempt: {attempt}, Error: {e}")
             return serialized_attempts
+
+    def count_attempts_by_user_and_question(self, user_id: int, question_id: int) -> int:
+        with self.session() as session:
+            count = session.query(Attempt).filter(
+                and_(
+                    Attempt.user_id == user_id,
+                    Attempt.question_id == question_id,
+                )
+            ).count()
+            return count
+
+    def get_last_attempt_by_user_and_question(self, user_id: int, question_id: int):
+        with self.session() as session:
+            attempt = (
+                session.query(Attempt)
+                .filter(
+                    Attempt.user_id == user_id,
+                    Attempt.question_id == question_id,
+                )
+                .order_by(Attempt.id.desc())  # ou Attempt.created_at.desc() si tu as un champ de date
+                .first()
+            )
+            return attempt.to_dict() if attempt else None

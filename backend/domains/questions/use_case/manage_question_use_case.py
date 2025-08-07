@@ -369,7 +369,7 @@ class ManageQuestionUseCase:
                     category_id=category.id,
                     theme_id=theme.id,
                     sub_theme_id=sub_theme.id,
-                    creator_id=1,
+                    creator_id=2,
                     explanation=row["explanation"],
                 )
                 question_already_exists = self.questions_repository.get_question_by_text(question.text)

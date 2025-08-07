@@ -57,3 +57,20 @@ class ManageAttemptUseCase:
         question_id: int,
     ) -> list:
         return self.attempt_repository.get_attempts_by_question_id(question_id)
+    
+    def count_attempts_by_user_and_question(self, user_id: int, question_id: int) -> int:
+        return self.attempt_repository.count_attempts_by_user_and_question(user_id, question_id)
+    
+    def get_last_attempt(self, user_id: int, question_id: int):
+        return self.attempt_repository.get_last_attempt_by_user_and_question(user_id, question_id)
+    
+    def can_attempt_question(
+        self,
+        user_id: int,
+        question_id: int,
+    ) -> bool:
+        last_attempt = self.get_last_attempt(user_id, question_id)
+        if last_attempt:
+            return False
+        return True
+        

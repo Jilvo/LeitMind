@@ -115,10 +115,10 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         with self.session() as session:
             return session.query(Question).filter(Question.user_id != user_id).all()
 
-    def get_unattempted_questions_by_user_id_and_subscribed_sub_categories(
+    def get_unattempted_questions_by_user_id_and_subscribed_categories(
         self,
         user_id: int,
-        list_id_sub_categories: list[int],
+        list_id_categories: list[int],
         count: Optional[int] = None,
     ) -> list[Question]:
         with self.session() as session:
@@ -129,7 +129,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
                     session.query(Question)
                     .filter(
                         and_(
-                            Question.sub_category_id.in_(list_id_sub_categories),
+                            Question.category_id.in_(list_id_categories),
                             not_(Question.id.in_(subquery)),
                         )
                     )
@@ -244,6 +244,27 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
             session.refresh(answer)
             return answer
 
+    def create_or_update_attempt(self, attempt: Attempt) -> Attempt:
+        with self.session() as session:
+            existing_attempt = (
+                session.query(Attempt)
+                .filter(
+                    Attempt.question_id == attempt.question_id,
+                    Attempt.user_id == attempt.user_id,
+                )
+                .first()
+            )
+            if existing_attempt:
+                existing_attempt.score = attempt.score
+                session.commit()
+                session.refresh(existing_attempt)
+                return existing_attempt.to_dict() if existing_attempt else attempt.to_dict()
+            else:
+                session.add(attempt)
+                session.commit()
+                session.refresh(attempt)
+                return attempt.to_dict()
+        
     # Sub Categories #
     def create_sub_category(
         self,
@@ -510,3 +531,6 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
                 {"user_id": user_id, "sub_category_id": sub_category_id},
             )
             session.commit()
+
+
+    
