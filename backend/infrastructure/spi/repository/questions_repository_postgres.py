@@ -64,6 +64,12 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         Create a new question.
         """
         with self.session() as session:
+            if question.creator_id:
+                from domains.auth.models.user import User
+                creator = session.query(User).filter(User.id == question.creator_id).first()
+                if not creator:
+                    raise ValueError(f"Creator with ID {question.creator_id} does not exist")
+            
             session.add(question)
             session.commit()
             session.refresh(question)

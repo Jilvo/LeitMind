@@ -326,7 +326,7 @@ class ManageQuestionUseCase:
         try:
             # Lire le fichier CSV
             df = pd.read_csv(
-                "datas/question_dot.csv",
+                "datas/questions.csv",
                 quotechar='"',
                 on_bad_lines="skip",
                 delimiter=";",
@@ -336,7 +336,7 @@ class ManageQuestionUseCase:
             for (
                 index,
                 row,
-            ) in df.iterrows():
+            ) in df_head.iterrows():
                 print(index)
                 # print(row)
                 # print(row)
@@ -369,7 +369,7 @@ class ManageQuestionUseCase:
                     category_id=category.id,
                     theme_id=theme.id,
                     sub_theme_id=sub_theme.id,
-                    creator_id=2,
+                    creator_id=1, #TODO : a supprimer
                     explanation=row["explanation"],
                 )
                 question_already_exists = self.questions_repository.get_question_by_text(question.text)
