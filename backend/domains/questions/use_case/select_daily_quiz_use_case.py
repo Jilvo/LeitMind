@@ -67,10 +67,14 @@ class SelectDailyQuestionsUseCase:
                 )
 
             list_of_daily_questions = questions + new_questions
-            if list_of_daily_questions:
-                return list_of_daily_questions
-            else:
-                return []
+            return {
+                "daily_questions": [q.to_dict() for q in list_of_daily_questions],
+                "total_questions": len(list_of_daily_questions),
+                "review_questions": len(questions),
+                "new_questions": len(new_questions),
+                "user_id": user.id,
+                "categories_subscribed": list_id_categories
+            }
         except Exception as e:
             print(f"Error in execute: {str(e)}")
             raise ValueError(f"Unable to retrieve daily questions: {str(e)}")
