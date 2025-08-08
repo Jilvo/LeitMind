@@ -93,7 +93,7 @@ class SelectDailyQuestionsUseCase:
 
         outdated_attempts = []
         for attempt in attempts:
-            last_attempt_date = attempt.timestamp.date()
+            last_attempt_date = attempt.attempted_at.date()
             days_since_last_attempt = (today.date() - last_attempt_date).days
 
             # Vérifie si la question doit être révisée

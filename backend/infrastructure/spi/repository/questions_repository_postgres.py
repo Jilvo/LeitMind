@@ -106,7 +106,13 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         question_ids: list[int],
     ) -> list[Question]:
         with self.session() as session:
-            return session.query(Question).filter(Question.id.in_(question_ids)).all()
+            questions = (
+                        session.query(Question)
+                        .options(joinedload(Question.answers))
+                        .filter(Question.id.in_(question_ids))
+                        .all()
+                    )
+            return questions
 
     def get_unattempted_questions_by_user_id(
         self,
@@ -127,6 +133,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
 
                 questions = (
                     session.query(Question)
+                    .options(joinedload(Question.answers))
                     .filter(
                         and_(
                             Question.category_id.in_(list_id_categories),
@@ -534,4 +541,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
             session.commit()
 
 
-    
+    def get_answers_by_question_id(self, question_id: int) -> list[Answer]:
+        with self.session() as session:
+            answers = session.query(Answer).filter(Answer.question_id == question_id).all()
+            return [answer.to_dict() for answer in answers]
