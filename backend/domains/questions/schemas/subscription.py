@@ -6,7 +6,7 @@ class SubscriptionRequest(BaseModel):
     Schema for creating a category subscription.
     """
 
-    category_name: str
+    category_id: int
     subscribed: bool
 
 

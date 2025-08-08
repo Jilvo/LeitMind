@@ -83,31 +83,7 @@ def get_subscription_by_id(
         )
 
 
-# @router.put("/subscriptions/{subscription_id}")
-# def update_subscription(
-#     subscription_id: int,
-#     subscription_data: SubscriptionUpdateRequest,
-#     current_user: str = Depends(get_current_user),
-# ) -> JSONResponse:
-#     """
-#     Update a subscription
-#     """
-#     service: UseCasesService = di[UseCasesService]
-#     try:
-#         service.manageSubscriptionUseCase.update_subscription(
-#             subscription_id,
-#             subscription_data,
-#             current_user,
-#         )
-#         return JSONResponse(
-#             status_code=200,
-#             content={"message": "Subscription updated"},
-#         )
-#     except Exception as e:
-#         return JSONResponse(
-#             status_code=500,
-#             content={"message": f"An error occurred while updating the subscription: {str(e)}"},
-#         )
+
 
 
 @router.delete("/subscriptions/{subscription_id}")
