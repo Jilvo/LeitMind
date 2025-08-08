@@ -502,11 +502,12 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
         user_id: int,
     ):
         with self.session() as session:
-            result = session.execute(
-                text(f"SELECT * FROM user_subscriptions WHERE user_id = :user_id"),
-                {"user_id": user_id},
+            subscriptions = (
+            session.query(UserSubscription)
+            .filter(UserSubscription.user_id == user_id)
+            .all()
             )
-            return [row[0] for row in result]
+            return [subscription.to_dict() for subscription in subscriptions]
 
     def unsubscribe_from_category(
         self,

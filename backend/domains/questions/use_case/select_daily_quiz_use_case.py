@@ -37,8 +37,9 @@ class SelectDailyQuestionsUseCase:
                 attempts,
                 today,
             )
-            list_id_categories = self.questions_repository.get_subscriptions_by_user(user.id)
-            if not list_id_categories:
+            list_categories = self.questions_repository.get_subscriptions_by_user(user.id)
+            list_id_categories = [c["category_id"] for c in list_categories if c["is_active"] == 1]
+            if not list_categories:
                 return []
             questions_to_review = []
             if outdated_attempts:
