@@ -14,6 +14,7 @@ from domains.questions.use_case.manage_subscription_use_case import \
     ManageSubscriptionUseCase
 from domains.questions.use_case.select_daily_quiz_use_case import \
     SelectDailyQuestionsUseCase
+from domains.questions.use_case.user_scoring_use_case import UserScoringUseCase
 
 
 @inject
@@ -31,3 +32,4 @@ class UseCasesService:
         self.manageCategoryUseCase: ManageCategoryUseCase = di[ManageCategoryUseCase]
         self.manageSubscriptionUseCase: ManageSubscriptionUseCase = di[ManageSubscriptionUseCase]
         self.manageAttemptUseCase: ManageAttemptUseCase = di[ManageAttemptUseCase]
+        self.userScoringUseCase: UserScoringUseCase = di[UserScoringUseCase]

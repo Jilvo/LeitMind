@@ -147,7 +147,7 @@ def update_subscription_by_user_id(
     """
     service: UseCasesService = di[UseCasesService]
     try:
-        updated_subscription = service.manageSubscriptionUseCase.update_subscription_by_user_id(
+        updated_subscription = service.manageSubscriptionUseCase.update_subscriptions_by_user_id(
             user_id,
             subscription_data,
             current_user,
@@ -155,8 +155,8 @@ def update_subscription_by_user_id(
         return JSONResponse(
             status_code=200,
             content={
-                "message": "Subscription updated",
-                "subscription": updated_subscription.to_dict(),
+                "message": "Subscriptions updated",
+                "result": updated_subscription,
             },
         )
     except Exception as e:

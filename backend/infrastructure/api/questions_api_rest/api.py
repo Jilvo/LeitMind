@@ -205,3 +205,18 @@ def bulk_create_questions(
         status_code=201,
         content={"message": res},
     )
+
+
+@router.get("/user_scoring/")
+def user_scoring(
+    current_user: str = Depends(get_current_user),
+) -> JSONResponse:
+    """
+    Get user scoring
+    """
+    service: UseCasesService = di[UseCasesService]
+    res = service.userScoringUseCase.get_user_scoring(current_user)
+    return JSONResponse(
+        status_code=200,
+        content={"message": res},
+    )

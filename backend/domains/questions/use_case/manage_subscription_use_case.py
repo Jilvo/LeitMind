@@ -9,7 +9,8 @@ from domains.questions.interfaces.questions_repository_postgres import \
 from domains.questions.interfaces.subscription_repository_postgres import \
     SubscriptionRepository
 from domains.questions.models.subscription import UserSubscription
-from domains.questions.schemas.subscription import (SubscriptionRequest)
+from domains.questions.schemas.subscription import (SubscriptionRequest,
+                                                    SubscriptionUserUpdateRequest)
 from domains.questions.use_case.manage_question_use_case import \
     ManageQuestionUseCase
 
@@ -42,7 +43,7 @@ class ManageSubscriptionUseCase:
             # Validate the subscription data
             subscription = UserSubscription(
                 user_id=user.id,
-                sub_category_id=subscription_data.sub_category_id,
+                category_id=subscription_data.category_id,  # Corrigé : category_id au lieu de sub_category_id
             )
 
             # Create the subscription
@@ -90,7 +91,7 @@ class ManageSubscriptionUseCase:
             user_subscriptions = self.subscription_repository.get_subscriptions_by_user_id(user_id)
 
             # Créer un set des category_id auxquels l'utilisateur est abonné
-            subscribed_category_ids = {sub["category_id"] for sub in user_subscriptions}
+            subscribed_category_ids = {sub["category_id"] for sub in user_subscriptions if sub["is_active"]}
 
             # Formater la réponse
             formatted_subscriptions = []
@@ -131,3 +132,68 @@ class ManageSubscriptionUseCase:
             self.subscription_repository.delete_subscription(subscription_id)
         except Exception as e:
             raise Exception(f"An error occurred while deleting the subscription: {str(e)}")
+
+    def update_subscriptions_by_user_id(
+        self,
+        user_id: int,
+        subscription_data: SubscriptionUserUpdateRequest,
+        current_user: str,
+    ) -> dict:
+        """
+        Update subscriptions by user ID.
+        Pour chaque catégorie dans la liste :
+        - Si subscribed=True : créer ou activer la souscription
+        - Si subscribed=False : désactiver la souscription (si elle existe)
+        """
+        try:
+            user = self.auth_repository.get_user_by_email(current_user)
+            if not user:
+                raise Exception("User not found")
+                
+            if not subscription_data.subscriptions:
+                raise ValidationError("No subscriptions provided")
+
+            updated_count = 0
+            
+            # Traiter chaque souscription dans la liste
+            for sub in subscription_data.subscriptions:
+                if not isinstance(sub, SubscriptionRequest):
+                    raise ValidationError("Invalid subscription data format")
+                
+                # Chercher si une souscription existe déjà pour cette catégorie
+                existing_subscription = self.subscription_repository.get_subscription_by_user_and_category(
+                    user_id, sub.category_id
+                )
+                
+                if existing_subscription:
+                    # La souscription existe déjà
+                    if sub.subscribed != existing_subscription.is_active:
+                        # L'état a changé, on met à jour
+                        self.subscription_repository.update_subscription_by_id(
+                            existing_subscription.id, 
+                            {"is_active": sub.subscribed}
+                        )
+                        updated_count += 1
+                else:
+                    # Pas de souscription existante
+                    if sub.subscribed:
+                        # L'utilisateur veut s'abonner, on crée une nouvelle souscription
+                        new_subscription = UserSubscription(
+                            user_id=user_id,
+                            category_id=sub.category_id,
+                            is_active=True
+                        )
+                        self.subscription_repository.create_subscription(new_subscription)
+                        updated_count += 1
+                    # Si subscribed=False et pas de souscription existante, on ne fait rien
+
+            return {
+                "message": "Subscriptions updated successfully",
+                "updated_count": updated_count,
+                "total_processed": len(subscription_data.subscriptions)
+            }
+            
+        except ValidationError as e:
+            raise e
+        except Exception as e:
+            raise Exception(f"An error occurred while updating subscriptions: {str(e)}")

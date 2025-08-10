@@ -66,6 +66,35 @@ class SubscriptionRepositoryPostgreSQL(SubscriptionRepository):
                 return []
             return [subscription.to_dict() for subscription in subscriptions]
 
+    def get_subscription_by_user_and_category(
+        self, user_id: int, category_id: int
+    ) -> Optional[UserSubscription]:
+        with self.session() as session:
+            try:
+                return (
+                    session.query(UserSubscription)
+                    .filter(
+                        and_(
+                            UserSubscription.user_id == user_id,
+                            UserSubscription.category_id == category_id,
+                        )
+                    )
+                    .one()
+                )
+            except NoResultFound:
+                return None
+    def update_subscription_by_id(
+        self, subscription_id: int, subscription_data: dict
+    ) -> UserSubscription:
+        with self.session() as session:
+            subscription = session.query(UserSubscription).filter(UserSubscription.id == subscription_id).one()
+            for key, value in subscription_data.items():
+                setattr(subscription, key, value)
+            session.commit()
+            session.refresh(subscription)
+            return subscription
+        
+        
     def count_subscriptions_by_sub_category(self, sub_category_id: str) -> dict:
         with self.session() as session:
             # Vérifiez si la sous-catégorie existe

@@ -71,3 +71,23 @@ class SubscriptionRepository:
         Count subscriptions by sub-category ID.
         """
         pass
+    
+    def get_subscription_by_user_and_category(
+        self,
+        user_id: int,
+        category_id: int,
+    ) -> UserSubscription:
+        """
+        Get a subscription by user ID and category ID.
+        """
+        pass
+
+    def update_subscription_by_id(
+        self,
+        subscription_id: str,
+        subscription_data: UserSubscription,
+    ) -> UserSubscription:
+        """
+        Update subscriptions by user ID.
+        """
+        pass

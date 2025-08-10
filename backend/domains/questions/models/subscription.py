@@ -1,4 +1,4 @@
-from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String
+from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -29,9 +29,9 @@ class UserSubscription(Base):
         nullable=False,
     )
     is_active = Column(
-        Integer,
+        Boolean,
         nullable=False,
-        default=1,
+        default=False,
     )
     created_at = Column(
         TIMESTAMP,
