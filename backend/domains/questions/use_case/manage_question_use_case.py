@@ -326,17 +326,16 @@ class ManageQuestionUseCase:
         try:
             # Lire le fichier CSV
             df = pd.read_csv(
-                "datas/questions.csv",
+                "datas/questions_test.csv",
+                # "datas/questions.csv",
                 quotechar='"',
                 on_bad_lines="skip",
                 delimiter=";",
             )
-            df_head = df.head()
-            print(df_head)
             for (
                 index,
                 row,
-            ) in df_head.iterrows():
+            ) in df.iterrows():
                 print(index)
                 # print(row)
                 # print(row)

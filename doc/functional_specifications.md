@@ -190,11 +190,71 @@ Functionalities
 
 -   Provide instant feedback on answers.
 
+##### Enhanced Leitner System Implementation
+
+The application implements an improved Leitner spaced repetition system with the following specifications:
+
+**Session Structure**:
+- **Maximum 25 questions per session** to prevent cognitive overload
+- **4-hour minimum interval** between sessions to ensure proper rest
+- **Automatic session management** with progress tracking
+
+**Question Distribution per Session**:
+- **5-10 new questions** (adjusted based on user's performance level and available time)
+- **8-12 priority review questions** (most overdue based on Leitner intervals)
+- **3-7 maintenance questions** (from boxes 4-5 for long-term retention)
+- **Balanced distribution** across all subscribed categories
+
+**Leitner Box System**:
+- **Box 1**: 1 day interval (new or recently failed questions)
+- **Box 2**: 3 days interval 
+- **Box 3**: 7 days interval
+- **Box 4**: 15 days interval
+- **Box 5**: 30 days interval
+
+**Intelligent Prioritization**:
+- **Overdue questions prioritized** by number of days overdue
+- **Category balancing** ensures no single category dominates
+- **Difficulty mixing** combines easy/medium/hard questions for optimal motivation
+- **"Leech" detection** identifies consistently failed questions for special handling
+
+**Adaptive Learning Features**:
+- **Performance-based quotas**: Users performing well get more new questions
+- **Personal interval adjustment**: Intervals modified based on individual success rates
+- **Daily cognitive load management**: Complex questions "cost" more from daily quota
+- **Streak protection**: Maintains learning streaks with appropriate question selection
+
+**Session Management**:
+- **Mandatory breaks**: After 15 questions, system suggests a break
+- **Progress persistence**: Sessions can be resumed later without losing progress
+- **Completion rewards**: Positive reinforcement for finishing daily sessions
+- **Flexible scheduling**: Users can adjust daily targets within recommended ranges
+
 #### Progress Tracking
 
 -   Display user progress in a graphical format.
 
 -   Log correct/incorrect answers and update the schedule accordingly.
+
+##### Advanced Progress Analytics
+
+**Leitner Box Visualization**:
+- **Real-time box distribution**: Show how many questions are in each Leitner box
+- **Category progression**: Track progress per subscribed category
+- **Retention rates**: Display success rates for each box level
+- **Learning velocity**: Measure how quickly questions move between boxes
+
+**Performance Metrics**:
+- **Daily completion rates**: Track session completion consistency
+- **Accuracy trends**: Monitor improvement over time per category
+- **Streak tracking**: Maintain and display learning streaks
+- **Cognitive load analysis**: Show optimal study times and patterns
+
+**Predictive Features**:
+- **Workload forecasting**: Predict upcoming review volumes
+- **Difficulty assessment**: Identify challenging topics requiring attention
+- **Time investment analysis**: Track time spent per question type
+- **Learning curve visualization**: Show knowledge acquisition patterns
 
 #### Notifications
 
@@ -202,15 +262,28 @@ Functionalities
 
 ### Optional Features
 
-#### Gamification
+#### Advanced Gamification
 
--   Add badges and rewards for milestones.
+-   **Achievement system** with badges for consistency, accuracy, and category mastery
+-   **Leaderboards** with weekly/monthly rankings across different metrics
+-   **Streak protection** items to maintain learning consistency
+-   **Daily challenges** with bonus questions and rewards
+-   **Category mastery levels** with unlock requirements and rewards
 
--   Include leaderboards for competitive engagement.
+#### Intelligent Learning Features
+
+-   **Adaptive difficulty**: Dynamic question selection based on performance patterns
+-   **Smart reminders**: Personalized notification timing based on optimal learning windows
+-   **Learning insights**: Weekly reports on strengths, weaknesses, and recommendations
+-   **Custom study modes**: Focus sessions for specific categories or difficulty levels
+-   **Collaborative learning**: Study groups and shared progress with friends
 
 #### Multi-Language Support
 
 -   Translate questions and UI for international audiences.
+
+-   **Localized learning paths**: Culture-specific question sets and learning approaches
+-   **Multi-language question support**: Questions available in multiple languages for language learners
 
 * * * * *
 

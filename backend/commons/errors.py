@@ -62,3 +62,21 @@ class UserAuthenticationError(AuthError):
     """Raised when user authentication fails."""
 
     pass
+
+
+class SessionIntervalError(QuizError):
+    """Raised when session minimum interval is not reached."""
+
+    pass
+
+
+class NoSubscriptionError(SubscriptionError):
+    """Raised when user has no active subscriptions."""
+
+    pass
+
+
+class DailyQuestionsError(QuizError):
+    """Raised when daily questions cannot be generated."""
+
+    pass

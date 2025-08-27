@@ -3,7 +3,13 @@ from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic
 from kink import di
 
-from commons.errors import CategoryError
+from commons.errors import (
+    CategoryError, 
+    UserNotFoundError, 
+    SessionIntervalError, 
+    NoSubscriptionError, 
+    DailyQuestionsError
+)
 from domains.questions.schemas.question import (QuestionRequest,
                                                 QuestionUpdateRequest)
 from domains.use_cases_services import UseCasesService
@@ -88,41 +94,55 @@ def get_daily_questions(
     Get daily questions
     """
     try:
-
         service: UseCasesService = di[UseCasesService]
         res = service.selectDailyQuestionsUseCase.execute(current_user=current_user)
-        if not res:
-            return JSONResponse(
-                status_code=200,
-                content={
-                    "daily_questions": [],
-                    "total_questions": 0,
-                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions",
-                },
-            )
         return JSONResponse(
             status_code=200,
             content=res,
         )
-    except ValueError as e:
-        if "no subscriptions" in str(e).lower():
-            return JSONResponse(
-                status_code=200,
-                content={
-                    "message": [],
-                    "note": "You have not yet subscribed to any categories. Please subscribe to at least one category to receive personalized questions",
-                },
-            )
+    except UserNotFoundError as e:
         return JSONResponse(
             status_code=404,
-            content={"message": str(e)},
+            content={
+                "error": "USER_NOT_FOUND",
+                "message": str(e)
+            },
+        )
+    except SessionIntervalError as e:
+        return JSONResponse(
+            status_code=429,  # Too Many Requests
+            content={
+                "error": "SESSION_TOO_SOON",
+                "message": str(e),
+                "retry_after": "4 hours"
+            },
+        )
+    except NoSubscriptionError as e:
+        return JSONResponse(
+            status_code=400,  # Bad Request
+            content={
+                "error": "NO_SUBSCRIPTIONS",
+                "message": str(e),
+                "action_required": "Please subscribe to at least one category"
+            },
+        )
+    except DailyQuestionsError as e:
+        return JSONResponse(
+            status_code=500,  # Internal Server Error
+            content={
+                "error": "DAILY_QUESTIONS_ERROR",
+                "message": str(e)
+            },
         )
     except Exception as e:
         # Loggez l'erreur pour le débogage
-        print(f"Erreur dans get_daily_questions: {str(e)}")
+        print(f"Unexpected error in get_daily_questions: {str(e)}")
         return JSONResponse(
             status_code=500,
-            content={"message": "Une erreur interne s'est produite"},
+            content={
+                "error": "INTERNAL_ERROR",
+                "message": "An unexpected error occurred"
+            },
         )
 
 
