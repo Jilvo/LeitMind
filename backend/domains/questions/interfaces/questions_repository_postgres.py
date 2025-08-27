@@ -470,7 +470,7 @@ class QuestionsRepository:
     def get_subscriptions_by_user(
         self,
         user_id: int,
-    ) -> list[SubCategory]:
+    ) -> list[dict]:
         """
         Get all subscriptions by user ID.
         """

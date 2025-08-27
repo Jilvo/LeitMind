@@ -513,7 +513,7 @@ class QuestionsRepositoryPostgreSQL(QuestionsRepository):
     def get_subscriptions_by_user(
         self,
         user_id: int,
-    ):
+    )-> list[dict]:
         with self.session() as session:
             subscriptions = (
             session.query(UserSubscription)
